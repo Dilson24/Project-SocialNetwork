@@ -62,6 +62,6 @@
             </div>
         </footer>
     </main>
-    <script src="JS/index.js"></script>
+    <script src="JS/script.js"></script>
 </body>
 </html>

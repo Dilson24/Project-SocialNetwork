@@ -12,11 +12,11 @@
 <body>
     <div class="login-card">
         <div class="card-header">
-            <div class="log">Login</div>
+            <div class="log">Inicio de sesion</div>
         </div>
         <form>
             <div class="form-group">
-                <label for="username">Email:</label>
+                <label for="email">Email:</label>
                 <input required="required" name="Email" id="email" type="email">
             </div>
             <div class="form-group">
@@ -24,10 +24,10 @@
                 <input required="required" name="password" id="password" type="password">
             </div>
             <div class="form-group">
-                <input value="Login" type="submit">
+                <input value="Iniciar Sesion" type="submit">
             </div>
         </form>
-        <p>¿No tienes cuenta? <a href="ruta_a_tu_pagina_de_registro.html">Regístrate</a></p>
+        <p>¿No tienes cuenta? <a href="registro.php">Regístrate</a></p>
     </div>
 
 </body>
