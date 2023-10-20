@@ -6,9 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Dilson Alexander Cruz Nivia">
-    <link rel="stylesheet" href="Css/styles.css" type="text/css">
+    <link rel="stylesheet" href="Css/index.css" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src=""></script>
 </head>
 
 <body>
@@ -22,8 +21,8 @@
                 <h1 class="headlineOne">Conectando el mundo, un amigo a la vez</h1>
                 <div class="contentBtn">
                     <h3 class="headlineTwo">Únete hoy</h3>
-                    <button class="signUp">Registrase</button>
-                    <button class="signIn">Iniciar Sesion</button>
+                    <button id="btnSignUp"class="signUp">Registrase</button>
+                    <button id="btnSignIn"class="signIn">Iniciar Sesion</button>
                 </div>
             </div>
         </div>
@@ -63,6 +62,6 @@
             </div>
         </footer>
     </main>
+    <script src="JS/index.js"></script>
 </body>
-
 </html>
