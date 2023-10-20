@@ -51,8 +51,6 @@ main>footer {
     border: 1px solid green;
 }
 
-
-
 main {
     height: 100vh;
     /* 100% de la altura de la ventana gráfica (viewport height) */
