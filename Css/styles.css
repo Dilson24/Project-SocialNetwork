@@ -1,0 +1,240 @@
+/*DEFAULT STYLE*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/*GLOBAL CSS VARIABLES*/
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap');
+
+
+:root {
+    --black-50: #EEEEF7;
+    --black-100: #e7e7e7;
+    --black-200: #d1d1d1;
+    --black-300: #b0b0b0;
+    --black-400: #888888;
+    --black-500: #6d6d6d;
+    --black-600: #5d5d5d;
+    --black-700: #4f4f4f;
+    --black-800: #454545;
+    --black-900: #3d3d3d;
+    --black-950: #000000;
+    --font-family: 'Rubik', sans-serif;
+}
+
+/*STYLES FOR ALL CONTAINERS*/
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+body {
+    background: var(--black-50);
+    font-family: var(--font-family);
+}
+
+main>footer {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    width: 90%;
+    gap: 1.5em;
+    position: fixed;
+    bottom: 0;
+    left: 0; 
+    right: 0;
+    border: 1px solid green;
+}
+
+
+
+main {
+    height: 100vh;
+    /* 100% de la altura de la ventana gráfica (viewport height) */
+    width: 100vw;
+}
+
+/*content*/
+.content {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    /* Arriba | Derecha | Abajo | Izquierda */
+    margin: 4.5em auto 0 auto;
+    width: 90%;
+    border: 1px solid red;
+}
+
+.contentImg {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    gap: 1em;
+    border: 1px solid black;
+}
+
+.contentLogin {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 2em;
+    border: 1px solid yellow;
+    width: 50%;
+}
+
+.headlineOne,
+.headlineTwo {
+    text-align: center;
+}
+
+.contentBtn {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+}
+
+/*buttons*/
+.signUp {
+    padding: 1.3em 4em;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    font-weight: 500;
+    color: var(--black-950);
+    background-color: #fff;
+    border: none;
+    border-radius: 45px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+    outline: none;
+    max-width: 200px;
+    /* Ajusta el valor según tus preferencias */
+    margin: 0 auto;
+    /* Centra horizontalmente en el contenedor padre */
+}
+
+.signUp:hover {
+    background-color: var(--black-950);
+    box-shadow: 0px 15px 20px rgba(61, 61, 61, 0.4);
+    color: #fff;
+    transform: translateY(-7px);
+}
+
+.signUp:active {
+    transform: translateY(-1px);
+}
+
+.signIn {
+    padding: 1.3em 3em;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    font-weight: 500;
+    color: var(--black-950);
+    background-color: #fff;
+    border: none;
+    border-radius: 45px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+    outline: none;
+    max-width: 200px;
+    /* Ajusta el valor según tus preferencias */
+    margin: 0 auto;
+    /* Centra horizontalmente en el contenedor padre */
+}
+
+.signIn:hover {
+    background-color: var(--black-950);
+    box-shadow: 0px 15px 20px rgba(61, 61, 61, 0.4);
+    color: #fff;
+    transform: translateY(-7px);
+}
+
+.signIn:active {
+    transform: translateY(-1px);
+}
+
+/*footer*/
+
+/* footer {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    width: 90%;
+    gap: 1.5em;
+    border: 1px solid green;
+} */
+
+.line {
+    width: 98%;
+    height: 0.125em;
+    margin: 1em auto 0 auto;
+    background: var(--black-900);
+}
+
+.footerContact {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    width: 100%;
+}
+
+.imgFooter {
+    height: 2.5em;
+    object-fit: contain;
+    width: auto;
+}
+
+.socialMedia {
+    display: flex;
+    flex-direction: row;
+    gap: 2em;
+    height: 2.188em;
+    margin: auto 0 auto 0;
+}
+
+.socialMedia i {
+    color: var(--black-700);
+    font-size: 2.188em;
+}
+
+.facebook i:hover {
+    color: var(--black-950);
+    transform: translateY(-0.3125em);
+    transition: transform 0.3s ease-in-out;
+}
+
+.instagram i:hover {
+    color: var(--black-950);
+    transform: translateY(-0.3125em);
+    transition: transform 0.3s ease-in-out;
+}
+
+.github i:hover {
+    color: var(--black-950);
+    transform: translateY(-0.3125em);
+    transition: transform 0.3s ease-in-out;
+}
+
+.linkedin i:hover {
+    color: var(--black-950);
+    transform: translateY(-0.3125em);
+    transition: transform 0.3s ease-in-out;
+}
+
+.contact-us {
+    font-size: 0.75em;
+    margin: 0 auto 0 auto;
+    color: var(--black-500);
+}
