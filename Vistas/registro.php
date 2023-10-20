@@ -59,7 +59,8 @@
         </form>
         <p>¿Ya tienes cuenta? <a href="inicio-sesion.php">Iniciar Sesion</a></p>
     </div>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="../JS/register.js"></script>
 </body>
 
 </html>
