@@ -48,12 +48,10 @@ main>footer {
     bottom: 0;
     left: 0; 
     right: 0;
-    border: 1px solid green;
 }
 
 main {
     height: 100vh;
-    /* 100% de la altura de la ventana gráfica (viewport height) */
     width: 100vw;
 }
 
@@ -65,7 +63,6 @@ main {
     /* Arriba | Derecha | Abajo | Izquierda */
     margin: 4.5em auto 0 auto;
     width: 90%;
-    border: 1px solid red;
 }
 
 .contentImg {
@@ -114,9 +111,7 @@ main {
     cursor: pointer;
     outline: none;
     max-width: 200px;
-    /* Ajusta el valor según tus preferencias */
     margin: 0 auto;
-    /* Centra horizontalmente en el contenedor padre */
 }
 
 .signUp:hover {
@@ -145,9 +140,7 @@ main {
     cursor: pointer;
     outline: none;
     max-width: 200px;
-    /* Ajusta el valor según tus preferencias */
     margin: 0 auto;
-    /* Centra horizontalmente en el contenedor padre */
 }
 
 .signIn:hover {
