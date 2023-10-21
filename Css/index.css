@@ -72,7 +72,6 @@ main {
     align-items: center;
     width: 50%;
     gap: 1em;
-    border: 1px solid black;
 }
 
 .contentLogin {
@@ -80,7 +79,6 @@ main {
     justify-content: space-between;
     flex-direction: column;
     gap: 2em;
-    border: 1px solid yellow;
     width: 50%;
 }
 
