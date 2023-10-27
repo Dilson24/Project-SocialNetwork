@@ -11,13 +11,13 @@ class Database
     private function __construct()
     {
         $this->connection = new mysqli($this->host, $this->username, $this->password, $this->database);
-        // Configurar la codificación de caracteres utf8
+
+        // Establecer la codificación de caracteres en UTF-8
         $this->connection->set_charset("utf8");
 
         if ($this->connection->connect_error) {
             die("Error de conexión a la base de datos: " . $this->connection->connect_error);
         }
-
     }
 
     public static function getInstance()

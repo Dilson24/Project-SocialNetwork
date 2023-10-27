@@ -31,7 +31,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $query = "INSERT INTO perfiles (usuario_id, name, last_name, date_of_birth, country, city, imagen_perfil) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = $connection->prepare($query);
         $stmt->bind_param("issssss", $userId, $nameFormatted, $lastNameFormatted, $dateOfBirthFormatted, $country, $city, $defaultProfileImage);
-
         if ($stmt->execute()) {
             // La inserción en la tabla `perfiles` fue exitosa
             session_start();
