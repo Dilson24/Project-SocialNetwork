@@ -13,7 +13,7 @@ class Database
         $this->connection = new mysqli($this->host, $this->username, $this->password, $this->database);
 
         // Establecer la codificación de caracteres en UTF-8
-        $this->connection->set_charset("utf8");
+        $this->connection->set_charset("utf8mb4");
 
         if ($this->connection->connect_error) {
             die("Error de conexión a la base de datos: " . $this->connection->connect_error);

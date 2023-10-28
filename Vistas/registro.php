@@ -2,7 +2,7 @@
 require_once('../db.php');
 $db = Database::getInstance();
 $connection = $db->getConnection();
-
+$connection->set_charset("utf8mb4");
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
     $password = $_POST['password'];
@@ -34,8 +34,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($stmt->execute()) {
             // La inserción en la tabla `perfiles` fue exitosa
             session_start();
-            $_SESSION['name'] = $name;
-            $_SESSION['userId'] = $userId;
+            $_SESSION['name'] = $nameFormatted;
+            $_SESSION['user_id'] = $userId;
             $_SESSION['profileImage'] = $defaultProfileImage;
             header('Location: perfil.php');
             exit();
