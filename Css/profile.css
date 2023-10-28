@@ -26,44 +26,23 @@
 
 /*STYLES FOR ALL CONTAINERS*/
 
-.container {
-    display: flex;
-    flex-direction: column;
-}
-
 body {
     background: var(--black-50);
     font-family: var(--font-family);
     height: 100%;
 }
-
-/* Estilos base comunes a todas las pantallas */
 .grid-container {
     display: grid;
-    grid-template-columns: 240px 1fr;
+    grid-template-columns: 20% 1fr 20%; /* 20% izquierda, 60% centro, 20% derecha */
     grid-template-rows: 50px 1fr 50px;
     grid-template-areas:
-        'sidenav header'
-        'sidenav main'
-        'sidenav footer';
+        'sidenav-left header sidenav-right'
+        'sidenav-left main sidenav-right'
+        'sidenav-left footer sidenav-right';
     height: 100vh;
 }
 
-.menu-icon {
-    position: fixed;
-    /* Necesita permanecer visible para todo el desplazamiento en dispositivos móviles */
-    display: flex;
-    top: 5px;
-    left: 10px;
-    align-items: center;
-    justify-content: center;
-    background-color: #DADAE3;
-    border-radius: 50%;
-    z-index: 1;
-    cursor: pointer;
-    padding: 12px;
-}
-
+/*contenido*/
 .header {
     grid-area: header;
     display: flex;
@@ -78,18 +57,28 @@ body {
     margin-left: 42px;
 }
 
+/* Establece los estilos para los aside */
 .sidenav {
-    grid-area: sidenav;
     display: flex;
     flex-direction: column;
     height: 100%;
-    width: 240px;
     position: fixed;
     overflow-y: auto;
-    transform: translateX(0); /* Abierto por defecto */
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
-    z-index: 2;
-    /* Necesita estar por encima del ícono del menú de hamburguesa */
+    background-color: #394263;
+}
+/* aside izquierdo */
+.sidenav.sidenav-left {
+    grid-area: sidenav-left;
+    width: 20%;/* Ancho fijo en píxeles o cualquier otro valor deseado */
+    background-color: #394263;
+}
+
+/* aside derecho */
+.sidenav.sidenav.sidenav-rigth {
+    right: 0;
+    grid-area: sidenav-rigth;
+    width: 20%; /* Ancho fijo en píxeles o cualquier otro valor deseado */
     background-color: #394263;
 }
 

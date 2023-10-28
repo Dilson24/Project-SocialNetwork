@@ -36,16 +36,23 @@ if ($result->num_rows > 0) {
 
 <body>
     <div class="grid-container">
-        <div class="menu-icon">
-            <i class="fas fa-bars header__menu"></i>
-        </div>
-
         <header class="header">
             <div class="header__search">Search...</div>
             <div class="header__avatar">Your face</div>
         </header>
-
-        <aside class="sidenav">
+        <aside class="sidenav sidenav-rigth">
+            <div class="sidenav__close-icon">
+                <i class="fas fa-times sidenav__brand-close"></i>
+            </div>
+            <ul class="sidenav__list">
+                <li class="sidenav__list-item">Item One</li>
+                <li class="sidenav__list-item">Item Two</li>
+                <li class="sidenav__list-item">Item Three</li>
+                <li class="sidenav__list-item">Item Four</li>
+                <li class="sidenav__list-item">Item Five</li>
+            </ul>
+        </aside>
+        <aside class="sidenav sidenav-left">
             <div class="sidenav__close-icon">
                 <i class="fas fa-times sidenav__brand-close"></i>
             </div>
