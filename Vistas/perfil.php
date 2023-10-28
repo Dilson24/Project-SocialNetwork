@@ -53,8 +53,8 @@ if ($result->num_rows > 0) {
             </ul>
         </aside>
         <aside class="sidenav sidenav-left">
-            <div class="sidenav__close-icon">
-                <i class="fas fa-times sidenav__brand-close"></i>
+            <div class="sidenav__logo">
+                <img src="../Img/logo.svg" alt="img logo">
             </div>
             <ul class="sidenav__list">
                 <li class="sidenav__list-item">Item One</li>

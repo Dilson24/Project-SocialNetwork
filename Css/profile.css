@@ -31,9 +31,11 @@ body {
     font-family: var(--font-family);
     height: 100%;
 }
+
 .grid-container {
     display: grid;
-    grid-template-columns: 20% 1fr 20%; /* 20% izquierda, 60% centro, 20% derecha */
+    grid-template-columns: 20% 1fr 20%;
+    /* 20% izquierda, 60% centro, 20% derecha */
     grid-template-rows: 50px 1fr 50px;
     grid-template-areas:
         'sidenav-left header sidenav-right'
@@ -67,10 +69,12 @@ body {
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
     background-color: #394263;
 }
+
 /* aside izquierdo */
 .sidenav.sidenav-left {
     grid-area: sidenav-left;
-    width: 20%;/* Ancho fijo en píxeles o cualquier otro valor deseado */
+    width: 20%;
+    /* Ancho fijo en píxeles o cualquier otro valor deseado */
     background-color: #394263;
 }
 
@@ -78,23 +82,32 @@ body {
 .sidenav.sidenav.sidenav-rigth {
     right: 0;
     grid-area: sidenav-rigth;
-    width: 20%; /* Ancho fijo en píxeles o cualquier otro valor deseado */
+    width: 20%;
+    /* Ancho fijo en píxeles o cualquier otro valor deseado */
     background-color: #394263;
 }
 
-/* Ocultar el ícono de cierre en dispositivos móviles */
-.sidenav__close-icon {
-    visibility: hidden;
+/*logo*/
+.sidenav__logo { /*eliminar*/
+    border: 1px solid red;
+}
+
+.sidenav__logo img {
+    width: 100%;
 }
 
 .sidenav__list {
-    padding: 0;
-    margin-top: 85px;
+    display: flex;
+    height: 100%;
+    justify-content: space-around;
+    flex-direction: column;
+    padding: 10px;
     list-style-type: none;
 }
 
 .sidenav__list-item {
     padding: 20px 20px 20px 40px;
+    border-radius: 8px;
     color: #ddd;
 }
 
@@ -135,7 +148,8 @@ body {
 }
 
 .main-cards {
-    column-count: 2; /* 2 columnas en pantallas medianas y grandes */
+    column-count: 2;
+    /* 2 columnas en pantallas medianas y grandes */
     column-gap: 20px;
     margin: 20px;
 }
