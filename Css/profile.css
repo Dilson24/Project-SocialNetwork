@@ -76,16 +76,15 @@ body {
 .sidenav.sidenav-left {
     grid-area: sidenav-left;
     width: 20%;
-    /* Ancho fijo en píxeles o cualquier otro valor deseado */
     background-color: #394263;
 }
 
 /* aside derecho */
 .sidenav.sidenav.sidenav-rigth {
-    right: 0;
     grid-area: sidenav-rigth;
+    right: 0;
     width: 20%;
-    /* Ancho fijo en píxeles o cualquier otro valor deseado */
+    gap: 10%;
     background-color: #394263;
 }
 
@@ -165,8 +164,6 @@ body {
     cursor: pointer;
 }
 
-.sidenav__users-profiles {}
-
 .sidenav__text {
     display: flex;
     justify-content: space-around;
@@ -223,6 +220,19 @@ body {
     border-radius: 100%;
     margin: 0 auto;
     cursor: pointer;
+}
+
+.contact-us{
+    display: flex;
+    justify-content: center;
+    margin-top: 54px;
+    border: 1px solid green;
+}
+.brad{
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: var(--font-family);
 }
 .main {
     grid-area: main;

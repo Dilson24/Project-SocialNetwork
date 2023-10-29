@@ -94,6 +94,12 @@ $connection->close();
                     <?php echo $usuariosHTML; ?>
                 </div>
             </div>
+            <div class="contact-us">
+                <samp class="brad">
+                    &copy; 2023 Dilson Alexander Cruz Nivia | Todos los
+                    derechos reservados.
+                </samp>
+            </div>
         </aside>
         <aside class="sidenav sidenav-left">
             <div class="sidenav__logo">
