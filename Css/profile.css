@@ -201,15 +201,8 @@ body {
     justify-content: space-between;
     align-items: center;
     /* arriba | derecha | abajo | izquierda */
-    padding: 20px 0 20px 0;
-}
-.sidenav__users-follow img{
-    height: 40px;
-    width: 40px;
-    object-fit: cover;
-    border-radius: 100%;
-    margin: 0 auto;
-    cursor: pointer;
+    padding: 15px 0 15px 0;
+    border: 1px solid red;
 }
 .sidenav__users-follow a {
     text-decoration: none;
@@ -217,11 +210,20 @@ body {
     cursor: pointer;
     font-size: 14px;
 }
-.sidenav__users-follow a:nth-child(2) {
-    margin-left: -90px; /* Ajusta el valor según el espacio de separación que desees */
+.sidenav__info-user{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
 }
-
-
+.sidenav__info-user img{
+    height: 40px;
+    width: 40px;
+    object-fit: cover;
+    border-radius: 100%;
+    margin: 0 auto;
+    cursor: pointer;
+}
 .main {
     grid-area: main;
     background-color: #8fd4d9;

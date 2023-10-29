@@ -9,12 +9,13 @@ if (!isset($_SESSION['user_id'])) {
     header('Location: inicio-sesion.php');
     exit();
 }
-
 $user_id = $_SESSION['user_id'];
+/*consultas*/
 $query = "SELECT name FROM perfiles WHERE usuario_id = $user_id";
 $queryTwo = "SELECT imagen_perfil FROM perfiles WHERE usuario_id = $user_id";
+$queryThree = "SELECT name, imagen_perfil FROM perfiles ORDER BY RAND() LIMIT 4";
+//condicional para la primera consulta
 $result = $connection->query($query);
-
 if ($result) { // Comprueba si la consulta se ejecutó correctamente
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
@@ -24,10 +25,8 @@ if ($result) { // Comprueba si la consulta se ejecutó correctamente
         $user_name = "Usuario Desconocido";
     }
 }
-
-// Ejecuta la segunda consulta
+// condicional segunda consulta
 $resultTwo = $connection->query($queryTwo);
-
 if ($resultTwo) { // Comprueba si la consulta se ejecutó correctamente
     if ($resultTwo->num_rows > 0) {
         $rowTwo = $resultTwo->fetch_assoc();
@@ -37,6 +36,27 @@ if ($resultTwo) { // Comprueba si la consulta se ejecutó correctamente
         $user_image = "../Img/User-Profile.png"; // Puedes asignar una ruta predeterminada aquí
     }
 }
+// condicional tercera consulta
+$resultThree = $connection->query($queryThree);
+if ($resultThree) {
+    if ($resultThree->num_rows > 0) {
+        $usuariosHTML = '';
+        while ($row = $resultThree->fetch_assoc()) { // Cambio aquí
+            $nombre = $row['name'];
+            $imagen = $row['imagen_perfil'];
+            $usuariosHTML .= '<div class="sidenav__users-follow">';
+            $usuariosHTML .= '<div class="sidenav__info-user">';
+            $usuariosHTML .= '<a href="#"><img src="' . $imagen . '" alt="Imagen de perfil"></a>';
+            $usuariosHTML .= '<a href="#">' . $nombre . '</a>';
+            $usuariosHTML .= '</div>';
+            $usuariosHTML .= '<a href="#">Seguir</a>';
+            $usuariosHTML .= '</div>';
+        }
+    } else {
+        echo "No se encontraron usuarios.";
+    }
+}
+$connection->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -61,7 +81,9 @@ if ($resultTwo) { // Comprueba si la consulta se ejecutó correctamente
         <aside class="sidenav sidenav-rigth">
             <div class="sidenav__user-profile">
                 <a href="#"><img src="<?php echo $user_image; ?>" alt="Img profile"></a>
-                <a href="#"><?php echo $user_name; ?></a>
+                <a href="#">
+                    <?php echo $user_name; ?>
+                </a>
             </div>
             <div class="sidenav__users-profiles">
                 <div class="sidenav__text">
@@ -69,13 +91,8 @@ if ($resultTwo) { // Comprueba si la consulta se ejecutó correctamente
                     <a href="#">Ver todo</a>
                 </div>
                 <div class="sidenav__follow">
-                    <div class="sidenav__users-follow">
-                        <a href="#"><img src="../Img/User-Profile.png" alt="Img profile"></a>
-                        <a href="#">El pepe</a>
-                        <a href="#">Seguir</a>
-                    </div>
+                    <?php echo $usuariosHTML; ?>
                 </div>
-
             </div>
         </aside>
         <aside class="sidenav sidenav-left">
