@@ -4,6 +4,7 @@ $db = Database::getInstance();
 $connection = $db->getConnection();
 $connection->set_charset("utf8mb4");
 session_start();
+
 if (!isset($_SESSION['user_id'])) {
     header('Location: inicio-sesion.php');
     exit();
@@ -11,15 +12,31 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 $query = "SELECT name FROM perfiles WHERE usuario_id = $user_id";
+$queryTwo = "SELECT imagen_perfil FROM perfiles WHERE usuario_id = $user_id";
 $result = $connection->query($query);
-if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    $user_name = $row['name'];
-} else {
-    // Manejar el caso en que no se encuentre el nombre del usuario
-    $user_name = "Usuario Desconocido";
+
+if ($result) { // Comprueba si la consulta se ejecutó correctamente
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $user_name = $row['name'];
+    } else {
+        // Manejar el caso en que no se encuentre el nombre del usuario
+        $user_name = "Usuario Desconocido";
+    }
 }
-// Si llega a este punto, el usuario ha iniciado sesión correctamente
+
+// Ejecuta la segunda consulta
+$resultTwo = $connection->query($queryTwo);
+
+if ($resultTwo) { // Comprueba si la consulta se ejecutó correctamente
+    if ($resultTwo->num_rows > 0) {
+        $rowTwo = $resultTwo->fetch_assoc();
+        $user_image = $rowTwo['imagen_perfil'];
+    } else {
+        // Manejar el caso en que no se encuentre la imagen del perfil
+        $user_image = "../Img/User-Profile.png"; // Puedes asignar una ruta predeterminada aquí
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,8 +54,7 @@ if ($result->num_rows > 0) {
 <body>
     <div class="grid-container">
         <header class="header">
-            <div class="header__search">Search...</div>
-            <div class="header__avatar">Your face</div>
+            <div class="header__slogan"><h2>Conectando el mundo, un amigo a la vez</h2></div>
         </header>
         <aside class="sidenav sidenav-rigth">
             <div class="sidenav__close-icon">
@@ -57,11 +73,21 @@ if ($result->num_rows > 0) {
                 <img src="../Img/logo.svg" alt="img logo">
             </div>
             <ul class="sidenav__list">
-                <li class="sidenav__list-item">Item One</li>
-                <li class="sidenav__list-item">Item Two</li>
-                <li class="sidenav__list-item">Item Three</li>
-                <li class="sidenav__list-item">Item Four</li>
-                <li class="sidenav__list-item">Item Five</li>
+                <a href="#">
+                    <li class="sidenav__list-item"><i class="fa-solid fa-house"></i>Inicio</li>
+                </a>
+                <a href="#">
+                    <li class="sidenav__list-item"><i class="fa-solid fa-heart"></i>Notificaciones</li>
+                </a>
+                <a href="#">
+                    <li class="sidenav__list-item"><i class="fa-solid fa-square-plus"></i>Crear</li>
+                </a>
+                <a href="#">
+                    <li class="sidenav__list-item"><img src="<?php echo $user_image; ?>" alt="img profile">Perfil</li>
+                </a>
+                <a href="#" id="logoutButton">
+                    <li class="sidenav__list-item"><i class="fa-solid fa-right-from-bracket"></i>Cerrar sesión</li>
+                </a>
             </ul>
         </aside>
 

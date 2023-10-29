@@ -49,14 +49,16 @@ body {
     grid-area: header;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 0 16px;
+    justify-content: center;
+    width: 100%;
+    margin:  0 auto;
     background-color: #648ca6;
 }
 
 /* Hacer espacio para el icono de menú en dispositivos móviles */
-.header__search {
-    margin-left: 42px;
+.header__slogan {
+    font-style: italic;
+
 }
 
 /* Establece los estilos para los aside */
@@ -88,7 +90,8 @@ body {
 }
 
 /*logo*/
-.sidenav__logo { /*eliminar*/
+.sidenav__logo {
+    /*eliminar*/
     border: 1px solid red;
 }
 
@@ -105,10 +108,29 @@ body {
     list-style-type: none;
 }
 
+.sidenav__list a {
+    text-decoration: none;
+}
+
 .sidenav__list-item {
+    display: flex;
+    align-items: center;
     padding: 20px 20px 20px 40px;
     border-radius: 8px;
     color: #ddd;
+    text-decoration: none;
+}
+
+.sidenav__list-item i {
+    font-size: 24px;
+    padding: 0 20px 0 0;
+}
+.sidenav__list-item img {
+    height: 30px;
+    width: 30px;
+    object-fit: cover;
+    border-radius: 100%;
+    margin: 0 16px 0 0;
 }
 
 .sidenav__list-item:hover {
