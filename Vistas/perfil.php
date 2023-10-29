@@ -54,19 +54,29 @@ if ($resultTwo) { // Comprueba si la consulta se ejecutó correctamente
 <body>
     <div class="grid-container">
         <header class="header">
-            <div class="header__slogan"><h2>Conectando el mundo, un amigo a la vez</h2></div>
+            <div class="header__slogan">
+                <h2>Conectando el mundo, un amigo a la vez</h2>
+            </div>
         </header>
         <aside class="sidenav sidenav-rigth">
-            <div class="sidenav__close-icon">
-                <i class="fas fa-times sidenav__brand-close"></i>
+            <div class="sidenav__user-profile">
+                <a href="#"><img src="<?php echo $user_image; ?>" alt="Img profile"></a>
+                <a href="#"><?php echo $user_name; ?></a>
             </div>
-            <ul class="sidenav__list">
-                <li class="sidenav__list-item">Item One</li>
-                <li class="sidenav__list-item">Item Two</li>
-                <li class="sidenav__list-item">Item Three</li>
-                <li class="sidenav__list-item">Item Four</li>
-                <li class="sidenav__list-item">Item Five</li>
-            </ul>
+            <div class="sidenav__users-profiles">
+                <div class="sidenav__text">
+                    <samp>Descubre nuevas conexiones</samp>
+                    <a href="#">Ver todo</a>
+                </div>
+                <div class="sidenav__follow">
+                    <div class="sidenav__users-follow">
+                        <a href="#"><img src="../Img/User-Profile.png" alt="Img profile"></a>
+                        <a href="#">El pepe</a>
+                        <a href="#">Seguir</a>
+                    </div>
+                </div>
+
+            </div>
         </aside>
         <aside class="sidenav sidenav-left">
             <div class="sidenav__logo">

@@ -51,7 +51,7 @@ body {
     align-items: center;
     justify-content: center;
     width: 100%;
-    margin:  0 auto;
+    margin: 0 auto;
     background-color: #648ca6;
 }
 
@@ -97,6 +97,7 @@ body {
 
 .sidenav__logo img {
     width: 100%;
+    height: 45px;
 }
 
 .sidenav__list {
@@ -125,6 +126,7 @@ body {
     font-size: 24px;
     padding: 0 20px 0 0;
 }
+
 .sidenav__list-item img {
     height: 30px;
     width: 30px;
@@ -137,6 +139,88 @@ body {
     background-color: rgba(255, 255, 255, 0.2);
     cursor: pointer;
 }
+
+/*aside izquierdo*/
+.sidenav__user-profile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 54px;
+    width: 100%;
+    border: 1px solid red;
+}
+
+.sidenav__user-profile img {
+    height: 40px;
+    width: 40px;
+    object-fit: cover;
+    border-radius: 100%;
+    margin: 0 16px 0 0;
+    cursor: pointer;
+}
+
+.sidenav__user-profile a {
+    text-decoration: none;
+    color: #ddd;
+    cursor: pointer;
+}
+
+.sidenav__users-profiles {}
+
+.sidenav__text {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    /* arriba | derecha | abajo | izquierda */
+    padding: 20px 0 20px 0;
+}
+
+.sidenav__text a {
+    text-decoration: none;
+    color: #ddd;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.sidenav__text samp {
+    font-family: var(--font-family);
+    text-decoration: none;
+    color: #ddd;
+    font-size: 14px;
+}
+
+.sidenav__follow{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 90%;
+    margin: 0 auto;
+}
+.sidenav__users-follow{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* arriba | derecha | abajo | izquierda */
+    padding: 20px 0 20px 0;
+}
+.sidenav__users-follow img{
+    height: 40px;
+    width: 40px;
+    object-fit: cover;
+    border-radius: 100%;
+    margin: 0 auto;
+    cursor: pointer;
+}
+.sidenav__users-follow a {
+    text-decoration: none;
+    color: #ddd;
+    cursor: pointer;
+    font-size: 14px;
+}
+.sidenav__users-follow a:nth-child(2) {
+    margin-left: -90px; /* Ajusta el valor según el espacio de separación que desees */
+}
+
 
 .main {
     grid-area: main;
