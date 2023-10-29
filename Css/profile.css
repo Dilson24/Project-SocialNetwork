@@ -55,10 +55,8 @@ body {
     background-color: #648ca6;
 }
 
-/* Hacer espacio para el icono de menú en dispositivos móviles */
 .header__slogan {
     font-style: italic;
-
 }
 
 /* Establece los estilos para los aside */
@@ -68,24 +66,15 @@ body {
     height: 100%;
     position: fixed;
     overflow-y: auto;
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
-    background-color: #394263;
 }
 
 /* aside izquierdo */
 .sidenav.sidenav-left {
     grid-area: sidenav-left;
     width: 20%;
-    background-color: #394263;
-}
-
-/* aside derecho */
-.sidenav.sidenav.sidenav-rigth {
-    grid-area: sidenav-rigth;
-    right: 0;
-    width: 20%;
-    gap: 10%;
-    background-color: #394263;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+    border-right: 2px solid var(--black-900);
+    background-color: var(--black-50);
 }
 
 /*logo*/
@@ -117,7 +106,7 @@ body {
     align-items: center;
     padding: 20px 20px 20px 40px;
     border-radius: 8px;
-    color: #ddd;
+    color: var(--black-950);
     text-decoration: none;
 }
 
@@ -135,11 +124,19 @@ body {
 }
 
 .sidenav__list-item:hover {
-    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    background-color: var(--black-950);
+    box-shadow: 0px 15px 20px rgba(61, 61, 61, 0.4);
     cursor: pointer;
 }
-
-/*aside izquierdo*/
+/* aside derecho */
+.sidenav.sidenav-rigth {
+    grid-area: sidenav-rigth;
+    right: 0;
+    width: 20%;
+    gap: 10%;
+    background-color: #394263;
+}
 .sidenav__user-profile {
     display: flex;
     align-items: center;
