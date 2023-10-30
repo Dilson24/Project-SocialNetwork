@@ -49,7 +49,7 @@ if ($resultThree) {
             $usuariosHTML .= '<a href="#"><img src="' . $imagen . '" alt="Imagen de perfil"></a>';
             $usuariosHTML .= '<a href="#">' . $nombre . '</a>';
             $usuariosHTML .= '</div>';
-            $usuariosHTML .= '<a href="#">Seguir</a>';
+            $usuariosHTML .= '<a class="follow-link" href="#">Seguir</a>';
             $usuariosHTML .= '</div>';
         }
     } else {
