@@ -1,6 +1,9 @@
 <?php
 session_start();
 require_once('../db.php');
+require_once('../vendor/firebase/php-jwt/src/JWT.php');
+use \Firebase\JWT\JWT;
+
 $db = Database::getInstance();
 $connection = $db->getConnection();
 
@@ -23,6 +26,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (password_verify($password, $storedPassword)) {
             // La contraseña es correcta
             $_SESSION['user_id'] = $row['usuario_id'];
+            // Crear un token JWT
+            $secret_key='Project_socialnetwork';
+            $token_data = array(
+                "user_id" => $row['usuario_id'],
+                "email" =>$row['email']
+                //se pueden agregar más datos personalizados
+            );
+            $token = JWT::encode($token_data,$secret_key,'HS256');
+            //Guardar token en una cookie
+            setcookie('token', $token, time()+3600,'/');
             header('Location: ../Vistas/inicio.php'); // Redirigir al perfil del usuario
             exit();
         } else {
@@ -34,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error_message = "Usuario no encontrado. Regístrate si no tienes una cuenta.";
     }
 }
-
+$connection->close();
 ?>
 
 <!DOCTYPE html>

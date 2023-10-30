@@ -1,11 +1,32 @@
 <?php
 require_once('../db.php');
+require_once('../vendor/firebase/php-jwt/src/JWT.php');
+use \Firebase\JWT\JWT;
+
 $db = Database::getInstance();
 $connection = $db->getConnection();
 $connection->set_charset("utf8mb4");
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
+    //Vertificar la cokie con el token
+    if (isset($_COOKIE['token'])) {
+        $token = $_COOKIE['token'];
+        $secret_key = 'Project_socialnetwork';
+
+        try {
+            $decode = JWT::decode($token . $secret_key, array('HS256'));
+            $_SESSION['user_id'] = $decode->user_id;
+        } catch (Exception $e) {
+            //Error de autentificación
+            header('Location: inicio-sesion.php');
+            exit();
+        }
+    } else {
+        // Si no hay token en la cookie, redirige a la página de inicio de sesión
+        header('Location: inicio-sesion.php');
+        exit();
+    }
     header('Location: inicio-sesion.php');
     exit();
 }
