@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['name'] = $nameFormatted;
             $_SESSION['user_id'] = $userId;
             $_SESSION['profileImage'] = $defaultProfileImage;
-            header('Location: perfil.php');
+            header('Location: inicio.php');
             exit();
         } else {
             echo "<script>alert('Error: Algo falló. Inténtelo de nuevo.');";

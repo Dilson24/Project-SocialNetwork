@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (password_verify($password, $storedPassword)) {
             // La contraseña es correcta
             $_SESSION['user_id'] = $row['usuario_id'];
-            header('Location: ../Vistas/perfil.php'); // Redirigir al perfil del usuario
+            header('Location: ../Vistas/inicio.php'); // Redirigir al perfil del usuario
             exit();
         } else {
             // Contraseña incorrecta
