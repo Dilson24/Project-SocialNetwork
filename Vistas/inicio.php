@@ -80,8 +80,8 @@ $connection->close();
         </header>
         <aside class="sidenav sidenav-rigth">
             <div class="sidenav__user-profile">
-                <a href="#"><img src="<?php echo $user_image; ?>" alt="Img profile"></a>
-                <a href="#">
+                <a href="../Vistas/prefil.php"><img src="<?php echo $user_image; ?>" alt="Img profile"></a>
+                <a href="../Vistas/prefil.php">
                     <?php echo $user_name; ?>
                 </a>
             </div>
@@ -115,7 +115,7 @@ $connection->close();
                 <a href="#">
                     <li class="sidenav__list-item"><i class="fa-solid fa-square-plus"></i>Crear</li>
                 </a>
-                <a href="#">
+                <a href="../Vistas/prefil.php">
                     <li class="sidenav__list-item"><img src="<?php echo $user_image; ?>" alt="img profile">Perfil</li>
                 </a>
                 <a href="#" id="logoutButton">
