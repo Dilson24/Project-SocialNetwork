@@ -88,7 +88,7 @@ $connection->close();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="../Css/profile.css">
+    <link rel="stylesheet" href="../Css/inicio.css">
     <title>Profile</title>
 </head>
 
@@ -108,7 +108,7 @@ $connection->close();
             </div>
             <div class="sidenav__users-profiles">
                 <div class="sidenav__text">
-                    <samp>Descubre nuevas conexiones</samp>
+                    <span>Descubre nuevas conexiones</span>
                     <a href="#">Ver todo</a>
                 </div>
                 <div class="sidenav__follow">
@@ -116,10 +116,10 @@ $connection->close();
                 </div>
             </div>
             <div class="contact-us">
-                <samp class="brad">
+                <span class="brad">
                     &copy; 2023 Dilson Alexander Cruz Nivia | Todos los
                     derechos reservados.
-                </samp>
+                </span>
             </div>
         </aside>
         <aside class="sidenav sidenav-left">
@@ -147,10 +147,26 @@ $connection->close();
 
         <main class="main">
             <div class="main-header">
-                <div class="main-header__heading">Hello User</div>
-                <div class="main-header__updates">Recent Items</div>
+                <div class="main-header__create">
+                    <div class="create__profile-user">
+                        <a href="../Vistas/prefil.php">
+                            <div>
+                                <img src="<?php echo $user_image; ?>" alt="img profile">
+                            </div>
+                        </a>
+                    </div>
+                    <div class="create__new-content">
+                        <span>¿Algo que quieras compartir, <?php echo $user_name; ?>?</span>
+                    </div>
+                </div>
+                <div class="hijo2__linea">
+                </div>
+                <div class="hijo3">
+                    <div class="hijo1__del-hijo3">
+                        <div><a href=""></a>Imagen</div>
+                    </div>
+                </div>
             </div>
-
             <div class="main-overview">
                 <div class="overviewcard">
                     <div class="overviewcard__icon">Overview</div>
