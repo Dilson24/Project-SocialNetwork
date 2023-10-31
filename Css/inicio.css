@@ -277,7 +277,7 @@ body {
     padding: 20px;
     /* height: 150px; */
     border-radius: 8px;
-    background-color: #e3e4e6;
+    background-color: var(--black-100);
     color: slategray;
     box-shadow: var(--box-shadow);
 }
@@ -336,6 +336,7 @@ body {
     padding: 8px 4px 8px 4px;
     color: var(--black-950);
 }
+
 .icons__new-image:hover {
     cursor: pointer;
     border-radius: 8px;
@@ -348,11 +349,97 @@ body {
     margin-left: 6px;
     font-family: var(--font-family);
 }
+
 .icons__new-image i {
     font-size: 35px;
 }
 
 /*elemento dos*/
-.main-publishing{
-
+.main-publishing {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    /* arriba | derecha | abajo | izquierda */
+    margin: 20px 40px 20px 40px;
+    padding: 20px;
+    height: auto;
+    border-radius: 8px;
+    background-color: var(--black-100);
+    color: slategray;
+    box-shadow: var(--box-shadow);
 }
+
+.users-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid seagreen;
+}
+
+.users-info img {
+    height: 40px;
+    width: 40px;
+    object-fit: cover;
+    border-radius: 100%;
+    margin: 0 auto;
+    cursor: pointer;
+}
+
+.users-info a{
+    text-decoration: none;
+    color: var(--black-950);
+    cursor: pointer;
+}
+
+.main-publishing__content-text{
+    display: flex;
+    margin: 4px 0 4px 0;    
+}
+
+.content-text p{
+    color: var(--black-950);
+    text-align: justify;
+}
+
+.main-publishing__content-img{
+    display: flex;
+    margin: 4px 0 4px 0;
+    width: 100%;
+    border: 1px solid yellow;
+}
+
+.content-img{
+    display: flex;
+    margin:  0 auto;
+}
+.content-img img {
+    max-width: 100%; 
+    max-height: 500px;
+    object-fit: contain;
+}
+
+.main-publishing__content-reation{
+    display: flex;
+    margin: 4px 0 4px 0;
+    width: 100%;
+    border: 1px solid #ff0000;
+}
+
+.contet-reaction{
+    display: flex;
+    align-items: center;
+    width: auto;
+    padding: 4px;
+    color: var(--black-950);
+    font-size: 18px; 
+}
+
+.contet-reaction span{
+    margin-left: 6px; 
+}
+
+.contet-reaction i:hover{
+    color: #ff0000 
+}
+
