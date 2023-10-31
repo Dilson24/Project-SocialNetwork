@@ -156,47 +156,26 @@ $connection->close();
                         </a>
                     </div>
                     <div class="create__new-content">
-                        <span>¿Algo que quieras compartir, <?php echo $user_name; ?>?</span>
+                        <span>¿Algo que quieras compartir,
+                            <?php echo $user_name; ?>?
+                        </span>
                     </div>
                 </div>
-                <div class="hijo2__linea">
+                <div class="main-header__line">
                 </div>
-                <div class="hijo3">
-                    <div class="hijo1__del-hijo3">
-                        <div><a href=""></a>Imagen</div>
-                    </div>
+                <div class="main-header__icons">
+                    <div class="icons__new-image"><i class="fa-solid fa-file-image"></i><span>Imagen</span></div>
                 </div>
             </div>
-            <div class="main-overview">
-                <div class="overviewcard">
-                    <div class="overviewcard__icon">Overview</div>
-                    <div class="overviewcard__info">Card</div>
+            <div class="main-publishing">
+                <div class="sidenav__user-profile">
+                    <a href="../Vistas/prefil.php"><img src="<?php echo $user_image; ?>" alt="Img profile"></a>
+                    <a href="../Vistas/prefil.php">
+                        <?php echo $user_name; ?>
+                    </a>
                 </div>
-                <div class="overviewcard">
-                    <div class="overviewcard__icon">Overview</div>
-                    <div class="overviewcard__info">Card</div>
-                </div>
-                <div class="overviewcard">
-                    <div class="overviewcard__icon">Overview</div>
-                    <div class="overviewcard__info">Card</div>
-                </div>
-                <div class="overviewcard">
-                    <div class="overviewcard__icon">Overview</div>
-                    <div class="overviewcard__info">Card</div>
-                </div>
-            </div>
-
-            <div class="main-cards">
-                <div class="card">Card</div>
-                <div class="card">Card</div>
-                <div class="card">Card</div>
             </div>
         </main>
-
-        <footer class="footer">
-            <div class="footer__copyright">&copy; 2018 MTH</div>
-            <div class="footer__signature">Made with love by pure genius</div>
-        </footer>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../JS/profile.js"></script>

@@ -264,7 +264,7 @@ body {
 /*main*/
 .main {
     grid-area: main;
-    background-color: #8fd4d9;
+    background-color: var(--black-50);
 }
 
 /*elemento uno*/
@@ -279,7 +279,7 @@ body {
     border-radius: 8px;
     background-color: #e3e4e6;
     color: slategray;
-    box-shadow: -5px -5px 15px 3px rgba(0, 0, 0, 0.16), 5px 5px 15px 3px rgba(0, 0, 0, 0.16);
+    box-shadow: var(--box-shadow);
 }
 
 .main-header__create {
@@ -316,59 +316,43 @@ body {
     color: var(--black-100);
 }
 
-.main-overview {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));
-    grid-auto-rows: 94px;
-    grid-gap: 20px;
-    margin: 20px;
+.main-header__line {
+    width: 98%;
+    height: 0.125em;
+    margin: 4px auto 4px auto;
+    background: var(--black-200);
 }
 
-.overviewcard {
+.main-header__icons {
+    display: flex;
+    margin: 4px 0 4px 0;
+    border: 1px solid rebeccapurple;
+}
+
+.icons__new-image {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 20px;
-    background-color: #d3d3;
+    width: auto;
+    padding: 8px 4px 8px 4px;
+    color: var(--black-950);
+}
+.icons__new-image:hover {
+    cursor: pointer;
+    border-radius: 8px;
+    color: #fff;
+    background-color: var(--black-950);
 }
 
-.main-cards {
-    column-count: 2;
-    /* 2 columnas en pantallas medianas y grandes */
-    column-gap: 20px;
-    margin: 20px;
+.icons__new-image span {
+    font-size: 14px;
+    margin-left: 6px;
+    font-family: var(--font-family);
+}
+.icons__new-image i {
+    font-size: 35px;
 }
 
-.card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    background-color: #82bef6;
-    margin-bottom: 20px;
-    -webkit-column-break-inside: avoid;
-    padding: 24px;
-    box-sizing: border-box;
-}
+/*elemento dos*/
+.main-publishing{
 
-/* Forzar alturas variables para simular contenido dinámico */
-.card:first-child {
-    height: 485px;
-}
-
-.card:nth-child(2) {
-    height: 200px;
-}
-
-.card:nth-child(3) {
-    height: 265px;
-}
-
-.footer {
-    grid-area: footer;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 16px;
-    background-color: #648ca6;
 }
