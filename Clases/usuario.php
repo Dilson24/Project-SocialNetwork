@@ -21,7 +21,6 @@ class Usuario
             $email = $_POST['email'];
             $password = $_POST['password'];
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
             // Paso 1: Insertar email y contraseña en la tabla de `usuario`
             $query = "INSERT INTO usuario (email, password) VALUES (?, ?)";
             $stmt = $this->connection->prepare($query); // Cambiado de $connection a $this->connection
@@ -79,14 +78,11 @@ class Usuario
     public function iniciar_sesion()
     {
         session_start();
-
         $db = Database::getInstance();
         $connection = $db->getConnection();
-
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $email = $_POST['Email'];
             $password = $_POST['password'];
-
             // Verificar las credenciales en la tabla de 'usuario'
             $query = "SELECT usuario_id, email, password FROM usuario WHERE email = ?";
             $stmt = $connection->prepare($query);
@@ -122,7 +118,6 @@ class Usuario
             }
         }
     }
-
     public function logout()
     {
         session_start();
@@ -131,6 +126,7 @@ class Usuario
         header("Location: ../index.php");
     }
 }
+
 $usuario = new Usuario($connection);
 
 if (isset($_GET['register'])) {
@@ -140,5 +136,4 @@ if (isset($_GET['register'])) {
 } else {
     $usuario->iniciar_sesion();
 }
-
 ?>

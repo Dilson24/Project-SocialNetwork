@@ -1,83 +1,39 @@
 <?php
-require_once('../db.php');
+require_once('../Clases/perfil.php');
+require_once('../Clases/seguidor-seguido.php');
+// require_once('../db.php');
+// $database = Database::getInstance();
+// $connection = $database->getConnection();
 require_once('../vendor/firebase/php-jwt/src/JWT.php');
 use \Firebase\JWT\JWT;
-
-$db = Database::getInstance();
-$connection = $db->getConnection();
-$connection->set_charset("utf8mb4");
 session_start();
-
-if (!isset($_SESSION['user_id'])) {
-    //Vertificar la cokie con el token
+if(!isset($_SESSION['user_id'])){
+    // Verificar si el usuario tiene un token JWT válido
     if (isset($_COOKIE['token'])) {
         $token = $_COOKIE['token'];
         $secret_key = 'Project_socialnetwork';
-
         try {
-            $decode = JWT::decode($token . $secret_key, array('HS256'));
-            $_SESSION['user_id'] = $decode->user_id;
+            $decoded = JWT::decode($token . $secret_key, array('HS256'));   
         } catch (Exception $e) {
-            //Error de autentificación
+            // El token no es válido, puedes redirigir al usuario a la página de inicio de sesión
             header('Location: inicio-sesion.php');
             exit();
         }
     } else {
-        // Si no hay token en la cookie, redirige a la página de inicio de sesión
+        // El token no está presente en la cookie, redirigir al usuario a la página de inicio de sesión
         header('Location: inicio-sesion.php');
         exit();
     }
     header('Location: inicio-sesion.php');
     exit();
 }
-$user_id = $_SESSION['user_id'];
-/*consultas*/
-$query = "SELECT name FROM perfiles WHERE usuario_id = $user_id";
-$queryTwo = "SELECT imagen_perfil FROM perfiles WHERE usuario_id = $user_id";
-$queryThree = "SELECT name, imagen_perfil FROM perfiles ORDER BY RAND() LIMIT 4";
-//condicional para la primera consulta
-$result = $connection->query($query);
-if ($result) { // Comprueba si la consulta se ejecutó correctamente
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        $user_name = $row['name'];
-    } else {
-        // Manejar el caso en que no se encuentre el nombre del usuario
-        $user_name = "Usuario Desconocido";
-    }
-}
-// condicional segunda consulta
-$resultTwo = $connection->query($queryTwo);
-if ($resultTwo) { // Comprueba si la consulta se ejecutó correctamente
-    if ($resultTwo->num_rows > 0) {
-        $rowTwo = $resultTwo->fetch_assoc();
-        $user_image = $rowTwo['imagen_perfil'];
-    } else {
-        // Manejar el caso en que no se encuentre la imagen del perfil
-        $user_image = "../Img/User-Profile.png"; // Puedes asignar una ruta predeterminada aquí
-    }
-}
-// condicional tercera consulta
-$resultThree = $connection->query($queryThree);
-if ($resultThree) {
-    if ($resultThree->num_rows > 0) {
-        $usuariosHTML = '';
-        while ($row = $resultThree->fetch_assoc()) { // Cambio aquí
-            $nombre = $row['name'];
-            $imagen = $row['imagen_perfil'];
-            $usuariosHTML .= '<div class="sidenav__users-follow">';
-            $usuariosHTML .= '<div class="sidenav__info-user">';
-            $usuariosHTML .= '<a href="#"><img src="' . $imagen . '" alt="Imagen de perfil"></a>';
-            $usuariosHTML .= '<a href="#">' . $nombre . '</a>';
-            $usuariosHTML .= '</div>';
-            $usuariosHTML .= '<a class="follow-link" href="#">Seguir</a>';
-            $usuariosHTML .= '</div>';
-        }
-    } else {
-        echo "No se encontraron usuarios.";
-    }
-}
-$connection->close();
+/*Gestión perfiles*/
+$perfil = new Perfil();
+$user_name = $perfil->obtenerNombre();
+$user_image = $perfil->obtenerImagen();
+/*Gentión seguido_seguidor*/
+$seguidor_seguido = new Seguidor_Seguido();
+$sugerenciasHTML = $seguidor_seguido->sugerencias();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -112,7 +68,7 @@ $connection->close();
                     <a href="#">Ver todo</a>
                 </div>
                 <div class="sidenav__follow">
-                    <?php echo $usuariosHTML; ?>
+                    <?php echo $sugerenciasHTML; ?>
                 </div>
             </div>
             <div class="contact-us">

@@ -20,7 +20,7 @@ mainPublishing.addEventListener("click", openPopup);
 $(document).ready(function () {
     $("#logoutButton").click(function () {
         $.ajax({
-            url: '../Clases/logout.php?logout', // Ruta al archivo PHP que contiene el código de cierre de sesión
+            url: '../Clases/usuario.php?logout', // Ruta al archivo PHP que contiene el código de cierre de sesión
             type: 'GET',
             success: function (response) {
                 // Redirigir al usuario a la página de inicio después de cerrar sesión
