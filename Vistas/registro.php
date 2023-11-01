@@ -1,60 +1,5 @@
-<?php
-require_once('../db.php');
-$db = Database::getInstance();
-$connection = $db->getConnection();
-$connection->set_charset("utf8mb4");
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-    // Paso 1: Insertar email y contraseña en la tabla de `usuario`
-    $query = "INSERT INTO usuario (email, password) VALUES (?, ?)";
-    $stmt = $connection->prepare($query);
-    $stmt->bind_param("ss", $email, $hashedPassword);
-
-    if ($stmt->execute()) {
-        // La inserción en la tabla `usuario` fue exitosa
-        // Obtener el ID del usuario recién insertado
-        $userId = $stmt->insert_id;
-
-        // Paso 2: Insertar los demás datos en la tabla de `perfiles`
-        $name = $_POST['name'];
-        $lastName = $_POST['lastName'];
-        $dateOfBirth = $_POST['dateOfBirth'];
-        $country = $_POST['country'];
-        $city = $_POST['city'];
-        $nameFormatted = ucfirst(strtolower($name));
-        $lastNameFormatted = ucfirst(strtolower($lastName));
-        $dateOfBirthFormatted = date('Y-m-d', strtotime(str_replace('/', '-', $dateOfBirth)));
-        $defaultProfileImage = '../Img/User-Profile.png';
-        $query = "INSERT INTO perfiles (usuario_id, name, last_name, date_of_birth, country, city, imagen_perfil) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        $stmt = $connection->prepare($query);
-        $stmt->bind_param("issssss", $userId, $nameFormatted, $lastNameFormatted, $dateOfBirthFormatted, $country, $city, $defaultProfileImage);
-        if ($stmt->execute()) {
-            // La inserción en la tabla `perfiles` fue exitosa
-            session_start();
-            $_SESSION['name'] = $nameFormatted;
-            $_SESSION['user_id'] = $userId;
-            $_SESSION['profileImage'] = $defaultProfileImage;
-            header('Location: inicio.php');
-            exit();
-        } else {
-            echo "<script>alert('Error: Algo falló. Inténtelo de nuevo.');";
-            echo "window.location = 'Registro.php';</script>";
-            // Manejar el error en la inserción en la tabla `perfiles`
-        }
-    } else {
-        echo "<script>alert('Error: Algo falló. Inténtelo de nuevo.');";
-        echo "window.location = 'Registro.php';</script>";
-        // Manejar el error en la inserción en la tabla `usuario`
-    }
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -62,13 +7,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="../Css/singUp.css" type="text/css">
     <title>Sing Up</title>
 </head>
-
 <body>
     <div class="login-card">
         <div class="card-header">
             <div class="log">Registrase</div>
         </div>
-        <form action="registro.php" method="post" accept-charset="UTF-8">
+        <form action="../Clases/usuario.php?register" method="post" accept-charset="UTF-8">
             <div class="form-group">
                 <label for="username">Nombre:</label>
                 <input required="required" name="name" id="email" type="text">
