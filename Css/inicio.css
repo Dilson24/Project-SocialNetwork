@@ -73,11 +73,12 @@ body {
     justify-content: center;
     width: 100%;
     margin: 0 auto;
-    background-color: #648ca6;
+    background-color: var(--black-950);
 }
 
 .header__slogan {
     font-style: italic;
+    color: #fff;
 }
 
 /* Establece los estilos para los aside */
@@ -538,6 +539,7 @@ body {
     color: var(--black-100);
     box-sizing: border-box;
     white-space: pre-line;
+    caret-color: var(--black-950);
 }
 
 .create__text textarea::placeholder {
@@ -585,7 +587,7 @@ body {
 
 /*test*/
 .create__content-img{
-    display: flex;
+    display: none;
     flex-direction: column;
     width: 100%;
 }
@@ -612,11 +614,11 @@ body {
 }
 
 .uploader label:hover {
-    border-color: #454cad;
+    border-color: var(--black-950);
 }
 
 .uploader label.hover {
-    border: 3px solid #454cad;
+    border: 3px solid var(--black-950);
     box-shadow: inset 0 0 0 6px #eee;
 }
 
@@ -713,7 +715,7 @@ body {
 
 .uploader div {
     margin: 0 0 0.5rem 0;
-    color: #5f6982;
+    color: var(--black-600);
 }
 
 .uploader .btn {
@@ -734,7 +736,13 @@ body {
     color: #fff;
     transition: all 0.2s ease-in-out;
     box-sizing: border-box;
-    background: #454cad;
-    border-color: #454cad;
+    background: var(--black-950);
+    border-color:var(--black-950);
     cursor: pointer;
+}
+
+.uploader .btn:hover {
+    background: #fff;
+    border-color:var(--black-950);
+    color: var(--black-950);
 }
