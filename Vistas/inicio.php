@@ -6,14 +6,15 @@ require_once('../Clases/seguidor-seguido.php');
 // $connection = $database->getConnection();
 require_once('../vendor/firebase/php-jwt/src/JWT.php');
 use \Firebase\JWT\JWT;
+
 session_start();
-if(!isset($_SESSION['user_id'])){
+if (!isset($_SESSION['user_id'])) {
     // Verificar si el usuario tiene un token JWT válido
     if (isset($_COOKIE['token'])) {
         $token = $_COOKIE['token'];
         $secret_key = 'Project_socialnetwork';
         try {
-            $decoded = JWT::decode($token . $secret_key, array('HS256'));   
+            $decoded = JWT::decode($token . $secret_key, array('HS256'));
         } catch (Exception $e) {
             // El token no es válido, puedes redirigir al usuario a la página de inicio de sesión
             header('Location: inicio-sesion.php');
@@ -123,6 +124,51 @@ $sugerenciasHTML = $seguidor_seguido->sugerencias();
                     <div class="icons__new-image"><i class="fa-solid fa-file-image"></i><span>Imagen</span></div>
                 </div>
             </div>
+            <div class="popup" id="popup_create">
+                <div class="popup-content">
+                    <h2 class="create__title">Crear publicación</h2>
+                    <span class="close-button" id="close_popup"><i class="fa-solid fa-xmark"></i></span>
+                    <div class="create__line"></div>
+                    <div class="main-publishing__users">
+                        <div class="users-info">
+                            <a href="link-perfil-user"><img src="<?php echo $user_image; ?>" alt="Img profile"></a>
+                            <a href="link-perfil-user">
+                                <?php echo $user_name; ?>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="create__content-text">
+                        <div class="create__text">
+                            <textarea placeholder=" ¿Algo que quieras compartir,<?php echo $user_name; ?>?"
+                                id="contentTextarea"></textarea>
+                        </div>
+                    </div>
+                    <div class="create__content-img">
+                        <h3 class="create__title">Añade fotos o imagenes</h3>
+                        <div id="file-upload-form" class="uploader">
+                            <input id="file-upload" type="file" name="fileUpload" accept="image/*" />
+                            <label for="file-upload" id="file-drag">
+                                <img id="file-image" src="#" alt="Preview" class="hidden">
+                                <div id="start">
+                                    <i class="fa fa-download" aria-hidden="true"></i>
+                                    <div>Selecciona un archvio o arrastralo aquí</div>
+                                    <div id="notimage" class="hidden">Por favor selecciona una imagen</div>
+                                    <span id="file-upload-btn" class="btn btn-primary">Selecciona un archvio</span>
+                                </div>
+                                <div id="response" class="hidden">
+                                    <div id="messages"></div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="create__content-btn-image">
+                        <div class="icons__new-image"><i class="fa-solid fa-file-image"></i><span>Imagen</span></div>
+                    </div>
+                    <div class="create__content-btn-publish">
+                        <div class="icons__btn-publish"><button id="publishBtn">Publicar</button></div>
+                    </div>
+                </div>
+            </div>
             <div class="main-publishing">
                 <div class="main-publishing__users">
                     <div class="users-info">
@@ -154,9 +200,9 @@ $sugerenciasHTML = $seguidor_seguido->sugerencias();
                     </div>
                 </div>
             </div>
-            <div class="popup" id="popup">
+            <div class="popup" id="popup_publishing">
                 <div class="popup-content">
-                    <span class="close-button" onclick="closePopup()"><i class="fa-solid fa-xmark"></i></span>
+                    <span class="close-button" id="close_popup"><i class="fa-solid fa-xmark"></i></span>
                     <div class="main-publishing__users">
                         <div class="users-info">
                             <a href="link-perfil-user"><img src="../Img/User-Profile.png" alt="Img profile"></a>
