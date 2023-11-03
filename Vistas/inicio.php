@@ -131,77 +131,13 @@ $sugerenciasHTML = $seguidor_seguido->sugerencias();
             <div class="popup" id="popup_create">
                 <?php echo $newpublishingHTML; ?>
             </div>
-            <div class="main-publishing">
-                <div class="main-publishing__users">
-                    <div class="users-info">
-                        <a href="link-perfil-user"><img src="../Img/User-Profile.png" alt="Img profile"></a>
-                        <a href="link-perfil-user">Harry</a>
-                    </div>
-                    <!-- aqui poner opción para el usuario de editar o eliminar -->
-                </div>
-                <div class="main-publishing__content-text">
-                    <div class="content-text">
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Id fugiat ad natus repellat
-                            temporibus
-                            cumque deserunt modi. Esse recusandae quia quam et fuga quaerat id error ex, aliquam,
-                            distinctio
-                            eum omnis. Incidunt, id obcaecati saepe, inventore ipsam rem quas unde atque impedit minima
-                            odit
-                            totam quis sed aliquam, expedita eligendi?</p>
-                    </div>
-                </div>
-                <div class="main-publishing__content-img">
-                    <div class="content-img">
-                        <img src="../Img/my cat test.jpg" alt="publishing img">
-                    </div>
-                </div>
-                <div class="main-publishing__content-reation">
-                    <div class="contet-reaction">
-                        <i class="fa-solid fa-heart"></i>
-                        <span>0</span>
-                    </div>
-                </div>
-            </div>
-            <div class="popup" id="popup_publishing">
-                <div class="popup-content">
-                    <span class="close-button" id="close_popup_publishing"><i class="fa-solid fa-xmark"></i></span>
-                    <div class="main-publishing__users">
-                        <div class="users-info">
-                            <a href="link-perfil-user"><img src="../Img/User-Profile.png" alt="Img profile"></a>
-                            <a href="link-perfil-user">Harry</a>
-                        </div>
-                        <!-- aqui poner opción para el usuario de editar o eliminar -->
-                    </div>
-                    <div class="main-publishing__content-text">
-                        <div class="content-text">
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Id fugiat ad natus repellat
-                                temporibus
-                                cumque deserunt modi. Esse recusandae quia quam et fuga quaerat id error ex,
-                                aliquam,
-                                distinctio
-                                eum omnis. Incidunt, id obcaecati saepe, inventore ipsam rem quas unde atque impedit
-                                minima
-                                odit
-                                totam quis sed aliquam, expedita eligendi?</p>
-                        </div>
-                    </div>
-                    <div class="main-publishing__content-img">
-                        <div class="content-img">
-                            <img src="../Img/my cat test.jpg" alt="publishing img">
-                        </div>
-                    </div>
-                    <div class="main-publishing__content-reation">
-                        <div class="contet-reaction">
-                            <i class="fa-solid fa-heart"></i>
-                            <span>0</span>
-                        </div>
-                    </div>
-                </div>
+            <div id="publicaciones-container">
             </div>
         </main>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="../JS/inicio.js"></script>
+    <script src="../JS/test.js"></script>
+    <script src="../JS/fileUpload.js"></script>
 </body>
 
 </html>

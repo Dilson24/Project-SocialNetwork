@@ -73,21 +73,21 @@ class Publicacion
             if (session_status() == PHP_SESSION_NONE) {
                 session_start();
             }
-    
+
             // Obtén el ID del usuario de la sesión (asegúrate de que la sesión esté iniciada)
             $usuario_id = $_SESSION['user_id'];
             $texto = isset($_POST['texto']) ? $_POST['texto'] : "";
-    
+
             // Verifica si se ha enviado una imagen
             if (isset($_FILES['imagen_ruta'])) {
                 $this->subirImagen($user_name, $usuario_id, $texto);
             } else {
                 $this->guardarPublicacion($usuario_id, $texto);
             }
-            
+
         }
     }
-    
+
 
     private function subirImagen($user_name, $usuario_id, $texto)
     {
@@ -97,7 +97,9 @@ class Publicacion
         if (!file_exists($directorio_usuario)) {
             mkdir($directorio_usuario, 0777, true);
         }
-        $nombre_archivo = $this->generarNombreArchivo();
+
+        $nombre_archivo_original = $_FILES['imagen_ruta']['name']; // Obtenemos el nombre original del archivo
+        $nombre_archivo = $this->generarNombreArchivo($nombre_archivo_original); // Generamos un nombre único
         $ruta_archivo = $directorio_usuario . $nombre_archivo;
 
         if (move_uploaded_file($_FILES['imagen_ruta']['tmp_name'], $ruta_archivo)) {
@@ -108,11 +110,16 @@ class Publicacion
         }
     }
 
-    private function generarNombreArchivo()
+
+    private function generarNombreArchivo($nombreArchivoOriginal)
     {
-        // Genera un nombre único para el archivo utilizando solo uniqid()
-        return uniqid();
+        // Extrae la extensión del archivo original
+        $extension = pathinfo($nombreArchivoOriginal, PATHINFO_EXTENSION);
+
+        // Genera un nombre único para el archivo utilizando uniqid() y agrega la extensión
+        return uniqid() . '.' . $extension;
     }
+
 
 
     private function guardarPublicacion($usuario_id, $texto, $imagen_ruta = null)
@@ -134,18 +141,35 @@ class Publicacion
 
             $success = false;
             $message = 'Error en la preparación de la sentencia SQL';
+            $publicacion_id = null; // Agregamos una variable para almacenar el ID de la publicación
 
             if ($resultSubirDatos->execute()) {
                 $success = true;
                 $message = 'Publicación guardada con éxito';
+                $publicacion_id = $this->connection->insert_id; // Obtenemos el ID de la publicación
             } else {
                 $message = 'Error al guardar la publicación';
             }
 
             $resultSubirDatos->close();
 
-            // Devolvemos los mensajes como una respuesta JSON
-            echo json_encode(array('success' => $success, 'message' => $message));
+            // Obtener el nombre y la imagen del usuario
+            $perfil = new Perfil();
+            $user_name = $perfil->obtenerNombre();
+            $user_image = $perfil->obtenerImagen();
+
+            // Devolvemos los datos de la publicación junto con el nombre e imagen del usuario
+            echo json_encode(
+                array(
+                    'success' => $success,
+                    'message' => $message,
+                    'user_name' => $user_name,
+                    'user_image' => $user_image,
+                    'publicacion_id' => $publicacion_id,
+                    'texto' => $texto,
+                    'imagen_ruta' => $imagen_ruta
+                )
+            );
         } else {
             // Si la preparación de la sentencia SQL falla, retornamos un mensaje de error
             echo json_encode(array('success' => false, 'message' => 'Error en la preparación de la sentencia SQL'));
