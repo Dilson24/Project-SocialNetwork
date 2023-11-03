@@ -244,11 +244,11 @@ body {
     color: var(--black-600);
 }
 
-.sidenav__users-follow a.follow-link {
+.sidenav__users-follow a.follow-button {
     color: #0095F6;
 }
 
-.sidenav__users-follow a.follow-link:hover {
+.sidenav__users-follow a.follow-button:hover {
     color: var(--black-950)
 }
 
