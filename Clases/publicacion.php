@@ -73,33 +73,30 @@ class Publicacion
             if (session_status() == PHP_SESSION_NONE) {
                 session_start();
             }
-
+    
             // Obtén el ID del usuario de la sesión (asegúrate de que la sesión esté iniciada)
             $usuario_id = $_SESSION['user_id'];
             $texto = isset($_POST['texto']) ? $_POST['texto'] : "";
-
+    
             // Verifica si se ha enviado una imagen
             if (isset($_FILES['imagen_ruta'])) {
-                $result = $this->subirImagen($user_name, $usuario_id, $texto);
+                $this->subirImagen($user_name, $usuario_id, $texto);
             } else {
-                $result = $this->guardarPublicacion($usuario_id, $texto);
+                $this->guardarPublicacion($usuario_id, $texto);
             }
-
-            return $result;
+            
         }
     }
+    
 
     private function subirImagen($user_name, $usuario_id, $texto)
     {
         $directorio_usuario = '../Img/' . $user_name . '-' . $usuario_id . '/';
 
-
         // Verifica si el directorio del usuario ya existe, si no, créalo
         if (!file_exists($directorio_usuario)) {
             mkdir($directorio_usuario, 0777, true);
         }
-
-
         $nombre_archivo = $this->generarNombreArchivo();
         $ruta_archivo = $directorio_usuario . $nombre_archivo;
 
@@ -116,37 +113,37 @@ class Publicacion
         // Genera un nombre único para el archivo utilizando solo uniqid()
         return uniqid();
     }
-    
+
 
     private function guardarPublicacion($usuario_id, $texto, $imagen_ruta = null)
     {
         $querySubirDatos = "INSERT INTO publicaciones (usuario_id, texto, imagen_ruta, fecha_publicacion) VALUES (?, ?, ?, NOW())";
-    
+
         if ($imagen_ruta === null) {
             $querySubirDatos = "INSERT INTO publicaciones (usuario_id, texto, fecha_publicacion) VALUES (?, ?, NOW())";
         }
-    
+
         $resultSubirDatos = $this->connection->prepare($querySubirDatos);
-    
+
         if ($resultSubirDatos) {
             if ($imagen_ruta === null) {
                 $resultSubirDatos->bind_param("is", $usuario_id, $texto);
             } else {
                 $resultSubirDatos->bind_param("iss", $usuario_id, $texto, $imagen_ruta);
             }
-    
+
             $success = false;
             $message = 'Error en la preparación de la sentencia SQL';
-    
+
             if ($resultSubirDatos->execute()) {
                 $success = true;
                 $message = 'Publicación guardada con éxito';
             } else {
                 $message = 'Error al guardar la publicación';
             }
-    
+
             $resultSubirDatos->close();
-    
+
             // Devolvemos los mensajes como una respuesta JSON
             echo json_encode(array('success' => $success, 'message' => $message));
         } else {
@@ -154,12 +151,6 @@ class Publicacion
             echo json_encode(array('success' => false, 'message' => 'Error en la preparación de la sentencia SQL'));
         }
     }
-    
-
-
-
-
-
 }
 $publicacion = new Publicacion();
 
