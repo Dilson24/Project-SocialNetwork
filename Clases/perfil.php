@@ -22,7 +22,7 @@ class Perfil
         $user_id = $_SESSION['user_id'];
         $query = "SELECT name FROM perfiles WHERE usuario_id = $user_id";
         $result = $this->connection->query($query);
-        
+
         if ($result) {
             if ($result->num_rows > 0) {
                 $row = $result->fetch_assoc();
@@ -35,7 +35,8 @@ class Perfil
             return "Error en la consulta";
         }
     }
-    public function obtenerImagen(){
+    public function obtenerImagen()
+    {
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
@@ -52,8 +53,27 @@ class Perfil
                 $user_image = "../Img/User-Profile.png"; // Puedes asignar una ruta predeterminada aquí
             }
         }
-
     }
+    public function obtenerTotalPublicaciones()
+    {
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        $user_id = $_SESSION['user_id'];
+
+        $query = "SELECT COUNT(*) AS numero_publicaciones FROM publicaciones WHERE usuario_id = $user_id";
+        $result = $this->connection->query($query);
+        if ($result) {
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $numero_publicaciones = $row['numero_publicaciones'];
+                return $numero_publicaciones;
+            } else {
+                // Manejar el error
+                echo "Error: La consulta falló";
+            }
+        }
+    }
+
 }
-// $perfil = new Perfil($connection);
 ?>

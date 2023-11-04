@@ -52,8 +52,8 @@ function createNewPublication(response) {
     contentUser.className = "main-publishing__users";
     contentUser.innerHTML = `
         <div class="users-info">
-            <a href="../Vistas/prefil.php"><img src="${response.user_image}" alt="Img profile"></a>
-            <a href="../Vistas/prefil.php">${response.user_name}</a>
+            <a href="../Vistas/perfil.php"><img src="${response.user_image}" alt="Img profile"></a>
+            <a href="../Vistas/perfil.php">${response.user_name}</a>
         </div>
     `;
     nuevaPublicacion.appendChild(contentUser);
@@ -122,8 +122,8 @@ function createPublicationPopup(response) {
     contentPopupUser.className = "main-publishing__users";
     contentPopupUser.innerHTML = `
         <div class="users-info">
-            <a href="../Vistas/prefil.php"><img src="${response.user_image}" alt="Img profile"></a>
-            <a href="../Vistas/prefil.php">${response.user_name}</a>
+            <a href="../Vistas/perfil.php"><img src="${response.user_image}" alt="Img profile"></a>
+            <a href="../Vistas/perfil.php">${response.user_name}</a>
         </div>
     `;
     contentPopup.appendChild(contentPopupUser);

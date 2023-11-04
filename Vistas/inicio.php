@@ -59,8 +59,8 @@ $sugerenciasHTML = $seguidor_seguido->sugerencias();
         </header>
         <aside class="sidenav sidenav-rigth">
             <div class="sidenav__user-profile">
-                <a href="../Vistas/prefil.php"><img src="<?php echo $user_image; ?>" alt="Img profile"></a>
-                <a href="../Vistas/prefil.php">
+                <a href="../Vistas/perfil.php"><img src="<?php echo $user_image; ?>" alt="Img profile"></a>
+                <a href="../Vistas/perfil.php">
                     <?php echo $user_name; ?>
                 </a>
             </div>
@@ -94,7 +94,7 @@ $sugerenciasHTML = $seguidor_seguido->sugerencias();
                 <a href="#">
                     <li class="sidenav__list-item"><i class="fa-solid fa-square-plus"></i>Crear</li>
                 </a>
-                <a href="../Vistas/prefil.php">
+                <a href="../Vistas/perfil.php">
                     <li class="sidenav__list-item"><img src="<?php echo $user_image; ?>" alt="img profile">Perfil</li>
                 </a>
                 <a href="#" id="logoutButton">
@@ -107,7 +107,7 @@ $sugerenciasHTML = $seguidor_seguido->sugerencias();
             <div class="main-header">
                 <div class="main-header__create">
                     <div class="create__profile-user">
-                        <a href="../Vistas/prefil.php">
+                        <a href="../Vistas/perfil.php">
                             <div>
                                 <img src="<?php echo $user_image; ?>" alt="img profile">
                             </div>
