@@ -80,8 +80,15 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (xhr.status >= 200 && xhr.status < 300) {
                     try {
                         var response = JSON.parse(xhr.responseText);
-                        console.log(response);
-                        followBtn(button)
+                        if (response.success) {
+                            // Actualizar el elemento HTML con el nuevo total de seguidos
+                            var totalFollowingsElement = document.querySelector(".info-following span");
+                            totalFollowingsElement.textContent = response.total_seguidos;
+                            console.log(response);
+                            followBtn(button);
+                        } else {
+                            console.log("Error al dejar de seguir al usuario");
+                        }
                     } catch (e) {
                         console.log("Error al analizar la respuesta JSON");
                     }

@@ -98,25 +98,28 @@ class Seguidor_Seguido
         $response = array();
         $response['success'] = false;
         $response['message'] = '';
-    
+
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
-    
+
         $user_id = $_SESSION['user_id'];
-    
+
         if (isset($_POST['usuario_id'])) {
-            $unfollow = (int)$_POST['usuario_id'];
+            $unfollow = (int) $_POST['usuario_id'];
             $querySeguidores = "DELETE FROM seguidores WHERE seguidor_id = $user_id AND usuario_id = $unfollow ";
             $querySeguidos = "DELETE FROM seguidos WHERE usuario_id = $unfollow AND seguidor_id = $user_id ";
-    
+
             $resultadoSeguidores = $this->connection->query($querySeguidores);
             $resultadoSeguidos = $this->connection->query($querySeguidos);
-    
+
             if ($resultadoSeguidores && $resultadoSeguidos) {
                 // Ambas eliminaciones fueron exitosas
                 $response['success'] = true;
-                $response['message'] = 'Dejar de seguir con éxito';
+                $response['message'] = 'Dejado de seguir con éxito';
+                // Obtener el nuevo total de seguidos
+                $totalSeguidos = $this->obtenerSeguidosTotal();
+                $response['total_seguidos'] = $totalSeguidos;
             } else {
                 // Manejar errores si alguna eliminación falla
                 $response['message'] = 'Error al dejar de seguir al usuario';
@@ -125,12 +128,12 @@ class Seguidor_Seguido
             // Manejar el caso en el que no se enviaron los datos esperados
             $response['message'] = 'Faltan datos necesarios';
         }
-    
+
         // Enviar la respuesta como JSON
         header('Content-Type: application/json');
         echo json_encode($response);
     }
-    
+
 
     public function obtenerSeguidores()
     {
