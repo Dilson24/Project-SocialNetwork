@@ -99,15 +99,21 @@ $listFollowings = $seguidor_seguido->obtenerSeguidos();
                         </div>
                     </div>
                     <div class="info-socialMedia">
-                        <div class="info-publishings"><span>Publicaciones<span class="number">
+                        <div class="info-publishings">
+                            <span>Publicaciones<span class="number">
                                     <?php echo $total_publicaciones; ?>
-                                </span></span></div>
-                        <div class="info-followers"><a>Seguidores<span>
+                                </span></span>
+                        </div>
+                        <div class="info-followers">
+                            <a>Seguidores<span>
                                     <?php echo $totalFollowers; ?>
-                                </span></a></div>
-                        <div class="info-following"><a>Seguidos<span>
+                                </span></a>
+                        </div>
+                        <div class="info-following">
+                            <a>Seguidos<span>
                                     <?php echo $totalFollowings; ?>
-                                </span></a></div>
+                                </span></a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -125,8 +131,10 @@ $listFollowings = $seguidor_seguido->obtenerSeguidos();
                             foreach ($listFollowers as $follower) {
                                 $seguidor_id = $follower['seguidor_id']; // Obtén el ID del usuario
                                 echo '<div class="show-users" id="' . $seguidor_id . '">';
+                                echo '<div class="show-users_info">';
                                 echo '<a class="show-users_profilImg"><img src="' . $follower['imagen_perfil'] . '" alt="Imagen de perfil"></a>';
                                 echo '<a class="show-users_profile">' . $follower['nombre'] . '</a>';
+                                echo '</div>';
                                 echo '</div>';
                             }
                         } else {
@@ -149,10 +157,12 @@ $listFollowings = $seguidor_seguido->obtenerSeguidos();
                         if (!empty($listFollowings)) {
                             foreach ($listFollowings as $following) {
                                 $seguidos_id = $following['usuario_id']; // Obtén el ID del usuario
-                                echo '<div class="show-users" id="following" data-id="' . $seguidos_id .'">';
+                                echo '<div class="show-users" data-id="' . $seguidos_id . '">';
+                                echo '<div class="show-users_info">';
                                 echo '<a class="show-users_profilImg"><img src="' . $following['imagen_perfil'] . '" alt="Imagen de perfil"></a>';
-                                echo '<a class="show-users_profile" id="followingUser">' . $following['nombre'] . '</a>';
-                                echo '<button data-id="' . $seguidos_id .'" class="btnUnfollow">Dejar de seguir</button>';
+                                echo '<a class="show-users_profile">' . $following['nombre'] . '</a>';
+                                echo '</div>';
+                                echo '<button data-id="' . $seguidos_id . '" class="btnUnfollow">Dejar de seguir</button>';
                                 echo '</div>';
                             }
                         } else {

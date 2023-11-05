@@ -327,7 +327,6 @@ document.addEventListener("DOMContentLoaded", function () {
     followButtons.forEach(function (button) {
         button.addEventListener("click", function () {
             var usuario_id = button.getAttribute("data-usuario-id");
-
             var xhr = new XMLHttpRequest();
             xhr.open("POST", '../Clases/seguidor-seguido.php?Seguidor_Seguido', true);
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");

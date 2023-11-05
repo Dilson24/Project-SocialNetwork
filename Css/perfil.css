@@ -323,16 +323,19 @@ body {
 
 .show-users {
     display: flex;
+    justify-content: space-between;
     align-items: center;
     margin: 5px;
     padding: 5px;
     border: 1px solid blueviolet;
 }
-#following{
-    justify-content: space-between;
-}
 
-.show-users img {
+.show-users_info{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.show-users_info img {
     height: 40px;
     width: 40px;
     object-fit: cover;
@@ -340,7 +343,7 @@ body {
     margin: 0 auto;
     cursor: pointer;
 }
-.show-users a {
+.show-users_info a {
     text-decoration:none ;
     font-size: 14px;
     margin-right: 5px;
@@ -348,12 +351,10 @@ body {
     cursor: pointer;
 }
 
-.show-users a:hover {
+.show-users_info a:hover {
     color: var(--black-600);
 }
-#followingUser{
-    margin-left: -40px;
-}
+
 /*btn unfollow*/
 .btnUnfollow {
     padding: 8px 15px;
@@ -364,7 +365,7 @@ body {
     border: none;
     border-radius: 8px;
     box-shadow: var(--box-shadow);
-    transition: all 0.3s ease 0s;
+    transition: background-color 0.3s;
     cursor: pointer;
 }
 
@@ -374,12 +375,11 @@ body {
     color: #fff;
 }
 
-#unfollow{
-    color: var(--black-950);
-    background-color: #0095F6;
-    cursor: pointer;
-    transition: background-color 0.3s;
+#follow{
+    background-color: var(--black-950);
+    color: #0095F6;
 }
-#unfollow:hover{
-    filter: brightness(1.1);
+#follow:hover{
+    background-color: #0095F6;
+    color: #fff;
 }

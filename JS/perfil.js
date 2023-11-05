@@ -7,16 +7,6 @@ function openPopup(popupId) {
     }
 }
 
-const showFollowers = document.querySelector(".info-followers");
-showFollowers.addEventListener("click", function () {
-    openPopup("showFollowers");
-});
-
-const showFollowing = document.querySelector(".info-following");
-showFollowing.addEventListener("click", function () {
-    openPopup("showFollowings");
-});
-
 // Función para cerrar el popup
 function closePopup(popupId) {
     const popup = document.getElementById(popupId);
@@ -26,44 +16,84 @@ function closePopup(popupId) {
     }
 }
 
-const closeFollowers = document.getElementById("close_Followers"); // Debes asegurarte de que este sea el botón que cierra el popup
-closeFollowers.addEventListener("click", function () {
-    closePopup("showFollowers");
-});
-const closeFollowing = document.getElementById("close_Following"); // Debes asegurarte de que este sea el botón que cierra el popup
-closeFollowing.addEventListener("click", function () {
-    closePopup("showFollowings");
-});
+// Función para cambiar el aspecto del botón Unfollow
+function followBtn(button) {
+    button.textContent = 'Seguir';
+    button.id = 'follow';
+}
 
-// Manejo de solicitudes en jQuery
-$(document).ready(function () {
-    $("#logoutButton").click(function () {
-        $.ajax({
-            url: '../Clases/usuario.php?logout', // Ruta al archivo PHP que contiene el código de cierre de sesión
-            type: 'GET',
-            success: function (response) {
-                // Redirigir al usuario a la página de inicio después de cerrar sesión
-                window.location.href = '../index.php';
-            }
+// Agregar eventos y controladores de clic
+document.addEventListener("DOMContentLoaded", function () {
+    const showFollowers = document.querySelector(".info-followers");
+    showFollowers.addEventListener("click", function () {
+        openPopup("showFollowers");
+    });
+
+    const closeFollowers = document.getElementById("close_Followers");
+    closeFollowers.addEventListener("click", function () {
+        closePopup("showFollowers");
+    });
+
+    const showFollowing = document.querySelector(".info-following");
+    showFollowing.addEventListener("click", function () {
+        openPopup("showFollowings");
+    });
+
+    const closeFollowing = document.getElementById("close_Following");
+    closeFollowing.addEventListener("click", function () {
+        closePopup("showFollowings");
+    });
+    //Manejo de solioitudes
+    // Logout Button
+    var logoutButton = document.getElementById("logoutButton");
+    if (logoutButton) {
+        logoutButton.addEventListener("click", function () {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", '../Clases/usuario.php?logout', true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    window.location.href = '../index.php';
+                }
+            };
+            xhr.send();
+        });
+    }
+    // Unfollow Button
+    document.querySelectorAll(".btnUnfollow").forEach(function (button) {
+        button.addEventListener("click", function () {
+            // Obtener el ID del usuario a dejar de seguir
+            var seguidos_id = parseInt(this.getAttribute("data-id"));
+
+            // Crear un objeto FormData para enviar los datos
+            var formData = new FormData();
+            formData.append('usuario_id', seguidos_id);
+
+            // Crear una solicitud AJAX
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '../Clases/seguidor-seguido.php?Unfollow', true);
+
+            // Configurar el encabezado necesario
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+            // Manejar la respuesta de la solicitud
+            xhr.onload = function () {
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    try {
+                        var response = JSON.parse(xhr.responseText);
+                        console.log(response);
+                        followBtn(button)
+                    } catch (e) {
+                        console.log("Error al analizar la respuesta JSON");
+                    }
+                } else {
+                    console.log("Error en la solicitud: " + xhr.status);
+                }
+            };
+
+            // Enviar los datos del formulario
+            xhr.send(formData);
         });
     });
-    $(".btnUnfollow").click(function () {
-        // Obtener el ID del usuario a dejar de seguir
-        var seguidos_id = parseInt($(this).data("id"));
-        //Crear un objeto FromData para enviar los datos
-        var fromData = new FormData();
-        fromData.append('usuario_id', seguidos_id);
-        $.ajax({
-            url: '../Clases/seguidor-seguido.php?Unfollow',
-            type: 'POST',
-            data: fromData,
-            processData: false,
-            contentType: false,
-            dataType: 'json',
-            success: function (response) {
-                console.log(response);
-            }
-        });
-    });
+
 });
 
