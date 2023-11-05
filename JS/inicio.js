@@ -216,6 +216,11 @@ document.addEventListener("DOMContentLoaded", function () {
         openPopup("popup_create");
     });
 
+    const btnCrear = document.getElementById("crear");
+    btnCrear.addEventListener("click", function () {
+        openPopup("popup_create");
+    });
+
     const createNewContentTwo = document.querySelector(".icons__new-image");
     createNewContentTwo.addEventListener("click", function () {
         openPopup("popup_create");

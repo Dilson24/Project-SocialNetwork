@@ -91,7 +91,7 @@ $sugerenciasHTML = $seguidor_seguido->sugerencias();
                 <a href="#">
                     <li class="sidenav__list-item"><i class="fa-solid fa-heart"></i>Notificaciones</li>
                 </a>
-                <a href="#">
+                <a href="#" id="crear">
                     <li class="sidenav__list-item"><i class="fa-solid fa-square-plus"></i>Crear</li>
                 </a>
                 <a href="../Vistas/perfil.php">
