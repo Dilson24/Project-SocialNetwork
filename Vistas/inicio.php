@@ -134,7 +134,6 @@ $sugerenciasHTML = $seguidor_seguido->sugerencias();
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../JS/inicio.js"></script>
-    <script src="../JS/follow.js"></script>
     <script src="../JS/fileUpload.js"></script>
 </body>
 

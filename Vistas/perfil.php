@@ -166,7 +166,6 @@ $listFollowings = $seguidor_seguido->obtenerSeguidos();
 
     </main>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../JS/perfil.js"></script>
 </body>
 

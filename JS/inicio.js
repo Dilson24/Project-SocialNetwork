@@ -41,6 +41,13 @@ function checkContent() {
     }
 }
 
+//Función para cambiar aspecto de boton follow
+function followBtn(boton) {
+    boton.textContent = 'Seguido';
+    boton.disabled = true;
+    boton.style.color = '#000000';
+    boton.style.cursor = 'none';
+}
 // Función para crear dinámicamente una nueva publicación
 function createNewPublication(response) {
     const nuevaPublicacion = document.createElement("div");
@@ -96,6 +103,7 @@ function createNewPublication(response) {
     // Agregar la nueva publicación al contenedor
     const publicacionesContainer = document.getElementById("publicaciones-container");
     publicacionesContainer.prepend(nuevaPublicacion);
+
 }
 
 // Función para crear dinámicamente un nuevo popup de publicación
@@ -168,6 +176,7 @@ function createPublicationPopup(response) {
     publicacionesContainer.prepend(publishingPopup);
 }
 
+
 // Funcion para restablecer los valores¨
 function restablecerValores() {
     // Cierra el popup
@@ -183,86 +192,22 @@ function restablecerValores() {
     // Restablecer el formulario con el id 'file-upload-form'
     document.getElementById("file-image").src = "";
 }
-
-
-// Manejo de solicitudes en jQuery
-$(document).ready(function () {
-    $("#logoutButton").click(function () {
-        $.ajax({
-            url: '../Clases/usuario.php?logout', // Ruta al archivo PHP que contiene el código de cierre de sesión
-            type: 'GET',
-            success: function (response) {
-                // Redirigir al usuario a la página de inicio después de cerrar sesión
-                window.location.href = '../index.php';
-            }
-        });
-    });
-
-    $("#publishBtn").click(function () {
-        // Obtén el contenido del textarea y el archivo seleccionado
-        var contenido = $("#contentTextarea").val();
-        var archivo = $("#file-upload")[0].files[0];
-
-        // Verifica si al menos uno de los dos campos está presente
-        if (contenido || archivo) {
-            // Crea un objeto FormData para enviar los datos
-            var formData = new FormData();
-            formData.append('texto', contenido);
-            formData.append('imagen_ruta', archivo);
-
-            // Realiza la solicitud AJAX
-            $.ajax({
-                url: '../Clases/publicacion.php?subirDatos', // Archivo de destino
-                type: 'POST',
-                data: formData,
-                processData: false, // Evita que jQuery procese los datos
-                contentType: false, // Evita que jQuery establezca el tipo de contenido
-                dataType: 'json', // Especificamos que esperamos una respuesta JSON
-                success: function (response) {
-                    // Manejar la respuesta del servidor
-                    console.log(response);
-                    if (response.success) {
-                        // La publicación se guardó con éxito
-                        console.log(response.message);
-                        restablecerValores();
-                        createNewPublication(response);
-                        createPublicationPopup(response);
-
-                        function openPublishing(publicacionId) {
-                            const popup = document.querySelector(`.popup[data-publicacion-id="${publicacionId}"]`);
-                            if (popup) {
-                                popup.style.display = "flex";
-                                popup.classList.add("active");
-                            }
-                        }
-                        // Agregar un controlador de clic a la publicación
-                        $('.main-publishing').on('click', function () {
-                            var publicacionID = $(this).data('publicacion-id');
-                            openPublishing(publicacionID); // Pasa solo el publicacionID, no el selector completo
-                        });
-                        // Agregar un controlador de clic al icono de cierre general
-                        $('#close_popup_publishing').on('click', function () {
-                            // Cerrar todos los popups
-                            $('.popup.active').each(function () {
-                                $(this).hide(); // Otra opción: $(this).css('display', 'none');
-                                $(this).removeClass('active');
-                            });
-                        });
-                    } else {
-                        // Hubo un error al guardar la publicación
-                        console.log(response.message);
-                    }
-                },
-                error: function () {
-                    console.log('Error en la solicitud AJAX');
-                }
-            });
-        } else {
-            // Muestra un mensaje de error al usuario o realiza alguna acción adecuada
-            console.log('Debes proporcionar al menos un campo (texto o imagen)');
-        }
-    });
-});
+// Función para abrir el popup con la publicación
+function openPublishing(publicacionId) {
+    popup = document.querySelector(`.popup[data-publicacion-id="${publicacionId}"]`);
+    if (popup) {
+        popup.style.display = "flex";
+        popup.classList.add("active");
+    }
+}
+// Función para cerrar el popup con la publicación
+function closePopupPublishing() {
+    var popup = document.querySelector('.popup.active');
+    if (popup){
+        popup.style.display = "none";
+        popup.classList.remove('active');        
+    }
+}
 
 // Agregar eventos y controladores de clic
 document.addEventListener("DOMContentLoaded", function () {
@@ -293,5 +238,111 @@ document.addEventListener("DOMContentLoaded", function () {
     const fileInput = document.getElementById("file-upload");
     textarea.addEventListener("input", checkContent);
     fileInput.addEventListener("change", checkContent);
+
+    // Agrega un evento al contenedor de publicaciones
+    const publicacionesContainer = document.getElementById("publicaciones-container");
+    publicacionesContainer.addEventListener('click', function (event) {
+        const element = event.target.closest('.main-publishing');
+        if (element) {
+            var publicacionId = element.getAttribute('data-publicacion-id');
+            openPublishing(publicacionId);
+        } 
+        const btnClosePublishing = document.getElementById("close_popup_publishing");
+        btnClosePublishing.addEventListener("click", function () {
+            const elementToClose = document.querySelector(".popup.active");
+            if (elementToClose) {
+                closePopupPublishing();
+            }
+        });
+    });
+
+
+    //Manejo de solioitudes
+    // Logout Button
+    var logoutButton = document.getElementById("logoutButton");
+    if (logoutButton) {
+        logoutButton.addEventListener("click", function () {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", '../Clases/usuario.php?logout', true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    window.location.href = '../index.php';
+                }
+            };
+            xhr.send();
+        });
+    }
+
+    // Publish Button
+    document.getElementById("publishBtn").addEventListener("click", function () {
+        // Obtén el contenido del textarea y el archivo seleccionado
+        var contenido = document.getElementById("contentTextarea").value;
+        var archivo = document.getElementById("file-upload").files[0];
+
+        // Verifica si al menos uno de los dos campos está presente
+        if (contenido || archivo) {
+            // Crea un objeto FormData para enviar los datos
+            var formData = new FormData();
+            formData.append('texto', contenido);
+            formData.append('imagen_ruta', archivo);
+
+            // Crea una solicitud XMLHttpRequest
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '../Clases/publicacion.php?subirDatos', true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        // Manejar la respuesta del servidor
+                        var response = JSON.parse(xhr.responseText);
+                        console.log(response);
+                        if (response.success) {
+                            // La publicación se guardó con éxito
+                            console.log(response.message);
+                            restablecerValores();
+                            createNewPublication(response);
+                            createPublicationPopup(response);
+                        } else {
+                            // Hubo un error al guardar la publicación
+                            console.log(response.message);
+                        }
+                    } else {
+                        console.log('Error en la solicitud AJAX');
+                    }
+                }
+            };
+            xhr.send(formData);
+        } else {
+            // Muestra un mensaje de error al usuario o realiza alguna acción adecuada
+            console.log('Debes proporcionar al menos un campo (texto o imagen)');
+        }
+    });
+
+    // Follow Buttons
+    var followButtons = document.querySelectorAll(".follow-button");
+    followButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+            var usuario_id = button.getAttribute("data-usuario-id");
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", '../Clases/seguidor-seguido.php?Seguidor_Seguido', true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        var response = JSON.parse(xhr.responseText);
+                        if (response.success) {
+                            followBtn(button);
+                            console.log(response.message);
+                        } else {
+                            console.log(response.message);
+                        }
+                    } else {
+                        console.error("Error en la solicitud AJAX: " + xhr.statusText);
+                    }
+                }
+            };
+            xhr.send("usuario_id=" + usuario_id);
+        });
+    });
 
 });

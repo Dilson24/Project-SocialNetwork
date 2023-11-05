@@ -34,7 +34,7 @@ class Publicacion
             $createHTML .= '</div>';
             $createHTML .= '<div class="create__content-text">';
             $createHTML .= '<div class="create__text">';
-            $createHTML .= '<textarea placeholder="¿Algo que quieras compartir,' . $nombre . '" id="contentTextarea"></textarea>';
+            $createHTML .= '<textarea placeholder="¿Algo que quieras compartir,' . $nombre . '?" id="contentTextarea"></textarea>';
             $createHTML .= '</div>';
             $createHTML .= '</div>';
             $createHTML .= '<div class="create__content-img" id="imageContent">';

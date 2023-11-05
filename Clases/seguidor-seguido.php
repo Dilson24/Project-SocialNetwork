@@ -15,7 +15,18 @@ class Seguidor_Seguido
     public function sugerencias()
     {
         $user_id = $_SESSION['user_id'];
-        $queryThree = "SELECT usuario_id, name, imagen_perfil FROM perfiles WHERE usuario_id != $user_id ORDER BY RAND() LIMIT 4";
+        // Consulta SQL para seleccionar usuarios sugeridos que el usuario actual no sigue
+        $queryThree = "SELECT p.usuario_id, p.name, p.imagen_perfil
+        FROM perfiles p
+        WHERE p.usuario_id != $user_id 
+        AND NOT EXISTS (
+        SELECT 1
+        FROM seguidores s
+        WHERE s.seguidor_id = $user_id
+        AND s.usuario_id = p.usuario_id
+        )
+        ORDER BY RAND()
+        LIMIT 4";
         $resultThree = $this->connection->query($queryThree);
         $usuariosHTML = '';
         if ($resultThree) {
@@ -64,7 +75,8 @@ class Seguidor_Seguido
                 $message = 'Seguido con éxito';
             } else {
                 // Manejar errores si alguna inserción falla
-                $message = 'Error al seguir al usuario';
+                $message = 'Error al seguir al usuario' . $this->connection->error;
+                ;
             }
         } else {
             // Manejar el caso en el que no se enviaron los datos esperados
