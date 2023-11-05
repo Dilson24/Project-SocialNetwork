@@ -52,8 +52,9 @@ class Seguidor_Seguido
 
     public function seguirUsuario()
     {
-        $success = false;
-        $message = '';
+        $response = array();
+        $response['success'] = false;
+        $response['message'] = '';
 
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
@@ -71,24 +72,24 @@ class Seguidor_Seguido
 
             if ($resultadoSeguidores && $resultadoSeguidos) {
                 // Ambas inserciones fueron exitosas
-                $success = true;
-                $message = 'Seguido con éxito';
+                $response['success'] = true;
+                $response['message'] = 'Seguido con éxito';
+                // Obtener el nuevo total de seguidos
+                $totalSeguidos = $this->obtenerSeguidosTotal();
+                $response['total_seguidos'] = $totalSeguidos;
             } else {
                 // Manejar errores si alguna inserción falla
-                $message = 'Error al seguir al usuario' . $this->connection->error;
+                $response = 'Error al seguir al usuario' . $this->connection->error;
                 ;
             }
         } else {
             // Manejar el caso en el que no se enviaron los datos esperados
-            $message = 'Faltan datos necesarios';
+            $response['message']  = 'Faltan datos necesarios';
         }
 
-        echo json_encode(
-            array(
-                'success' => $success,
-                'message' => $message
-            )
-        );
+        // Enviar la respuesta como JSON
+        header('Content-Type: application/json');
+        echo json_encode($response);
         die();
     }
 
@@ -132,6 +133,7 @@ class Seguidor_Seguido
         // Enviar la respuesta como JSON
         header('Content-Type: application/json');
         echo json_encode($response);
+        die();
     }
 
 
@@ -256,7 +258,7 @@ class Seguidor_Seguido
 
 }
 $Seguidor_Seguido = new Seguidor_Seguido();
-if (isset($_GET['Seguidor_Seguido'])) {
+if (isset($_GET['Follow'])) {
     $Seguidor_Seguido->seguirUsuario();
 }
 if (isset($_GET['Unfollow'])) {

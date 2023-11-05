@@ -157,7 +157,7 @@ $listFollowings = $seguidor_seguido->obtenerSeguidos();
                         if (!empty($listFollowings)) {
                             foreach ($listFollowings as $following) {
                                 $seguidos_id = $following['usuario_id']; // Obtén el ID del usuario
-                                echo '<div class="show-users" data-id="' . $seguidos_id . '">';
+                                echo '<div class="show-users" id="following" data-id="' . $seguidos_id . '">';
                                 echo '<div class="show-users_info">';
                                 echo '<a class="show-users_profilImg"><img src="' . $following['imagen_perfil'] . '" alt="Imagen de perfil"></a>';
                                 echo '<a class="show-users_profile">' . $following['nombre'] . '</a>';
