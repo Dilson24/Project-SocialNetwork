@@ -194,18 +194,23 @@ function restablecerValores() {
 }
 // Función para abrir el popup con la publicación
 function openPublishing(publicacionId) {
-    popup = document.querySelector(`.popup[data-publicacion-id="${publicacionId}"]`);
+    // Buscamos el elemento con la clase "popup" que tiene un atributo "data-publicacion-id" igual a "publicacionId"
+    var popup = document.querySelector(`.popup[data-publicacion-id="${publicacionId}"]`);
     if (popup) {
+        // Si se encuentra el popup, lo hacemos visible y le añadimos la clase "active"
         popup.style.display = "flex";
         popup.classList.add("active");
     }
 }
+
 // Función para cerrar el popup con la publicación
 function closePopupPublishing() {
+    // Buscamos el elemento con la clase "popup" que tiene la clase "active"
     var popup = document.querySelector('.popup.active');
-    if (popup){
+    if (popup) {
+        // Si se encuentra un popup activo, lo ocultamos y eliminamos la clase "active"
         popup.style.display = "none";
-        popup.classList.remove('active');        
+        popup.classList.remove('active');
     }
 }
 
@@ -247,15 +252,22 @@ document.addEventListener("DOMContentLoaded", function () {
     // Agrega un evento al contenedor de publicaciones
     const publicacionesContainer = document.getElementById("publicaciones-container");
     publicacionesContainer.addEventListener('click', function (event) {
+        // Cuando se hace clic en el contenedor de publicaciones, buscamos el elemento más cercano con la clase "main-publishing"
         const element = event.target.closest('.main-publishing');
         if (element) {
+            // Obtenemos el valor del atributo "data-publicacion-id" del elemento
             var publicacionId = element.getAttribute('data-publicacion-id');
+            // Luego, llamamos a la función openPublishing para abrir el popup correspondiente
             openPublishing(publicacionId);
-        } 
+        }
+
+        // Buscamos el botón con el id "close_popup_publishing"
         const btnClosePublishing = document.getElementById("close_popup_publishing");
         btnClosePublishing.addEventListener("click", function () {
+            // Cuando se hace clic en el botón para cerrar el popup, buscamos el elemento con la clase "popup" que tiene la clase "active"
             const elementToClose = document.querySelector(".popup.active");
             if (elementToClose) {
+                // Luego, llamamos a la función closePopupPublishing para cerrar el popup activo
                 closePopupPublishing();
             }
         });

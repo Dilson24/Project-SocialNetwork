@@ -128,7 +128,7 @@ $sugerenciasHTML = $seguidor_seguido->sugerencias();
             <div class="popup" id="popup_create">
                 <?php echo $newpublishingHTML; ?>
             </div>
-            <div id="publicaciones-container">
+            <div class="publicaciones-container" id="publicaciones-container">
             </div>
         </main>
     </div>
