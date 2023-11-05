@@ -176,7 +176,6 @@ function createPublicationPopup(response) {
     publicacionesContainer.prepend(publishingPopup);
 }
 
-
 // Funcion para restablecer los valores¨
 function restablecerValores() {
     // Cierra el popup
@@ -262,14 +261,15 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         // Buscamos el botón con el id "close_popup_publishing"
-        const btnClosePublishing = document.getElementById("close_popup_publishing");
-        btnClosePublishing.addEventListener("click", function () {
-            // Cuando se hace clic en el botón para cerrar el popup, buscamos el elemento con la clase "popup" que tiene la clase "active"
-            const elementToClose = document.querySelector(".popup.active");
-            if (elementToClose) {
-                // Luego, llamamos a la función closePopupPublishing para cerrar el popup activo
-                closePopupPublishing();
-            }
+        const btnClosePublishingList = document.querySelectorAll(".close-button");
+        btnClosePublishingList.forEach(function (btnClosePublishing) {
+            btnClosePublishing.addEventListener("click", function () {
+                // Obtener el elemento "popup-publishing" relativo al botón
+                const elementToClose = btnClosePublishing.closest(".popup.active");
+                if (elementToClose) {
+                    closePopupPublishing();
+                }
+            });
         });
     });
 

@@ -30,10 +30,10 @@ if (!isset($_SESSION['user_id'])) {
 $perfil = new Perfil();
 $user_name = $perfil->obtenerNombre();
 $user_image = $perfil->obtenerImagen();
-$total_publicaciones = $perfil->obtenerTotalPublicaciones();
 /*Gestión publicaciones*/
 $publicacion = new Publicacion();
 $newpublishingHTML = $publicacion->crearPublicacion();
+$total_publicaciones = $publicacion->obtenerTotalPublicaciones();
 /*Gentión seguido_seguidor*/
 $seguidor_seguido = new Seguidor_Seguido();
 $sugerenciasHTML = $seguidor_seguido->sugerencias();
@@ -171,6 +171,12 @@ $listFollowings = $seguidor_seguido->obtenerSeguidos();
                         ?>
                     </div>
                 </div>
+            </div>
+            <div class="publicaciones-container" id="publicaciones-container">
+                <?php
+                $publicacion = new Publicacion();
+                $publicacion->obtenerPublicacionesPerfil();
+                ?>
             </div>
     </div>
 

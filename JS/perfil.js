@@ -16,6 +16,28 @@ function closePopup(popupId) {
     }
 }
 
+// Función para abrir el popup con la publicación
+function openPublishing(publicacionId) {
+    // Buscamos el elemento con la clase "popup-publishing" que tiene un atributo "data-publicacion-id" igual a "publicacionId"
+    var popup = document.querySelector(`.popup-publishing[data-publicacion-id="${publicacionId}"]`);
+    if (popup) {
+        // Si se encuentra el popup, lo hacemos visible y le añadimos la clase "active"
+        popup.style.display = "flex";
+        popup.classList.add("active");
+    }
+}
+
+// Función para cerrar el popup con la publicación
+function closePopupPublishing() {
+    // Buscamos el elemento con la clase "popup" que tiene la clase "active"
+    var popup = document.querySelector('.popup-publishing.active');
+    if (popup) {
+        // Si se encuentra un popup activo, lo ocultamos y eliminamos la clase "active"
+        popup.style.display = "none";
+        popup.classList.remove('active');
+    }
+}
+
 // Agregar eventos y controladores de clic
 document.addEventListener("DOMContentLoaded", function () {
     const showFollowers = document.querySelector(".info-followers");
@@ -37,6 +59,34 @@ document.addEventListener("DOMContentLoaded", function () {
     closeFollowing.addEventListener("click", function () {
         closePopup("showFollowings");
     });
+
+    // Agrega un evento al contenedor de publicaciones
+    const publicacionesContainer = document.getElementById("publicaciones-container");
+    publicacionesContainer.addEventListener('click', function (event) {
+        // Cuando se hace clic en el contenedor de publicaciones, buscamos el elemento más cercano con la clase "main-publishing"
+        const element = event.target.closest('.main-publishing');
+        if (element) {
+            // Obtenemos el valor del atributo "data-publicacion-id" del elemento
+            var publicacionId = element.getAttribute('data-publicacion-id');
+            // Luego, llamamos a la función openPublishing para abrir el popup correspondiente
+            openPublishing(publicacionId);
+        }
+
+        // Buscamos el botón con el id "close_popup_publishing"
+        const btnClosePublishingList = document.querySelectorAll(".close-button");
+        btnClosePublishingList.forEach(function (btnClosePublishing) {
+            btnClosePublishing.addEventListener("click", function () {
+                // Obtener el elemento "popup-publishing" relativo al botón
+                const elementToClose = btnClosePublishing.closest(".popup-publishing.active");
+                if (elementToClose) {
+                    closePopupPublishing();
+                }
+            });
+        });
+
+
+    });
+
     //Manejo de solioitudes
     // Logout Button
     var logoutButton = document.getElementById("logoutButton");
@@ -107,8 +157,6 @@ document.addEventListener("DOMContentLoaded", function () {
             toggleFollow(this);
         });
     });
-
-
 
 });
 
