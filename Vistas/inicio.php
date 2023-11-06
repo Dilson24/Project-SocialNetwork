@@ -129,6 +129,10 @@ $sugerenciasHTML = $seguidor_seguido->sugerencias();
                 <?php echo $newpublishingHTML; ?>
             </div>
             <div class="publicaciones-container" id="publicaciones-container">
+                <?php
+                $publicaciones = new Publicacion();
+                $publicaciones->obtenerPublicacionesPaginaInicio();
+                ?>
             </div>
         </main>
     </div>

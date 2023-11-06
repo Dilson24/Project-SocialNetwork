@@ -258,7 +258,7 @@ body {
 /*POPUPS*/
 
 /*popups*/
-.popup {
+.popup-f {
     display: none;
     position: fixed;
     top: 0;
@@ -268,7 +268,7 @@ body {
     background-color: rgba(0, 0, 0, 0.7);
 }
 
-.popup-content {
+.popup-content-f {
     display: flex;
     flex-direction: column;
     gap: 5px;
@@ -484,7 +484,7 @@ body {
 }
 
 /*popup publication*/
-.popup-publishing {
+.popup {
     display: none;
     position: fixed;
     top: 0;
@@ -494,7 +494,7 @@ body {
     background-color: rgba(0, 0, 0, 0.7);
 }
 
-.popup-publishing_content {
+.popup-content {
     display: flex;
     flex-direction: column;
     gap: 5px;
@@ -511,7 +511,7 @@ body {
     overflow-y: auto;
 }
 
-.popup-publishing_content::-webkit-scrollbar-track  {
+.popup-content::-webkit-scrollbar-track  {
     border-radius: 8px;
 }
 

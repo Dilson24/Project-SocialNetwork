@@ -2,30 +2,6 @@
 require_once('../Clases/perfil.php');
 require_once('../Clases/publicacion.php');
 require_once('../Clases/seguidor-seguido.php');
-require_once('../vendor/firebase/php-jwt/src/JWT.php');
-use \Firebase\JWT\JWT;
-
-session_start();
-if (!isset($_SESSION['user_id'])) {
-    // Verificar si el usuario tiene un token JWT válido
-    if (isset($_COOKIE['token'])) {
-        $token = $_COOKIE['token'];
-        $secret_key = 'Project_socialnetwork';
-        try {
-            $decoded = JWT::decode($token . $secret_key, array('HS256'));
-        } catch (Exception $e) {
-            // El token no es válido, puedes redirigir al usuario a la página de inicio de sesión
-            header('Location: inicio-sesion.php');
-            exit();
-        }
-    } else {
-        // El token no está presente en la cookie, redirigir al usuario a la página de inicio de sesión
-        header('Location: inicio-sesion.php');
-        exit();
-    }
-    header('Location: inicio-sesion.php');
-    exit();
-}
 /*Gestión perfiles*/
 $perfil = new Perfil();
 $user_name = $perfil->obtenerNombre();

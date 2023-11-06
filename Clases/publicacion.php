@@ -249,7 +249,7 @@ class Publicacion
     function publicationPopup($user_name, $user_image, $publicacion_id, $texto, $imagen_ruta)
     {
         // Contenedro hijo
-        $contentPopup = '<div class="popup-publishing_content">';
+        $contentPopup = '<div class="popup-content">';
 
         // Elemento hijo1 del contenedor hijo
         $btnClose = '<span class="close-button" id="close_popup_publishing"><i class="fa-solid fa-xmark"></i></span>';
@@ -323,7 +323,7 @@ class Publicacion
 
                 // Llama a la función 'publication' para mostrar el 'main-publishing'
                 $this->publication($user_name, $user_image, $publicacion_id, $texto, $imagen_ruta);
-                echo '<div class="popup-publishing" id="popup_publishing" data-publicacion-id="'. $publicacion_id .'">';
+                echo '<div class="popup" id="popup_publishing" data-publicacion-id="' . $publicacion_id . '">';
                 // Llama a la función 'publicationPopup' para mostrar el 'popup-publishing'
                 $this->publicationPopup($user_name, $user_image, $publicacion_id, $texto, $imagen_ruta);
                 echo '</div>';
@@ -345,10 +345,48 @@ class Publicacion
 
     public function obtenerPublicacionesPaginaInicio()
     {
-        $response = array();
-        // Obtener datos de la publicación para la página de inicio
-        // ...
-        // $this->createPublication($response, true); // Es un popup
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        $user_id = $_SESSION['user_id'];
+
+        // Consulta para obtener la lista de usuarios seguidos y sus publicaciones más recientes
+        $query = "SELECT s.usuario_id AS seguido_id, p.publicacion_id, p.texto, p.imagen_ruta, p.fecha_publicacion, pr.name, pr.imagen_perfil
+        FROM seguidos s
+        JOIN publicaciones p ON s.usuario_id = p.usuario_id
+        JOIN perfiles pr ON s.usuario_id = pr.usuario_id
+        WHERE s.seguidor_id = $user_id
+        ORDER BY p.fecha_publicacion DESC";
+        $result = $this->connection->query($query);
+
+        if ($result) {
+            $publicaciones = array();
+
+            while ($row = $result->fetch_assoc()) {
+                $publicaciones[] = $row;
+            }
+
+            // Mezclar aleatoriamente el array de publicaciones
+            shuffle($publicaciones);
+
+            foreach ($publicaciones as $row) {
+                $publicacion_id = $row['publicacion_id'];
+                $texto = $row['texto'];
+                $imagen_ruta = $row['imagen_ruta'];
+                $user_name = $row['name'];
+                $user_image = $row['imagen_perfil'];
+
+                // Llama a la función 'publication' para mostrar el 'main-publishing'
+                $this->publication($user_name, $user_image, $publicacion_id, $texto, $imagen_ruta);
+                echo '<div class="popup" id="popup_publishing" data-publicacion-id="' . $publicacion_id . '">';
+                // Llama a la función 'publicationPopup' para mostrar el 'popup-publishing'
+                $this->publicationPopup($user_name, $user_image, $publicacion_id, $texto, $imagen_ruta);
+                echo '</div>';
+            }
+        } else {
+            echo "Error al obtener las publicaciones de la página de inicio.";
+        }
     }
 }
 $publicacion = new Publicacion();
