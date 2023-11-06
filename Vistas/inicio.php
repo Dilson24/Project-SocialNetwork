@@ -28,8 +28,9 @@ if (!isset($_SESSION['user_id'])) {
 }
 /*Gestión perfiles*/
 $perfil = new Perfil();
-$user_name = $perfil->obtenerNombre();
-$user_image = $perfil->obtenerImagen();
+$userData = $perfil->obtenerDatosUsuario();
+$user_name = $userData['name'];
+$user_image = $userData['imagen_perfil'];
 /*Gestión publicaciones*/
 $publicacion = new Publicacion();
 $newpublishingHTML = $publicacion->crearPublicacion();

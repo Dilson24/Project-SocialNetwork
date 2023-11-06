@@ -37,8 +37,8 @@ class Seguidor_Seguido
                     $imagen = $row['imagen_perfil'];
                     $usuariosHTML .= '<div class="sidenav__users-follow">';
                     $usuariosHTML .= '<div class="sidenav__info-user">';
-                    $usuariosHTML .= '<a href="#"><img src="' . $imagen . '" alt="Imagen de perfil"></a>';
-                    $usuariosHTML .= '<a href="#">' . $nombre . '</a>';
+                    $usuariosHTML .= '<a href="../Vistas/perfiles.php?'.$usuario_id.'"><img src="' . $imagen . '" alt="Imagen de perfil"></a>';
+                    $usuariosHTML .= '<a href="../Vistas/perfiles.php?'.$usuario_id.'">' . $nombre . '</a>';
                     $usuariosHTML .= '</div>';
                     $usuariosHTML .= '<a class="follow-button" data-usuario-id="' . $usuario_id . '" href="#"><span>Seguir</span></a>';
                     $usuariosHTML .= '</div>';

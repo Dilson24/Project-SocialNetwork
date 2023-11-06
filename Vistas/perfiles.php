@@ -4,8 +4,9 @@ require_once('../Clases/publicacion.php');
 require_once('../Clases/seguidor-seguido.php');
 /*Gestión perfiles*/
 $perfil = new Perfil();
-$user_name = $perfil->obtenerNombre();
-$user_image = $perfil->obtenerImagen();
+$userData = $perfil->obtenerDatosUsuario();
+$user_name = $userData['name'];
+$user_image = $userData['imagen_perfil'];
 /*Gestión publicaciones*/
 $publicacion = new Publicacion();
 $newpublishingHTML = $publicacion->crearPublicacion();
@@ -71,7 +72,7 @@ $listFollowings = $seguidor_seguido->obtenerSeguidos();
                             </h2>
                         </div>
                         <div class="btnEdit">
-                            <button id="btnEdit" class="editBtn">Editar Perfil</button>
+                            <button id="btnEdit" class="editBtn">Seguido</button>
                         </div>
                     </div>
                     <div class="info-socialMedia">

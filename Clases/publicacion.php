@@ -17,8 +17,9 @@ class Publicacion
     public function crearPublicacion()
     {
         $perfil = new Perfil();
-        $user_name = $perfil->obtenerNombre();
-        $user_image = $perfil->obtenerImagen();
+        $userData = $perfil->obtenerDatosUsuario();
+        $user_name = $userData['name'];
+        $user_image = $userData['imagen_perfil'];
 
         $createHTML = '';
         $createHTML .= '<div class="popup-content">';
@@ -67,7 +68,8 @@ class Publicacion
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $perfil = new Perfil();
-            $user_name = $perfil->obtenerNombre();
+            $userData = $perfil->obtenerDatosUsuario();
+            $user_name = $userData['name'];
             // Asegúrate de que la sesión esté iniciada antes de intentar acceder a $_SESSION
             if (session_status() == PHP_SESSION_NONE) {
                 session_start();
@@ -153,8 +155,9 @@ class Publicacion
 
             // Obtener el nombre y la imagen del usuario
             $perfil = new Perfil();
-            $user_name = $perfil->obtenerNombre();
-            $user_image = $perfil->obtenerImagen();
+            $userData = $perfil->obtenerDatosUsuario();
+            $user_name = $userData['name'];
+            $user_image = $userData['imagen_perfil'];
 
             // Devolvemos los datos de la publicación junto con el nombre e imagen del usuario
             echo json_encode(
@@ -306,8 +309,9 @@ class Publicacion
         }
 
         $perfil = new Perfil();
-        $user_name = $perfil->obtenerNombre();
-        $user_image = $perfil->obtenerImagen();
+        $userData = $perfil->obtenerDatosUsuario();
+        $user_name = $userData['name'];
+        $user_image = $userData['imagen_perfil'];
 
         $user_id = $_SESSION['user_id'];
 
