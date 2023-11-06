@@ -6,26 +6,36 @@ require_once('../vendor/firebase/php-jwt/src/JWT.php');
 use \Firebase\JWT\JWT;
 
 session_start();
-if (!isset($_SESSION['user_id'])) {
-    // Verificar si el usuario tiene un token JWT válido
-    if (isset($_COOKIE['token'])) {
-        $token = $_COOKIE['token'];
-        $secret_key = 'Project_socialnetwork';
-        try {
-            $decoded = JWT::decode($token . $secret_key, array('HS256'));
-        } catch (Exception $e) {
-            // El token no es válido, puedes redirigir al usuario a la página de inicio de sesión
+if (isset($_GET['id'])) {
+    $profile_id = $_GET['id'];
+    // Aquí debes cargar y mostrar el perfil correspondiente al ID proporcionado.
+} else {
+    if (!isset($_SESSION['user_id'])) {
+        // Verificar si el usuario tiene un token JWT válido
+        if (isset($_COOKIE['token'])) {
+            $token = $_COOKIE['token'];
+            $secret_key = 'Project_socialnetwork';
+            try {
+                $decoded = JWT::decode($token . $secret_key, array('HS256'));
+                // En este punto, $decoded contiene la información del usuario si el token es válido.
+                // Puedes asignar el ID del usuario desde $decoded.
+                $profile_id = $decoded->user_id;
+            } catch (Exception $e) {
+                // El token no es válido, puedes redirigir al usuario a la página de inicio de sesión
+                header('Location: inicio-sesion.php');
+                exit();
+            }
+        } else {
+            // El token no está presente en la cookie, redirigir al usuario a la página de inicio de sesión
             header('Location: inicio-sesion.php');
             exit();
         }
     } else {
-        // El token no está presente en la cookie, redirigir al usuario a la página de inicio de sesión
-        header('Location: inicio-sesion.php');
-        exit();
+        // Muestra el perfil del usuario en sesión.
+        $profile_id = $_SESSION['user_id'];
     }
-    header('Location: inicio-sesion.php');
-    exit();
 }
+
 /*Gestión perfiles*/
 $perfil = new Perfil();
 $user_name = $perfil->obtenerNombre();

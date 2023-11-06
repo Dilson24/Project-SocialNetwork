@@ -12,4 +12,4 @@ btnSingIn.addEventListener("click", function() {
 btnSingUp.addEventListener("click", function() {
     // Redirige a la página deseada cuando se hace clic
     window.location.href = "Vistas/registro.php"; 
-});
+}); 
