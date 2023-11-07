@@ -44,24 +44,11 @@ if (isset($_GET['id'])) {
 } else {
     echo "Hubo un error, intentelo de nuevo";
 }
-
-
 /*Gestión perfiles*/
 $perfil = new Perfil();
 $userData = $perfil->obtenerDatosUsuario();
 $user_name = $userData['name'];
 $user_image = $userData['imagen_perfil'];
-// /*Gestión publicaciones*/
-// $publicacion = new Publicacion();
-// $newpublishingHTML = $publicacion->crearPublicacion();
-// $total_publicaciones = $publicacion->obtenerTotalPublicaciones();
-// /*Gentión seguido_seguidor*/
-// $seguidor_seguido = new Seguidor_Seguido();
-// $sugerenciasHTML = $seguidor_seguido->sugerencias();
-// $totalFollowers = $seguidor_seguido->obtenerSeguidoresTotal();
-// $totalFollowings = $seguidor_seguido->obtenerSeguidosTotal();
-// $listFollowers = $seguidor_seguido->obtenerSeguidores();
-// $listFollowings = $seguidor_seguido->obtenerSeguidos();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -156,6 +143,7 @@ $user_image = $userData['imagen_perfil'];
                                 echo '<a class="show-users_profilImg"><img src="' . $follower['imagen_perfil'] . '" alt="Imagen de perfil"></a>';
                                 echo '<a class="show-users_profile">' . $follower['nombre'] . '</a>';
                                 echo '</div>';
+                                echo '<button data-id="' . $seguidos_id . '" class="btnUnfollow">Dejar de seguir</button>';
                                 echo '</div>';
                             }
                         } else {
@@ -203,7 +191,7 @@ $user_image = $userData['imagen_perfil'];
 
     </main>
     </div>
-    <script src="../JS/perfil.js"></script>
+    <!-- <script src="../JS/perfil.js"></script> -->
 </body>
 
 </html>
