@@ -103,7 +103,16 @@ $user_image = $userData['imagen_perfil'];
                             </h2>
                         </div>
                         <div class="btnEdit">
-                            <button id="btnEdit" class="editBtn">Seguido</button>
+                            <?php 
+                            $seguidos_id = $profile_id;
+                            $sigueUsuario = $seguidor_seguido->sigueUsuario($_SESSION['user_id'], $seguidos_id);
+                            $esSeguido = ($_SESSION['user_id'] == $seguidos_id);
+                            if (!$esSeguido){
+                                echo '<button data-id="' . $seguidos_id . '" class="btnUnfollow">Deja de seguir</button>';
+                            }else{
+                                echo '<button data-id="' . $seguidos_id . '" class="btnFollow">Seguido</button>';
+                            }
+                            ?>
                         </div>
                     </div>
                     <div class="info-socialMedia">
