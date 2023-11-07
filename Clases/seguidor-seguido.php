@@ -311,7 +311,7 @@ class Seguidor_Seguido
 
         return $seguidores;
     }
-    public function obtenerSeguidosPublic($profile_id)
+    public function obtenerSeguidosPublico($profile_id)
     {
         // Consulta para obtener la lista de seguidos
         $query = "SELECT usuario_id FROM seguidos WHERE seguidor_id = $profile_id";
@@ -354,6 +354,8 @@ class Seguidor_Seguido
     
         return false;
     }
+
+    
     
 }
 $Seguidor_Seguido = new Seguidor_Seguido();

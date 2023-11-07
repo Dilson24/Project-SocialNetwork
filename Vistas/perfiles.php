@@ -135,36 +135,31 @@ $user_image = $userData['imagen_perfil'];
                     <div class="popup-content__show-users">
                         <?php
                         $listFollowers = $seguidor_seguido->obtenerSeguidoresPublico($profile_id);
-                        foreach ($listFollowers as $follower) {
-                            $seguidor_id = $follower['seguidor_id'];
-                            $sigueUsuario = $seguidor_seguido->sigueUsuario($_SESSION['user_id'], $seguidor_id);
+                        if (!empty($listFollowers)) {
+                            foreach ($listFollowers as $follower) {
+                                $seguidor_id = $follower['seguidor_id'];
+                                $sigueUsuario = $seguidor_seguido->sigueUsuario($_SESSION['user_id'], $seguidor_id);
+                                // Verifica si el usuario de sesión es el mismo que el seguidor actual
+                                $esUsuarioSesion = ($_SESSION['user_id'] == $seguidor_id);
+                                echo '<div class="show-users" id="' . $seguidor_id . '">';
+                                echo '<div class="show-users_info">';
+                                echo '<a class="show-users_profilImg"><img src="' . $follower['imagen_perfil'] . '" alt="Imagen de perfil"></a>';
+                                echo '<a class="show-users_profile">' . $follower['nombre'] . '</a>';
+                                echo '</div>';
 
-                            // Verifica si el usuario de sesión es el mismo que el seguidor actual
-                            $esUsuarioSesion = ($_SESSION['user_id'] == $seguidor_id);
-
-                            echo '<div class="show-users" id="' . $seguidor_id . '">';
-                            echo '<div class="show-users_info">';
-                            echo '<a class="show-users_profilImg"><img src="' . $follower['imagen_perfil'] . '" alt="Imagen de perfil"></a>';
-                            echo '<a class="show-users_profile">' . $follower['nombre'] . '</a>';
-                            echo '</div>';
-
-                            if (!$esUsuarioSesion) {
-                                if ($sigueUsuario) {
-                                    echo '<button data-id="' . $seguidor_id . '" class="btnUnfollow">Unfollow</button>';
-                                } else {
-                                    echo '<button data-id="' . $seguidor_id . '" class="btnFollow">Follow</button>';
+                                if (!$esUsuarioSesion) {
+                                    if ($sigueUsuario) {
+                                        echo '<button data-id="' . $seguidor_id . '" class="btnUnfollow">Dejar de seguir</button>';
+                                    } else {
+                                        echo '<button data-id="' . $seguidor_id . '" class="btnFollow">Seguir</button>';
+                                    }
                                 }
+                                echo '</div>';
                             }
-
-                            echo '</div>';
+                        } else {
+                            echo '<div class="popup-content__title"><h3>El usuario no tiene seguidores.</h3><div class="popup-content__line"></div></div>';
                         }
                         ?>
-
-
-
-
-
-
                     </div>
                 </div>
             </div>
@@ -177,16 +172,27 @@ $user_image = $userData['imagen_perfil'];
                     </div>
                     <div class="popup-content__show-users">
                         <?php
-                        $listFollowings = $seguidor_seguido->obtenerSeguidosPublic($profile_id);
+                        $listFollowings = $seguidor_seguido->obtenerSeguidosPublico($profile_id);
+
                         if (!empty($listFollowings)) {
                             foreach ($listFollowings as $following) {
-                                $seguidos_id = $following['usuario_id']; // Obtén el ID del usuario
-                                echo '<div class="show-users" id="following" data-id="' . $seguidos_id . '">';
+                                $seguidos_id = $following['usuario_id'];
+                                // Verifica si el usuario de sesión sigue al usuario actual de la lista
+                                $sigueUsuario = $seguidor_seguido->sigueUsuario($_SESSION['user_id'], $seguidos_id);
+                                // Verifica si el usuario de sesión es el mismo que el usuario actual de la lista
+                                $esUsuarioSesion = ($_SESSION['user_id'] == $seguidos_id);
+                                echo '<div class="show-users" id="' . $seguidos_id . '">';
                                 echo '<div class="show-users_info">';
                                 echo '<a class="show-users_profilImg"><img src="' . $following['imagen_perfil'] . '" alt="Imagen de perfil"></a>';
                                 echo '<a class="show-users_profile">' . $following['nombre'] . '</a>';
                                 echo '</div>';
-                                echo '<button data-id="' . $seguidos_id . '" class="btnUnfollow">Dejar de seguir</button>';
+                                if (!$esUsuarioSesion) {
+                                    if ($sigueUsuario) {
+                                        echo '<button data-id="' . $seguidos_id . '" class="btnUnfollow">Dejar de seguir</button>';
+                                    } else {
+                                        echo '<button data-id="' . $seguidos_id . '" class="btnFollow">Seguir</button>';
+                                    }
+                                }
                                 echo '</div>';
                             }
                         } else {
