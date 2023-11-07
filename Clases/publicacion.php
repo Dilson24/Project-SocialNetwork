@@ -198,6 +198,21 @@ class Publicacion
             }
         }
     }
+    public function obtenerTotalPublicacionesPublic($profile_id)
+    {
+        $query = "SELECT COUNT(*) AS numero_publicaciones FROM publicaciones WHERE usuario_id = $profile_id";
+        $result = $this->connection->query($query);
+        if ($result) {
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $numero_publicaciones = $row['numero_publicaciones'];
+                return $numero_publicaciones;
+            } else {
+                // Manejar el error
+                echo "Error: La consulta falló";
+            }
+        }
+    }
 
     // Funciones para crear las publicaciones dinamicamente
     function publication($user_name, $user_image, $publicacion_id, $texto, $imagen_ruta)
@@ -337,7 +352,33 @@ class Publicacion
         }
     }
 
+    public function obtenerPublicacionesPerfilPublic($profile_id)
+    {
+        $perfil = new Perfil();
+        $userData_P = $perfil->obtenerDatosUsuarioPublico($profile_id);
+        $user_name = $userData_P['name'];
+        $user_image = $userData_P['imagen_perfil'];
+        // Consultar las publicaciones del usuario en orden cronológico
+        $query = "SELECT * FROM publicaciones WHERE usuario_id = $profile_id ORDER BY fecha_publicacion DESC";
+        $result = $this->connection->query($query);
 
+        if ($result) {
+            while ($row = $result->fetch_assoc()) {
+                $publicacion_id = $row['publicacion_id'];
+                $texto = $row['texto'];
+                $imagen_ruta = $row['imagen_ruta'];
+
+                // Llama a la función 'publication' para mostrar el 'main-publishing'
+                $this->publication($user_name, $user_image, $publicacion_id, $texto, $imagen_ruta);
+                echo '<div class="popup" id="popup_publishing" data-publicacion-id="' . $publicacion_id . '">';
+                // Llama a la función 'publicationPopup' para mostrar el 'popup-publishing'
+                $this->publicationPopup($user_name, $user_image, $publicacion_id, $texto, $imagen_ruta);
+                echo '</div>';
+            }
+        } else {
+            echo "Error al obtener las publicaciones del perfil.";
+        }
+    }
 
     public function obtenerPublicacionesSeguidos()
     {

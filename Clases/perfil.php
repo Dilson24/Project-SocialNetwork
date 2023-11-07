@@ -40,6 +40,28 @@ class Perfil
         return ['name' => $user_name, 'imagen_perfil' => $user_image];
     }
 
+    public function obtenerDatosUsuarioPublico($profile_id)
+    {
+        $query = "SELECT name, imagen_perfil FROM perfiles WHERE usuario_id = $profile_id";
+        $result = $this->connection->query($query);
+
+        if ($result) {
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $user_name_p = $row['name'];
+                $user_image_p = $row['imagen_perfil'];
+            } else {
+                $user_name_p = "Usuario Desconocido";
+                $user_image_p = "../Img/User-Profile.png"; // Ruta predeterminada
+            }
+        } else {
+            $user_name_p = "Error en la consulta";
+            $user_image_p = "../Img/User-Profile.png"; // Ruta predeterminada
+        }
+
+        return ['name' => $user_name_p, 'imagen_perfil' => $user_image_p];
+    }
+
 
     public function obtenerTotalPublicaciones()
     {

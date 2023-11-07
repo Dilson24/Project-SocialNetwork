@@ -2,22 +2,66 @@
 require_once('../Clases/perfil.php');
 require_once('../Clases/publicacion.php');
 require_once('../Clases/seguidor-seguido.php');
+require_once('../vendor/firebase/php-jwt/src/JWT.php');
+use \Firebase\JWT\JWT;
+
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    // Verificar si el usuario tiene un token JWT válido
+    if (isset($_COOKIE['token'])) {
+        $token = $_COOKIE['token'];
+        $secret_key = 'Project_socialnetwork';
+        try {
+            $decoded = JWT::decode($token . $secret_key, array('HS256'));
+        } catch (Exception $e) {
+            // El token no es válido, puedes redirigir al usuario a la página de inicio de sesión
+            header('Location: inicio-sesion.php');
+            exit();
+        }
+    } else {
+        // El token no está presente en la cookie, redirigir al usuario a la página de inicio de sesión
+        header('Location: inicio-sesion.php');
+        exit();
+    }
+    header('Location: inicio-sesion.php');
+    exit();
+}
+if (isset($_GET['id'])) {
+    $profile_id = $_GET['id'];
+    /*Gestión perfil publico*/
+    $perfil = new Perfil();
+    $userData_P = $perfil->obtenerDatosUsuarioPublico($profile_id);
+    $user_name_p = $userData_P['name'];
+    $user_image_p = $userData_P['imagen_perfil'];
+    /*Gestión publicaciones publico*/
+    $publicacion = new Publicacion();
+    $total_publicaciones_p = $publicacion->obtenerTotalPublicacionesPublic($profile_id);
+    /*Gentión seguido_seguidor publico*/
+    $seguidor_seguido = new Seguidor_Seguido();
+    $totalFollowers_p = $seguidor_seguido->obtenerSeguidoresTotalPublic($profile_id);
+    $totalFollowings_p = $seguidor_seguido->obtenerSeguidosTotalPublic($profile_id);
+
+} else {
+    echo "Hubo un error, intentelo de nuevo";
+}
+
+
 /*Gestión perfiles*/
 $perfil = new Perfil();
 $userData = $perfil->obtenerDatosUsuario();
 $user_name = $userData['name'];
 $user_image = $userData['imagen_perfil'];
-/*Gestión publicaciones*/
-$publicacion = new Publicacion();
-$newpublishingHTML = $publicacion->crearPublicacion();
-$total_publicaciones = $publicacion->obtenerTotalPublicaciones();
-/*Gentión seguido_seguidor*/
-$seguidor_seguido = new Seguidor_Seguido();
-$sugerenciasHTML = $seguidor_seguido->sugerencias();
-$totalFollowers = $seguidor_seguido->obtenerSeguidoresTotal();
-$totalFollowings = $seguidor_seguido->obtenerSeguidosTotal();
-$listFollowers = $seguidor_seguido->obtenerSeguidores();
-$listFollowings = $seguidor_seguido->obtenerSeguidos();
+// /*Gestión publicaciones*/
+// $publicacion = new Publicacion();
+// $newpublishingHTML = $publicacion->crearPublicacion();
+// $total_publicaciones = $publicacion->obtenerTotalPublicaciones();
+// /*Gentión seguido_seguidor*/
+// $seguidor_seguido = new Seguidor_Seguido();
+// $sugerenciasHTML = $seguidor_seguido->sugerencias();
+// $totalFollowers = $seguidor_seguido->obtenerSeguidoresTotal();
+// $totalFollowings = $seguidor_seguido->obtenerSeguidosTotal();
+// $listFollowers = $seguidor_seguido->obtenerSeguidores();
+// $listFollowings = $seguidor_seguido->obtenerSeguidos();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -63,12 +107,12 @@ $listFollowings = $seguidor_seguido->obtenerSeguidos();
         </aside>
         <main class="main">
             <div class="main-cardUser">
-                <div class="userInfo__imgProfile"><img src="<?php echo $user_image; ?>" alt="profile"></div>
+                <div class="userInfo__imgProfile"><img src="<?php echo $user_image_p; ?>" alt="profile"></div>
                 <div class="main-cardUser__info">
                     <div class="info_userInfo">
                         <div class="info-name">
                             <h2>
-                                <?php echo $user_name; ?>
+                                <?php echo $user_name_p; ?>
                             </h2>
                         </div>
                         <div class="btnEdit">
@@ -78,17 +122,17 @@ $listFollowings = $seguidor_seguido->obtenerSeguidos();
                     <div class="info-socialMedia">
                         <div class="info-publishings">
                             <span>Publicaciones<span class="number">
-                                    <?php echo $total_publicaciones; ?>
+                                    <?php echo $total_publicaciones_p; ?>
                                 </span></span>
                         </div>
                         <div class="info-followers">
                             <a>Seguidores<span>
-                                    <?php echo $totalFollowers; ?>
+                                    <?php echo $totalFollowers_p; ?>
                                 </span></a>
                         </div>
                         <div class="info-following">
                             <a>Seguidos<span>
-                                    <?php echo $totalFollowings; ?>
+                                    <?php echo $totalFollowings_p; ?>
                                 </span></a>
                         </div>
                     </div>
@@ -103,7 +147,7 @@ $listFollowings = $seguidor_seguido->obtenerSeguidos();
                     </div>
                     <div class="popup-content__show-users">
                         <?php
-                        $listFollowers = $seguidor_seguido->obtenerSeguidores();
+                        $listFollowers = $seguidor_seguido->obtenerSeguidoresPublico($profile_id);
                         if (!empty($listFollowers)) {
                             foreach ($listFollowers as $follower) {
                                 $seguidor_id = $follower['seguidor_id']; // Obtén el ID del usuario
@@ -152,7 +196,7 @@ $listFollowings = $seguidor_seguido->obtenerSeguidos();
             <div class="publicaciones-container" id="publicaciones-container">
                 <?php
                 $publicacion = new Publicacion();
-                $publicacion->obtenerPublicacionesPerfil();
+                $publicacion->obtenerPublicacionesPerfilPublic($profile_id);
                 ?>
             </div>
     </div>

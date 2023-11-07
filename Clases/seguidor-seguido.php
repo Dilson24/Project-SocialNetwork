@@ -37,8 +37,8 @@ class Seguidor_Seguido
                     $imagen = $row['imagen_perfil'];
                     $usuariosHTML .= '<div class="sidenav__users-follow">';
                     $usuariosHTML .= '<div class="sidenav__info-user">';
-                    $usuariosHTML .= '<a href="../Vistas/perfiles.php?'.$usuario_id.'"><img src="' . $imagen . '" alt="Imagen de perfil"></a>';
-                    $usuariosHTML .= '<a href="../Vistas/perfiles.php?'.$usuario_id.'">' . $nombre . '</a>';
+                    $usuariosHTML .= '<a href="../Vistas/perfiles.php?id='.$usuario_id.'"><img src="' . $imagen . '" alt="Imagen de perfil"></a>';
+                    $usuariosHTML .= '<a href="../Vistas/perfiles.php?id='.$usuario_id.'">' . $nombre . '</a>';
                     $usuariosHTML .= '</div>';
                     $usuariosHTML .= '<a class="follow-button" data-usuario-id="' . $usuario_id . '" href="#"><span>Seguir</span></a>';
                     $usuariosHTML .= '</div>';
@@ -174,6 +174,37 @@ class Seguidor_Seguido
 
         return $seguidores;
     }
+    public function obtenerSeguidoresPublico($profile_id)
+    {
+        // Consulta para obtener la lista de seguidores
+        $query = "SELECT seguidor_id FROM seguidores WHERE usuario_id = $profile_id";
+        $result = $this->connection->query($query);
+
+        $seguidores = array(); // Un arreglo para almacenar los datos de los seguidores
+
+        if ($result) {
+            while ($row = $result->fetch_assoc()) {
+                $seguidor_id = $row['seguidor_id'];
+                // Consulta para obtener los datos del perfil del seguidor
+                $perfil_query = "SELECT name, imagen_perfil FROM perfiles WHERE usuario_id = $seguidor_id";
+                $perfil_result = $this->connection->query($perfil_query);
+
+                if ($perfil_result && $perfil_result->num_rows > 0) {
+                    $perfil_data = $perfil_result->fetch_assoc();
+                    $nombre = $perfil_data['name'];
+                    $imagen_perfil = $perfil_data['imagen_perfil'];
+                    // Agrega los datos del seguidor al arreglo de seguidores
+                    $seguidores[] = array(
+                        'nombre' => $nombre,
+                        'imagen_perfil' => $imagen_perfil,
+                        'seguidor_id' => $seguidor_id
+                    );
+                }
+            }
+        }
+
+        return $seguidores;
+    }
 
     public function obtenerSeguidos()
     {
@@ -235,6 +266,21 @@ class Seguidor_Seguido
             }
         }
     }
+    public function obtenerSeguidoresTotalPublic($profile_id)
+    {
+        $query = "SELECT COUNT(*) AS total_seguidores FROM seguidores WHERE usuario_id = $profile_id";
+        $result = $this->connection->query($query);
+        if ($result) {
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $totalFollowers_p = $row['total_seguidores'];
+                return $totalFollowers_p;
+            } else {
+                // Manejar el error
+                echo "Error: La consulta falló";
+            }
+        }
+    }
 
     public function obtenerSeguidosTotal()
     {
@@ -249,6 +295,21 @@ class Seguidor_Seguido
                 $row = $result->fetch_assoc();
                 $totalFollowing = $row['total_seguidos'];
                 return $totalFollowing;
+            } else {
+                // Manejar el error
+                echo "Error: La consulta falló";
+            }
+        }
+    }
+    public function obtenerSeguidosTotalPublic($profile_id)
+    {
+        $query = "SELECT COUNT(*) AS total_seguidos FROM seguidos WHERE seguidor_id =  $profile_id";
+        $result = $this->connection->query($query);
+        if ($result) {
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $totalFollowing_p = $row['total_seguidos'];
+                return $totalFollowing_p;
             } else {
                 // Manejar el error
                 echo "Error: La consulta falló";
