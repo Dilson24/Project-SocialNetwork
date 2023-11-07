@@ -111,7 +111,7 @@ $listFollowings = $seguidor_seguido->obtenerSeguidos();
                                     <?php echo $totalFollowers; ?>
                                 </span></a>
                         </div>
-                        <div class="info-following">
+                        <div class="info-following" id="info-following">
                             <a>Seguidos<span>
                                     <?php echo $totalFollowings; ?>
                                 </span></a>

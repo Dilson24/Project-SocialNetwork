@@ -123,8 +123,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     var response = JSON.parse(xhr.responseText);
                     if (response.success) {
                         // Actualiza el botón y el total de seguidos en la interfaz
-                        var totalFollowingsElement = document.querySelector(".info-following span");
-                        totalFollowingsElement.textContent = response.total_seguidos;
+                        var totalFollowingsElement = document.querySelector("#info-following span");
+                        if (totalFollowingsElement) {
+                            totalFollowingsElement.textContent = response.total_seguidos;
+                        }
                         if (action === "Unfollow") {
                             // Si se estaba siguiendo al usuario, cambia el botón y el texto
                             button.classList.remove("btnUnfollow");
