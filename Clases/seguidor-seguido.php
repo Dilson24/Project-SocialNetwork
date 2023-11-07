@@ -50,6 +50,43 @@ class Seguidor_Seguido
         return $usuariosHTML;
     }
 
+    public function sugerenciasPopup(){
+        $user_id = $_SESSION['user_id'];
+        // Consulta SQL para seleccionar usuarios sugeridos que el usuario actual no sigue
+        $queryThree = "SELECT p.usuario_id, p.name, p.imagen_perfil
+        FROM perfiles p
+        WHERE p.usuario_id != $user_id 
+        AND NOT EXISTS (
+        SELECT 1
+        FROM seguidores s
+        WHERE s.seguidor_id = $user_id
+        AND s.usuario_id = p.usuario_id
+        )
+        ORDER BY RAND()
+        LIMIT 10";
+        $resultThree = $this->connection->query($queryThree);
+        $usuariosHTML = '';
+        if ($resultThree) {
+            if ($resultThree->num_rows > 0) {
+                while ($row = $resultThree->fetch_assoc()) {
+                    $usuario_id = $row['usuario_id'];
+                    $nombre = $row['name'];
+                    $imagen = $row['imagen_perfil'];
+                    $usuariosHTML .= '<div class="show-users" id="' . $usuario_id . '">';
+                    $usuariosHTML .= '<div class="show-users_info">';
+                    $usuariosHTML .= '<a class="show-users_profilImg" href="../Vistas/perfiles.php?id=' . $usuario_id . '"><img src="' . $imagen . '" alt="Imagen de perfil"></a>';
+                    $usuariosHTML .= '<a class="show-users_profile" href="../Vistas/perfiles.php?id=' . $usuario_id . '">' . $nombre . '</a>';
+                    $usuariosHTML .= '</div>';
+                    $usuariosHTML .= '<button data-id="' . $usuario_id . '" class="btnFollow">Seguir</button>';
+                    $usuariosHTML .= '</div>';
+                }
+            } else {
+                echo "No se encontraron usuarios.";
+            }
+        }
+        return $usuariosHTML;
+    }
+
     public function obtenerSeguidoresTotal()
     {
         if (session_status() == PHP_SESSION_NONE) {

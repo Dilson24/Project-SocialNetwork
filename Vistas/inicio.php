@@ -37,6 +37,7 @@ $newpublishingHTML = $publicacion->crearPublicacion();
 /*Gentión seguido_seguidor*/
 $seguidor_seguido = new Seguidor_Seguido();
 $sugerenciasHTML = $seguidor_seguido->sugerencias();
+$sugerenciasPopupHTML = $seguidor_seguido->sugerenciasPopup();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -48,7 +49,7 @@ $sugerenciasHTML = $seguidor_seguido->sugerencias();
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="../Css/inicio.css">
-    <title>Profile</title>
+    <title>Red Social Net</title>
 </head>
 
 <body>
@@ -68,7 +69,7 @@ $sugerenciasHTML = $seguidor_seguido->sugerencias();
             <div class="sidenav__users-profiles">
                 <div class="sidenav__text">
                     <span>Descubre nuevas conexiones</span>
-                    <a href="#">Ver todo</a>
+                    <a id="showAllUsers">Ver todo</a>
                 </div>
                 <div class="sidenav__follow">
                     <?php echo $sugerenciasHTML; ?>
@@ -134,6 +135,20 @@ $sugerenciasHTML = $seguidor_seguido->sugerencias();
                 $publicaciones = new Publicacion();
                 $publicaciones->obtenerPublicacionesPaginaInicio();
                 ?>
+            </div>
+            <div class="popup-f" id="show_sugerencias">
+                <div class="popup-content-f">
+                    <span class="popup-content__close" id="close_suggestions"><i class="fa-solid fa-xmark"></i></span>
+                    <div class="popup-content__title">
+                        <h3>Seguerencias</h3>
+                        <div class="popup-content__line"></div>
+                    </div>
+                    <div class="popup-content__show-users">
+                        <?php
+                            echo $sugerenciasPopupHTML;
+                        ?>
+                    </div>
+                </div>
             </div>
         </main>
     </div>

@@ -224,7 +224,10 @@ document.addEventListener("DOMContentLoaded", function () {
     btnCrear.addEventListener("click", function () {
         openPopup("popup_create");
     });
-
+    const btnShowAllUsers = document.getElementById("showAllUsers");
+    btnShowAllUsers.addEventListener("click", function () {
+        openPopup("show_sugerencias");
+    })
     const createNewContentTwo = document.querySelector(".icons__new-image");
     createNewContentTwo.addEventListener("click", function () {
         openPopup("popup_create");
@@ -235,6 +238,13 @@ document.addEventListener("DOMContentLoaded", function () {
     if (closeButtonCreate) {
         closeButtonCreate.addEventListener("click", function () {
             closePopup("popup_create");
+        });
+    }
+
+    const closeButtonSuggestions = document.getElementById("close_suggestions");
+    if (closeButtonSuggestions) {
+        closeButtonSuggestions.addEventListener("click", function () {
+            closePopup("show_sugerencias");
         });
     }
 
@@ -361,4 +371,56 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    // Follow Buttons Suggestions
+    // Función para manejar el seguimiento (Follow/Unfollow) de un usuario
+    function toggleFollow(button) {
+        // Obtiene el ID del usuario desde el atributo "data-id" del botón
+        var usuario_id = button.getAttribute("data-id");
+
+        // Determina si se debe realizar un seguimiento o dejar de seguir
+        var action = button.classList.contains("btnFollow") ? "Follow" : "Unfollow";
+
+        // Crea una solicitud AJAX
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", '../Clases/seguidor-seguido.php?' + action, true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        // Maneja la respuesta de la solicitud
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    if (response.success) {
+
+                        if (action === "Follow") {
+                            // Si se estaba siguiendo al usuario, cambia el botón y el texto
+                            button.classList.remove("btnFollow");
+                            button.classList.add("btnUnfollow");
+                            button.textContent = "Dejar de seguir";
+                        } else {
+                            // Si no se estaba siguiendo al usuario, cambia el botón y el texto
+                            button.classList.remove("btnUnfollow");
+                            button.classList.add("btnFollow");
+                            button.textContent = "Seguir";
+                        }
+                        console.log(response.message);
+                    } else {
+                        console.log("Error al cambiar el estado de seguimiento");
+                    }
+                } else {
+                    console.error("Error en la solicitud AJAX: " + xhr.statusText);
+                }
+            }
+        };
+
+        // Envía el ID del usuario al servidor
+        xhr.send("usuario_id=" + usuario_id);
+    }
+    // Agregar evento de clic a los botones de seguimiento (Follow/Unfollow)
+    document.querySelectorAll(".btnFollow, .btnUnfollow").forEach(function (button) {
+        // Cuando se hace clic en un botón, llama a la función toggleFollow
+        button.addEventListener("click", function () {
+            toggleFollow(this);
+        });
+    });
 });
