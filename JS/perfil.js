@@ -60,6 +60,16 @@ document.addEventListener("DOMContentLoaded", function () {
         closePopup("showFollowings");
     });
 
+    const btnShowpCardProfile = document.getElementById("btnEdit");
+    btnShowpCardProfile.addEventListener("click", function (){
+        openPopup("showprofile");
+    });
+
+    const closeCardProfile = document.getElementById("close_profile_card");
+    closeCardProfile.addEventListener("click", function(){
+        closePopup("showprofile");
+    });
+
     // Agrega un evento al contenedor de publicaciones
     const publicacionesContainer = document.getElementById("publicaciones-container");
     publicacionesContainer.addEventListener('click', function (event) {
@@ -83,10 +93,24 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             });
         });
-
-
     });
+    // Prewiew image
+    const input = document.getElementById('profile-picture');
+        const preview = document.getElementById('preview-image');
 
+        input.addEventListener('change', function () {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                // Si no se selecciona ningún archivo, puedes mostrar una imagen por defecto o dejarla vacía.
+                preview.src = '../Img/User-Profile.png';
+            }
+        });
     //Manejo de solioitudes
     // Logout Button
     var logoutButton = document.getElementById("logoutButton");

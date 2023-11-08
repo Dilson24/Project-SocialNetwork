@@ -181,6 +181,7 @@ $listFollowings = $seguidor_seguido->obtenerSeguidos();
             </div>
             <div class="popup-p" id="showprofile">
                 <div class="profile-card">
+                    <span class="popup-content__close" id="close_profile_card"><i class="fa-solid fa-xmark"></i></span>
                     <div class="edit-info">
                         <div class="profile-image">
                             <img src="../Img/User-Profile.png" id="preview-image" alt="User Image">

@@ -227,7 +227,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const btnShowAllUsers = document.getElementById("showAllUsers");
     btnShowAllUsers.addEventListener("click", function () {
         openPopup("show_sugerencias");
-    })
+    });
     const createNewContentTwo = document.querySelector(".icons__new-image");
     createNewContentTwo.addEventListener("click", function () {
         openPopup("popup_create");
