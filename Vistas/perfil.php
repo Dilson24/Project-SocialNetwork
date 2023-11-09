@@ -184,21 +184,21 @@ $listFollowings = $seguidor_seguido->obtenerSeguidos();
                     <span class="popup-content__close" id="close_profile_card"><i class="fa-solid fa-xmark"></i></span>
                     <div class="edit-info">
                         <div class="profile-image">
-                            <img src="../Img/User-Profile.png" id="preview-image" alt="User Image">
+                            <img src="<?php echo $user_image; ?>" id="preview-image" alt="User Image">
                             <input type="file" id="profile-picture" accept="image/*">
                             <label for="profile-picture">Cambiar Foto</label>
                         </div>
                         <div class="edit-group">
                             <label for="first-name" class="text">Nombre:</label>
-                            <input class="edit-input" type="text" id="first-name" placeholder="Nombre">
+                            <input class="edit-input" name="name" type="text" id="first-name" placeholder="Nombre">
                         </div>
                         <div class="edit-group">
                             <label for="last-name" class="text">Apellido:</label>
-                            <input class="edit-input" type="text" id="last-name" placeholder="Apellido">
+                            <input class="edit-input" name="lastName" type="text" id="last-name" placeholder="Apellido">
                         </div>
                         <div class="edit-group">
                             <label for="birthdate" class="text">Fecha de nacimiento:</label>
-                            <input class="edit-input" type="date" id="birthdate" placeholder="Fecha de nacimiento">
+                            <input class="edit-input" name="dateOfBirth" type="date" id="birthdate" placeholder="Fecha de nacimiento">
                         </div>
                         <div class="edit-group">
                             <label for="country" class="text">País:</label>
@@ -220,40 +220,23 @@ $listFollowings = $seguidor_seguido->obtenerSeguidos();
                         </div>
                         <div class="edit-group">
                             <label for="email" class="text">Email:</label>
-                            <input class="edit-input" type="email" id="email" placeholder="Email">
+                            <input class="edit-input" name="email" type="email" id="email" placeholder="Email">
                         </div>
                         <div class="edit-group">
                             <label for="password" class="text">Contraseña:</label>
-                            <input class="edit-input" type="password" id="password" placeholder="Contraseña">
+                            <input class="edit-input" name="password" type="password" id="password" placeholder="Contraseña">
                         </div>
                         <button class="update-button" id="update-button">Actualizar datos</button>
                         <button class="delete-button" id="delete-button">Eliminar Cuenta</button>
-
                     </div>
                 </div>
             </div>
 
         </main>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="../JS/perfil.js"></script>
-    <script>
-        const input = document.getElementById('profile-picture');
-        const preview = document.getElementById('preview-image');
-
-        input.addEventListener('change', function () {
-            const file = input.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    preview.src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            } else {
-                // Si no se selecciona ningún archivo, puedes mostrar una imagen por defecto o dejarla vacía.
-                preview.src = '../Img/User-Profile.png';
-            }
-        });
-    </script>
+    <script src="../JS/register.js"></script>
 </body>
 
 </html>

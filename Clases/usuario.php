@@ -8,7 +8,7 @@ class Usuario
     private $db;
     private $connection;
 
-    public function __construct($connection)
+    public function __construct()
     {
         $this->db = Database::getInstance();
         $this->connection = $this->db->getConnection();
@@ -127,13 +127,14 @@ class Usuario
     }
 }
 
-$usuario = new Usuario($connection);
+$usuario = new Usuario();
 
 if (isset($_GET['register'])) {
     $usuario->registrar();
-} elseif (isset($_GET['logout'])) {
-    $usuario->logout();
 } else {
     $usuario->iniciar_sesion();
+}
+if (isset($_GET['logout'])) {
+    $usuario->logout();
 }
 ?>

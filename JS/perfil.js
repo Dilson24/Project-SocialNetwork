@@ -38,6 +38,20 @@ function closePopupPublishing() {
     }
 }
 
+// Función para restablecer valores
+function restablecerValores() {
+    // Obtén todos los campos
+    document.getElementById("first-name").value = "";
+    document.getElementById("last-name").value = "";
+    document.getElementById("birthdate").value = "";
+    document.getElementById("country").value = "";
+    document.getElementById("city").value = "";
+    document.getElementById("email").value = "";
+    document.getElementById("password").value = "";
+    document.getElementById("profile-picture").value = "";
+    closePopup("showprofile");
+}
+
 // Agregar eventos y controladores de clic
 document.addEventListener("DOMContentLoaded", function () {
     const showFollowers = document.querySelector(".info-followers");
@@ -61,12 +75,12 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     const btnShowpCardProfile = document.getElementById("btnEdit");
-    btnShowpCardProfile.addEventListener("click", function (){
+    btnShowpCardProfile.addEventListener("click", function () {
         openPopup("showprofile");
     });
 
     const closeCardProfile = document.getElementById("close_profile_card");
-    closeCardProfile.addEventListener("click", function(){
+    closeCardProfile.addEventListener("click", function () {
         closePopup("showprofile");
     });
 
@@ -96,21 +110,21 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     // Prewiew image
     const input = document.getElementById('profile-picture');
-        const preview = document.getElementById('preview-image');
+    const preview = document.getElementById('preview-image');
 
-        input.addEventListener('change', function () {
-            const file = input.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    preview.src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            } else {
-                // Si no se selecciona ningún archivo, puedes mostrar una imagen por defecto o dejarla vacía.
-                preview.src = '../Img/User-Profile.png';
-            }
-        });
+    input.addEventListener('change', function () {
+        const file = input.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                preview.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        } else {
+            // Si no se selecciona ningún archivo, puedes mostrar una imagen por defecto o dejarla vacía.
+            preview.src = '../Img/User-Profile.png';
+        }
+    });
     //Manejo de solioitudes
     // Logout Button
     var logoutButton = document.getElementById("logoutButton");
@@ -183,6 +197,67 @@ document.addEventListener("DOMContentLoaded", function () {
             toggleFollow(this);
         });
     });
+    // Update profile 
+    var updateProfile = document.getElementById("update-button");
+    if (updateProfile) {
+        updateProfile.addEventListener("click", function () {
+            var xhr = new XMLHttpRequest();
+            var formData = new FormData();
+
+            // Obtén todos los campos
+            var name = document.getElementById("first-name").value;
+            var lastName = document.getElementById("last-name").value;
+            var dateOfBirth = document.getElementById("birthdate").value;
+            var country = document.getElementById("country").value;
+            var city = document.getElementById("city").value;
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+
+            // Agrega los campos no nulos al FormData
+            if (name) formData.append("name", name);
+            if (lastName) formData.append("lastName", lastName);
+            if (dateOfBirth) formData.append("dateOfBirth", dateOfBirth);
+            if (country) formData.append("country", country);
+            if (city) formData.append("city", city);
+            if (email) formData.append("email", email);
+            if (password) formData.append("password", password);
+
+            // Agrega la imagen solo si se ha seleccionado
+            var imageInput = document.getElementById("profile-picture");
+            if (imageInput.files.length > 0) {
+                formData.append("image_profile", imageInput.files[0]);
+            }
+            // Mostrar el contenido de FormData en la consola
+            console.log("Contenido de FormData:");
+            for (let pair of formData.entries()) {
+                console.log(pair[0] + ', ' + pair[1]);
+            }
+            // Envía la solicitud AJAX
+            xhr.open("POST", '../Clases/perfil.php?update', true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        // Maneja la respuesta del servidor
+                        var response = JSON.parse(xhr.responseText);
+                        if (response.success) {
+                            console.log(response.message);
+                            restablecerValores()
+                            if (response.data) {
+                                console.log("Datos modificados:", response.data);
+                                // Realiza acciones adicionales si es necesario
+                            }
+                        } else {
+                            console.log(response.message);
+                        }
+                    } else {
+                        console.log("Error en la solicitud AJAX: " + xhr.statusText);
+                    }
+                }
+            };
+            xhr.send(formData);
+            console
+        });
+    }
 
 });
 

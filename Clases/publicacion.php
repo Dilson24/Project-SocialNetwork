@@ -67,9 +67,6 @@ class Publicacion
     public function subirDatos()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $perfil = new Perfil();
-            $userData = $perfil->obtenerDatosUsuario();
-            $user_name = $userData['name'];
             // Asegúrate de que la sesión esté iniciada antes de intentar acceder a $_SESSION
             if (session_status() == PHP_SESSION_NONE) {
                 session_start();
@@ -81,7 +78,7 @@ class Publicacion
 
             // Verifica si se ha enviado una imagen
             if (isset($_FILES['imagen_ruta'])) {
-                $this->subirImagen($user_name, $usuario_id, $texto);
+                $this->subirImagen($usuario_id, $texto);
             } else {
                 $this->guardarPublicacion($usuario_id, $texto);
             }
@@ -90,9 +87,9 @@ class Publicacion
     }
 
     // Función para procesar la imagen enviada
-    private function subirImagen($user_name, $usuario_id, $texto)
+    private function subirImagen($usuario_id, $texto)
     {
-        $directorio_usuario = '../Img/' . $user_name . '-' . $usuario_id . '/';
+        $directorio_usuario = '../Img/Perfil_ID__' . $usuario_id . '/';
 
         // Verifica si el directorio del usuario ya existe, si no, créalo
         if (!file_exists($directorio_usuario)) {
@@ -100,7 +97,8 @@ class Publicacion
         }
 
         $nombre_archivo_original = $_FILES['imagen_ruta']['name']; // Obtenemos el nombre original del archivo
-        $nombre_archivo = $this->generarNombreArchivo($nombre_archivo_original); // Generamos un nombre único
+        $extension = pathinfo($nombre_archivo_original, PATHINFO_EXTENSION);
+        $nombre_archivo = uniqid() . '.' . $extension; // Generamos un nombre único
         $ruta_archivo = $directorio_usuario . $nombre_archivo;
 
         if (move_uploaded_file($_FILES['imagen_ruta']['tmp_name'], $ruta_archivo)) {
@@ -109,16 +107,6 @@ class Publicacion
         } else {
             return array('success' => false, 'message' => 'Error al subir la imagen');
         }
-    }
-
-    // Función para cambiar el nombre del archivo subido
-    private function generarNombreArchivo($nombreArchivoOriginal)
-    {
-        // Extrae la extensión del archivo original
-        $extension = pathinfo($nombreArchivoOriginal, PATHINFO_EXTENSION);
-
-        // Genera un nombre único para el archivo utilizando uniqid() y agrega la extensión
-        return uniqid() . '.' . $extension;
     }
 
     // Función para hacer la inserción en la BD
