@@ -256,7 +256,6 @@ class Perfil
         // Lógica para obtener el directorio y generar un nombre de archivo único (mismo que en subirImagen).
         $directorio_usuario = '../Img/Perfil_ID__' . $user_id . '/';
 
-
         // Verifica si el directorio del usuario ya existe, si no, créalo
         if (!file_exists($directorio_usuario)) {
             mkdir($directorio_usuario, 0777, true);
