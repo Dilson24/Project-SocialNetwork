@@ -21,8 +21,8 @@ class Usuario
             $email = $_POST['email'];
             $password = $_POST['password'];
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-            // Paso 1: Insertar email y contraseña en la tabla de `usuario`
-            $query = "INSERT INTO usuario (email, password) VALUES (?, ?)";
+            // Paso 1: Insertar email,contraseña y el estado en la tabla de `usuario`
+            $query = "INSERT INTO usuario (email, password, state) VALUES (?,?,'Activo')";
             $stmt = $this->connection->prepare($query); // Cambiado de $connection a $this->connection
             $stmt->bind_param("ss", $email, $hashedPassword);
 
