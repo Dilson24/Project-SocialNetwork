@@ -215,6 +215,11 @@ function closePopupPublishing() {
 
 // Agregar eventos y controladores de clic
 document.addEventListener("DOMContentLoaded", function () {
+     // Verificar si hay un fragmento en la URL
+     if (window.location.hash === "#crear") {
+        // Activar el controlador
+        openPopup("popup_create");
+    }
     const createNewContent = document.querySelector(".create__new-content");
     createNewContent.addEventListener("click", function () {
         openPopup("popup_create");
@@ -227,7 +232,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const btnShowAllUsers = document.getElementById("showAllUsers");
     btnShowAllUsers.addEventListener("click", function () {
         openPopup("show_sugerencias");
-    })
+    });
     const createNewContentTwo = document.querySelector(".icons__new-image");
     createNewContentTwo.addEventListener("click", function () {
         openPopup("popup_create");

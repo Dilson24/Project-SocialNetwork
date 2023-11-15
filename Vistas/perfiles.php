@@ -81,7 +81,7 @@ $user_image = $userData['imagen_perfil'];
                 <a href="#">
                     <li class="sidenav__list-item"><i class="fa-solid fa-heart"></i>Notificaciones</li>
                 </a>
-                <a href="#">
+                <a href="../Vistas/inicio.php#crear">
                     <li class="sidenav__list-item"><i class="fa-solid fa-square-plus"></i>Crear</li>
                 </a>
                 <a href="../Vistas/perfil.php">

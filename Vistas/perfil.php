@@ -75,7 +75,7 @@ $listFollowings = $seguidor_seguido->obtenerSeguidos();
                 <a href="#">
                     <li class="sidenav__list-item"><i class="fa-solid fa-heart"></i>Notificaciones</li>
                 </a>
-                <a href="#">
+                <a href="../Vistas/inicio.php#crear">
                     <li class="sidenav__list-item"><i class="fa-solid fa-square-plus"></i>Crear</li>
                 </a>
                 <a href="../Vistas/perfil.php">
@@ -180,11 +180,77 @@ $listFollowings = $seguidor_seguido->obtenerSeguidos();
                 $publicacion->obtenerPublicacionesPerfil();
                 ?>
             </div>
+            <div class="popup-p" id="showprofile">
+                <div class="profile-card">
+                    <span class="popup-content__close" id="close_profile_card"><i class="fa-solid fa-xmark"></i></span>
+                    <div class="edit-info">
+                        <div class="profile-image">
+                            <img src="<?php echo $user_image; ?>" id="preview-image" alt="User Image">
+                            <input type="file" id="profile-picture" accept="image/*">
+                            <label for="profile-picture">Cambiar Foto</label>
+                        </div>
+                        <div class="edit-group">
+                            <label for="first-name" class="text">Nombre:</label>
+                            <input class="edit-input" name="name" type="text" id="first-name" placeholder="Nombre">
+                        </div>
+                        <div class="edit-group">
+                            <label for="last-name" class="text">Apellido:</label>
+                            <input class="edit-input" name="lastName" type="text" id="last-name" placeholder="Apellido">
+                        </div>
+                        <div class="edit-group">
+                            <label for="birthdate" class="text">Fecha de nacimiento:</label>
+                            <input class="edit-input" name="dateOfBirth" type="date" id="birthdate"
+                                placeholder="Fecha de nacimiento">
+                        </div>
+                        <div class="edit-group">
+                            <label for="country" class="text">País:</label>
+                            <select id="country" class="edit-input" name="country" required="required">
+                                <option value="">-- País --</option>
+                            </select>
+                        </div>
+                        <div class="edit-group">
+                            <label for="region" class="text">Región:</label>
+                            <select id="region" class="edit-input">
+                                <option value="">-- Región --</option>
+                            </select>
+                        </div>
+                        <div class="edit-group">
+                            <label for="city" class="text">Ciudad:</label>
+                            <select id="city" class="edit-input" name="city" required="required">
+                                <option value="">-- Ciudad --</option>
+                            </select>
+                        </div>
+                        <div class="edit-group">
+                            <label for="email" class="text">Email:</label>
+                            <input class="edit-input" name="email" type="email" id="email" placeholder="Email">
+                        </div>
+                        <div class="edit-group">
+                            <label for="password" class="text">Contraseña:</label>
+                            <input class="edit-input" name="password" type="password" id="password"
+                                placeholder="Contraseña">
+                        </div>
+                        <button class="update-button" id="update-button">Actualizar datos</button>
+                        <button class="delete-button" id="delete-button">Eliminar Perfil</button>
+                    </div>
+                </div>
+            </div>
+            <div id="modal" class="modal">
+                <div class="modal-content">
+                    <span class="popup-content__close" id="close_info"><i class="fa-solid fa-xmark"></i></span>
+                    <h4 class="modal_title">Digite su contraseña para confirmar</h4>
+                    <div class="edit-group">
+                        <label for="password" class="text">Contraseña:</label>
+                        <input class="edit-input" name="password" type="password" id="password-confirm"
+                            placeholder="Contraseña">
+                    </div>
+                    <button class="update-button" id="btn-confirm">Enviar</button>
+                </div>
+            </div>
+        </main>
     </div>
-
-    </main>
-    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="../JS/perfil.js"></script>
+    <script src="../JS/register.js"></script>
 </body>
 
 </html>

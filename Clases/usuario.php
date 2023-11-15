@@ -8,7 +8,7 @@ class Usuario
     private $db;
     private $connection;
 
-    public function __construct($connection)
+    public function __construct()
     {
         $this->db = Database::getInstance();
         $this->connection = $this->db->getConnection();
@@ -21,8 +21,8 @@ class Usuario
             $email = $_POST['email'];
             $password = $_POST['password'];
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-            // Paso 1: Insertar email y contraseña en la tabla de `usuario`
-            $query = "INSERT INTO usuario (email, password) VALUES (?, ?)";
+            // Paso 1: Insertar email,contraseña y el estado en la tabla de `usuario`
+            $query = "INSERT INTO usuario (email, password, state) VALUES (?,?,'Activo')";
             $stmt = $this->connection->prepare($query); // Cambiado de $connection a $this->connection
             $stmt->bind_param("ss", $email, $hashedPassword);
 
@@ -83,32 +83,40 @@ class Usuario
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $email = $_POST['Email'];
             $password = $_POST['password'];
-            // Verificar las credenciales en la tabla de 'usuario'
-            $query = "SELECT usuario_id, email, password FROM usuario WHERE email = ?";
+            // Verificar las credenciales en la tabla de 'usuario' con el estado 'Activo'
+            $query = "SELECT usuario_id, email, password, state FROM usuario WHERE email = ?";
             $stmt = $connection->prepare($query);
             $stmt->bind_param("s", $email);
             $stmt->execute();
             $result = $stmt->get_result();
 
             if ($result->num_rows === 1) {
-                // El usuario con el correo electrónico proporcionado fue encontrado
+                // Usuario encontrado
                 $row = $result->fetch_assoc();
-                $storedPassword = $row['password'];
 
-                if (password_verify($password, $storedPassword)) {
-                    // La contraseña es correcta
-                    $_SESSION['user_id'] = $row['usuario_id'];
+                if ($row['state'] === 'Activo') {
+                    // El usuario está activo
+                    $storedPassword = $row['password'];
 
-                    // Generar el token JWT usando la función separada
-                    $token = $this->generarTokenJWT($row['usuario_id'], $row['email']);
+                    if (password_verify($password, $storedPassword)) {
+                        // Contraseña correcta
+                        $_SESSION['user_id'] = $row['usuario_id'];
 
-                    // Guardar el token en una cookie
-                    setcookie('token', $token, time() + 3600, '/');
-                    header('Location: ../Vistas/inicio.php'); // Redirigir al perfil del usuario
-                    exit();
+                        // Generar el token JWT usando la función separada
+                        $token = $this->generarTokenJWT($row['usuario_id'], $row['email']);
+
+                        // Guardar el token en una cookie
+                        setcookie('token', $token, time() + 3600, '/');
+                        header('Location: ../Vistas/inicio.php'); // Redirigir al perfil del usuario
+                        exit();
+                    } else {
+                        // Contraseña incorrecta
+                        echo "<script>alert('Contraseña incorrecta. Inténtalo de nuevo.');";
+                        echo "window.location = '../Vistas/inicio-sesion.php';</script>";
+                    }
                 } else {
-                    // Contraseña incorrecta
-                    echo "<script>alert('Contraseña incorrecta. Inténtalo de nuevo.');";
+                    // Usuario no está activo
+                    echo "<script>alert('Usuario inactivo. Enviá un correo a adminExample@RSN.com solicitando tu reactivación.');";
                     echo "window.location = '../Vistas/inicio-sesion.php';</script>";
                 }
             } else {
@@ -118,6 +126,7 @@ class Usuario
             }
         }
     }
+
     public function logout()
     {
         session_start();
@@ -127,13 +136,14 @@ class Usuario
     }
 }
 
-$usuario = new Usuario($connection);
+$usuario = new Usuario();
 
 if (isset($_GET['register'])) {
     $usuario->registrar();
-} elseif (isset($_GET['logout'])) {
-    $usuario->logout();
 } else {
     $usuario->iniciar_sesion();
+}
+if (isset($_GET['logout'])) {
+    $usuario->logout();
 }
 ?>
