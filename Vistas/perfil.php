@@ -75,7 +75,7 @@ $listFollowings = $seguidor_seguido->obtenerSeguidos();
                 <a href="#">
                     <li class="sidenav__list-item"><i class="fa-solid fa-heart"></i>Notificaciones</li>
                 </a>
-                <a href="#">
+                <a href="../Vistas/inicio.php#crear">
                     <li class="sidenav__list-item"><i class="fa-solid fa-square-plus"></i>Crear</li>
                 </a>
                 <a href="../Vistas/perfil.php">
@@ -176,7 +176,8 @@ $listFollowings = $seguidor_seguido->obtenerSeguidos();
             </div>
             <div class="publicaciones-container" id="publicaciones-container">
                 <?php
-
+                $publicacion = new Publicacion();
+                $publicacion->obtenerPublicacionesPerfil();
                 ?>
             </div>
             <div class="popup-p" id="showprofile">
