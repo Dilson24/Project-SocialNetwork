@@ -245,12 +245,6 @@ class Perfil
         echo json_encode(['success' => false, 'message' => 'No hay campos para actualizar']);
         exit();
     }
-
-
-
-
-
-
     private function procesarImagen($user_id, $imagen)
     {
         // Lógica para obtener el directorio y generar un nombre de archivo único (mismo que en subirImagen).
@@ -273,10 +267,55 @@ class Perfil
             return false;
         }
     }
+
+
+
+    public function deleteUser()
+{
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+    $user_id = $_SESSION['user_id'];
+    // Obtén la contraseña del formulario
+    $password = $_POST['password'];
+    // Inicializa $hashed_password con un valor predeterminado
+    $hashed_password = null;
+
+    // Obtén la contraseña almacenada en la base de datos
+    $query = "SELECT password FROM usuario WHERE usuario_id = ?";
+    $stmt = $this->connection->prepare($query);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $stmt->bind_result($hashed_password);
+    $stmt->fetch();
+    $stmt->close();
+
+    // Verifica la contraseña
+    if (!is_null($hashed_password) && password_verify($password, $hashed_password)) {
+        // Contraseña válida, procede con la eliminación
+        $query = "UPDATE usuario SET state = 'Inactivo' WHERE usuario_id = ?";
+        $stmt = $this->connection->prepare($query);
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $stmt->close();
+        // Envía una respuesta JSON indicando éxito
+        echo json_encode(["success" => true]);
+    } else {
+        // Contraseña incorrecta
+        // Envía una respuesta JSON indicando fallo
+        echo json_encode(["success" => false, "message" => "Contraseña incorrecta, intentelo de nuevo"]);
+    }
+}
+
+
+
 }
 
 $perfil = new Perfil();
 if (isset($_GET['update'])) {
     $perfil->updateUser();
+}
+if (isset($_GET['delete'])) {
+    $perfil->deleteUser();
 }
 ?>

@@ -84,6 +84,11 @@ document.addEventListener("DOMContentLoaded", function () {
         closePopup("showprofile");
     });
 
+    const closeModal = document.getElementById("close_info");
+    closeModal.addEventListener("click", function () {
+        closePopup("modal");
+    });
+
     // Agrega un evento al contenedor de publicaciones
     const publicacionesContainer = document.getElementById("publicaciones-container");
     publicacionesContainer.addEventListener('click', function (event) {
@@ -258,6 +263,47 @@ document.addEventListener("DOMContentLoaded", function () {
             console
         });
     }
+
+    // Delete button
+    var deleteProfile = document.getElementById("delete-button");
+    if (deleteProfile) {
+        deleteProfile.addEventListener("click", function () {
+            var confirmDelete = confirm("¿Estás seguro de que deseas eliminar tu perfil?");
+            if (confirmDelete) {
+                openPopup("modal");
+                closePopup("showprofile");
+            }
+        });
+    }
+
+    var confirmBtn = document.getElementById("btn-confirm");
+    if (confirmBtn) {
+        confirmBtn.addEventListener("click", function () {
+            var password = document.getElementById("password-confirm").value;
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", '../Clases/perfil.php?delete', true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    // Procesar la respuesta JSON
+                    var response = JSON.parse(xhr.responseText);
+
+                    // Mostrar la alerta según la respuesta del servidor
+                    if (response.success) {
+                        window.location = '../index.php';
+                    } else {
+                        // Fallo, muestra la alerta
+                        alert(response.message);
+                        document.getElementById("password-confirm").value = "";
+                        closePopup("modal");
+                    }
+                }
+            };
+            // Enviar la solicitud con la contraseña como parámetro
+            xhr.send("password=" + password);
+        });
+    }
+
 
 });
 

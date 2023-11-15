@@ -557,7 +557,7 @@ body {
     overflow-y: auto;
 }
 
-.edit-info{
+.edit-info {
     display: flex;
     justify-content: space-between;
     flex-direction: column;
@@ -575,7 +575,7 @@ body {
     border-radius: 50%;
     position: relative;
     overflow: hidden;
-    margin:10px;
+    margin: 10px;
     border: 2px solid #007bff;
 }
 
@@ -691,5 +691,34 @@ select.edit-input {
 }
 
 .delete-button:hover {
-    filter: opacity(80%);;
+    filter: opacity(80%);
+    ;
+}
+
+/*Modal*/
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+.modal_title{
+    margin-top: 6px;
 }

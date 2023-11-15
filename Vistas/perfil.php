@@ -198,7 +198,8 @@ $listFollowings = $seguidor_seguido->obtenerSeguidos();
                         </div>
                         <div class="edit-group">
                             <label for="birthdate" class="text">Fecha de nacimiento:</label>
-                            <input class="edit-input" name="dateOfBirth" type="date" id="birthdate" placeholder="Fecha de nacimiento">
+                            <input class="edit-input" name="dateOfBirth" type="date" id="birthdate"
+                                placeholder="Fecha de nacimiento">
                         </div>
                         <div class="edit-group">
                             <label for="country" class="text">País:</label>
@@ -224,14 +225,26 @@ $listFollowings = $seguidor_seguido->obtenerSeguidos();
                         </div>
                         <div class="edit-group">
                             <label for="password" class="text">Contraseña:</label>
-                            <input class="edit-input" name="password" type="password" id="password" placeholder="Contraseña">
+                            <input class="edit-input" name="password" type="password" id="password"
+                                placeholder="Contraseña">
                         </div>
                         <button class="update-button" id="update-button">Actualizar datos</button>
-                        <button class="delete-button" id="delete-button">Eliminar Cuenta</button>
+                        <button class="delete-button" id="delete-button">Eliminar Perfil</button>
                     </div>
                 </div>
             </div>
-
+            <div id="modal" class="modal">
+                <div class="modal-content">
+                    <span class="popup-content__close" id="close_info"><i class="fa-solid fa-xmark"></i></span>
+                    <h4 class="modal_title">Digite su contraseña para confirmar</h4>
+                    <div class="edit-group">
+                        <label for="password" class="text">Contraseña:</label>
+                        <input class="edit-input" name="password" type="password" id="password-confirm"
+                            placeholder="Contraseña">
+                    </div>
+                    <button class="update-button" id="btn-confirm">Enviar</button>
+                </div>
+            </div>
         </main>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

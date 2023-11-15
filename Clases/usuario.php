@@ -76,57 +76,56 @@ class Usuario
     }
 
     public function iniciar_sesion()
-{
-    session_start();
-    $db = Database::getInstance();
-    $connection = $db->getConnection();
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $email = $_POST['Email'];
-        $password = $_POST['password'];
-        
-        // Verificar las credenciales en la tabla de 'usuario' con el estado 'Activo'
-        $query = "SELECT usuario_id, email, password, state FROM usuario WHERE email = ?";
-        $stmt = $connection->prepare($query);
-        $stmt->bind_param("s", $email);
-        $stmt->execute();
-        $result = $stmt->get_result();
+    {
+        session_start();
+        $db = Database::getInstance();
+        $connection = $db->getConnection();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $email = $_POST['Email'];
+            $password = $_POST['password'];
+            // Verificar las credenciales en la tabla de 'usuario' con el estado 'Activo'
+            $query = "SELECT usuario_id, email, password, state FROM usuario WHERE email = ?";
+            $stmt = $connection->prepare($query);
+            $stmt->bind_param("s", $email);
+            $stmt->execute();
+            $result = $stmt->get_result();
 
-        if ($result->num_rows === 1) {
-            // Usuario encontrado
-            $row = $result->fetch_assoc();
+            if ($result->num_rows === 1) {
+                // Usuario encontrado
+                $row = $result->fetch_assoc();
 
-            if ($row['state'] === 'Activo') {
-                // El usuario está activo
-                $storedPassword = $row['password'];
+                if ($row['state'] === 'Activo') {
+                    // El usuario está activo
+                    $storedPassword = $row['password'];
 
-                if (password_verify($password, $storedPassword)) {
-                    // Contraseña correcta
-                    $_SESSION['user_id'] = $row['usuario_id'];
+                    if (password_verify($password, $storedPassword)) {
+                        // Contraseña correcta
+                        $_SESSION['user_id'] = $row['usuario_id'];
 
-                    // Generar el token JWT usando la función separada
-                    $token = $this->generarTokenJWT($row['usuario_id'], $row['email']);
+                        // Generar el token JWT usando la función separada
+                        $token = $this->generarTokenJWT($row['usuario_id'], $row['email']);
 
-                    // Guardar el token en una cookie
-                    setcookie('token', $token, time() + 3600, '/');
-                    header('Location: ../Vistas/inicio.php'); // Redirigir al perfil del usuario
-                    exit();
+                        // Guardar el token en una cookie
+                        setcookie('token', $token, time() + 3600, '/');
+                        header('Location: ../Vistas/inicio.php'); // Redirigir al perfil del usuario
+                        exit();
+                    } else {
+                        // Contraseña incorrecta
+                        echo "<script>alert('Contraseña incorrecta. Inténtalo de nuevo.');";
+                        echo "window.location = '../Vistas/inicio-sesion.php';</script>";
+                    }
                 } else {
-                    // Contraseña incorrecta
-                    echo "<script>alert('Contraseña incorrecta. Inténtalo de nuevo.');";
+                    // Usuario no está activo
+                    echo "<script>alert('Usuario inactivo. Enviá un correo a adminExample@RSN.com solicitando tu reactivación.');";
                     echo "window.location = '../Vistas/inicio-sesion.php';</script>";
                 }
             } else {
-                // Usuario no está activo
-                echo "<script>alert('Usuario inactivo. Enviá un correo a adminExample@RSN.com solicitando tu reactivación.');";
+                // Usuario no encontrado
+                echo "<script>alert('Usuario no encontrado. Regístrate si no tienes una cuenta.');";
                 echo "window.location = '../Vistas/inicio-sesion.php';</script>";
             }
-        } else {
-            // Usuario no encontrado
-            echo "<script>alert('Usuario no encontrado. Regístrate si no tienes una cuenta.');";
-            echo "window.location = '../Vistas/inicio-sesion.php';</script>";
         }
     }
-}
 
     public function logout()
     {
