@@ -1,20 +1,24 @@
 <?php
+// Incluir las clases y archvios necesarios
 require_once('../Clases/perfil.php');
 require_once('../Clases/publicacion.php');
 require_once('../Clases/seguidor-seguido.php');
 require_once('../vendor/firebase/php-jwt/src/JWT.php');
 use \Firebase\JWT\JWT;
 
+// Iniciar sesión
 session_start();
+// Verificar si el usuario está autenticado
 if (!isset($_SESSION['user_id'])) {
     // Verificar si el usuario tiene un token JWT válido
     if (isset($_COOKIE['token'])) {
         $token = $_COOKIE['token'];
         $secret_key = 'Project_socialnetwork';
         try {
+            // Decodificar el token JWT
             $decoded = JWT::decode($token . $secret_key, array('HS256'));
         } catch (Exception $e) {
-            // El token no es válido, puedes redirigir al usuario a la página de inicio de sesión
+            // El token no es válido, redirigir al usuario a la página de inicio de sesión
             header('Location: inicio-sesion.php');
             exit();
         }
@@ -23,26 +27,28 @@ if (!isset($_SESSION['user_id'])) {
         header('Location: inicio-sesion.php');
         exit();
     }
-    header('Location: inicio-sesion.php');
-    exit();
 }
-
 /*Gestión perfiles*/
+// Crear una instancia de la clase 'Perfil'
 $perfil = new Perfil();
+// Metodo para obtener datos del usuario
 $userData = $perfil->obtenerDatosUsuario();
 $user_name = $userData['name'];
 $user_image = $userData['imagen_perfil'];
 /*Gestión publicaciones*/
+// Crear una instancia de la clase 'Publiacion'
 $publicacion = new Publicacion();
+// Método para crear una nueva publicacion
 $newpublishingHTML = $publicacion->crearPublicacion();
+// Método para obtener el total de publicaciones
 $total_publicaciones = $publicacion->obtenerTotalPublicaciones();
 /*Gentión seguido_seguidor*/
+// Crear una instancia de la clase 'Seguidor_Seguido'
 $seguidor_seguido = new Seguidor_Seguido();
-$sugerenciasHTML = $seguidor_seguido->sugerencias();
+// Método para obtener total de seguidores
 $totalFollowers = $seguidor_seguido->obtenerSeguidoresTotal();
+// Método para obtener total de seguidos
 $totalFollowings = $seguidor_seguido->obtenerSeguidosTotal();
-$listFollowers = $seguidor_seguido->obtenerSeguidores();
-$listFollowings = $seguidor_seguido->obtenerSeguidos();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,6 +56,7 @@ $listFollowings = $seguidor_seguido->obtenerSeguidos();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Dilson Alexander Cruz Nivia">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -128,10 +135,15 @@ $listFollowings = $seguidor_seguido->obtenerSeguidos();
                     </div>
                     <div class="popup-content__show-users">
                         <?php
+                        // Obtener la lista de seguidores utilizando el método obtenerSeguidores de la instancia de Seguidor_Seguido
                         $listFollowers = $seguidor_seguido->obtenerSeguidores();
+                        // Verificar si la lista de seguidores no está vacía
                         if (!empty($listFollowers)) {
+                            // Iterar sobre cada seguidor en la lista
                             foreach ($listFollowers as $follower) {
-                                $seguidor_id = $follower['seguidor_id']; // Obtén el ID del usuario
+                                // Obtener el ID del seguidor actual
+                                $seguidor_id = $follower['seguidor_id'];
+                                // Mostrar la información del seguidor
                                 echo '<div class="show-users" id="' . $seguidor_id . '">';
                                 echo '<div class="show-users_info">';
                                 echo '<a class="show-users_profilImg"><img src="' . $follower['imagen_perfil'] . '" alt="Imagen de perfil"></a>';
@@ -140,6 +152,7 @@ $listFollowings = $seguidor_seguido->obtenerSeguidos();
                                 echo '</div>';
                             }
                         } else {
+                            // Si la lista de seguidores está vacía, mostrar un mensaje indicando que el usuario no tiene seguidores
                             echo '<div class="popup-content__title"><h3>No tienes seguidores</h3><div class="popup-content__line"></div></div>';
                         }
                         ?>
@@ -155,19 +168,26 @@ $listFollowings = $seguidor_seguido->obtenerSeguidos();
                     </div>
                     <div class="popup-content__show-users">
                         <?php
+                        // Obtener la lista de usuarios seguidos utilizando el método obtenerSeguidos de la instancia de Seguidor_Seguido
                         $listFollowings = $seguidor_seguido->obtenerSeguidos();
+                        // Verificar si la lista de usuarios seguidos no está vacía
                         if (!empty($listFollowings)) {
+                            // Iterar sobre cada usuario seguido en la lista
                             foreach ($listFollowings as $following) {
-                                $seguidos_id = $following['usuario_id']; // Obtén el ID del usuario
+                                // Obtener el ID del usuario seguido actual
+                                $seguidos_id = $following['usuario_id'];
+                                // Mostrar la información del usuario seguido
                                 echo '<div class="show-users" id="following" data-id="' . $seguidos_id . '">';
                                 echo '<div class="show-users_info">';
                                 echo '<a class="show-users_profilImg"><img src="' . $following['imagen_perfil'] . '" alt="Imagen de perfil"></a>';
                                 echo '<a class="show-users_profile">' . $following['nombre'] . '</a>';
                                 echo '</div>';
+                                // Mostrar el botón "Dejar de seguir" para cada usuario seguido
                                 echo '<button data-id="' . $seguidos_id . '" class="btnUnfollow">Dejar de seguir</button>';
                                 echo '</div>';
                             }
                         } else {
+                            // Si la lista de usuarios seguidos está vacía, mostrar un mensaje indicando que el usuario no sigue a nadie
                             echo '<div class="popup-content__title"><h3>No sigues a nadie.</h3><div class="popup-content__line"></div></div>';
                         }
                         ?>
@@ -176,7 +196,9 @@ $listFollowings = $seguidor_seguido->obtenerSeguidos();
             </div>
             <div class="publicaciones-container" id="publicaciones-container">
                 <?php
+                // Crear una instancia de la clase 'Publicacion'
                 $publicacion = new Publicacion();
+                // Llamar al método para obtener las publicaciones del perfil
                 $publicacion->obtenerPublicacionesPerfil();
                 ?>
             </div>

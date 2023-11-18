@@ -1,20 +1,23 @@
 <?php
+// Incluir las clases y archvios necesarios
 require_once('../Clases/perfil.php');
 require_once('../Clases/publicacion.php');
 require_once('../Clases/seguidor-seguido.php');
 require_once('../vendor/firebase/php-jwt/src/JWT.php');
 use \Firebase\JWT\JWT;
-
+// Iniciar sesión
 session_start();
+// Verificar si el usuario está autenticado
 if (!isset($_SESSION['user_id'])) {
     // Verificar si el usuario tiene un token JWT válido
     if (isset($_COOKIE['token'])) {
         $token = $_COOKIE['token'];
         $secret_key = 'Project_socialnetwork';
         try {
+            // Decodificar el token JWT
             $decoded = JWT::decode($token . $secret_key, array('HS256'));
         } catch (Exception $e) {
-            // El token no es válido, puedes redirigir al usuario a la página de inicio de sesión
+            // El token no es válido, redirigir al usuario a la página de inicio de sesión
             header('Location: inicio-sesion.php');
             exit();
         }
@@ -23,20 +26,25 @@ if (!isset($_SESSION['user_id'])) {
         header('Location: inicio-sesion.php');
         exit();
     }
-    header('Location: inicio-sesion.php');
-    exit();
 }
 /*Gestión perfiles*/
+// Crear una instancia de la clase 'Perfil'
 $perfil = new Perfil();
+// Método para obtener datos del usuario
 $userData = $perfil->obtenerDatosUsuario();
 $user_name = $userData['name'];
 $user_image = $userData['imagen_perfil'];
 /*Gestión publicaciones*/
+// Crear una instancia de la clase 'Publiacion'
 $publicacion = new Publicacion();
+// Método para crear una nueva publicación
 $newpublishingHTML = $publicacion->crearPublicacion();
 /*Gentión seguido_seguidor*/
+// Crear una instancia de la clase 'Seguidor_Seguido'
 $seguidor_seguido = new Seguidor_Seguido();
+// Método para mostrar sugerencias
 $sugerenciasHTML = $seguidor_seguido->sugerencias();
+// Método para mostrar sugerencia en el popup
 $sugerenciasPopupHTML = $seguidor_seguido->sugerenciasPopup();
 ?>
 <!DOCTYPE html>
@@ -132,7 +140,9 @@ $sugerenciasPopupHTML = $seguidor_seguido->sugerenciasPopup();
             </div>
             <div class="publicaciones-container" id="publicaciones-container">
                 <?php
+                // Crea una instancia de la clase 'Publicación'
                 $publicaciones = new Publicacion();
+                // Método para obtener las publucaciones de usuarios seguidos 
                 $publicaciones->obtenerPublicacionesPaginaInicio();
                 ?>
             </div>
