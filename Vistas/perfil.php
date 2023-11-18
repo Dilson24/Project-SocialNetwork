@@ -146,8 +146,8 @@ $totalFollowings = $seguidor_seguido->obtenerSeguidosTotal();
                                 // Mostrar la información del seguidor
                                 echo '<div class="show-users" id="' . $seguidor_id . '">';
                                 echo '<div class="show-users_info">';
-                                echo '<a class="show-users_profilImg"><img src="' . $follower['imagen_perfil'] . '" alt="Imagen de perfil"></a>';
-                                echo '<a class="show-users_profile">' . $follower['nombre'] . '</a>';
+                                echo '<a href="../Vistas/perfiles.php?id=' . $seguidor_id . '" class="show-users_profilImg"><img src="' . $follower['imagen_perfil'] . '" alt="Imagen de perfil"></a>';
+                                echo '<a href="../Vistas/perfiles.php?id=' . $seguidor_id . '" class="show-users_profile">' . $follower['nombre'] . '</a>';
                                 echo '</div>';
                                 echo '</div>';
                             }
@@ -179,8 +179,8 @@ $totalFollowings = $seguidor_seguido->obtenerSeguidosTotal();
                                 // Mostrar la información del usuario seguido
                                 echo '<div class="show-users" id="following" data-id="' . $seguidos_id . '">';
                                 echo '<div class="show-users_info">';
-                                echo '<a class="show-users_profilImg"><img src="' . $following['imagen_perfil'] . '" alt="Imagen de perfil"></a>';
-                                echo '<a class="show-users_profile">' . $following['nombre'] . '</a>';
+                                echo '<a href="../Vistas/perfiles.php?id=' . $seguidos_id . '" class="show-users_profilImg"><img src="' . $following['imagen_perfil'] . '" alt="Imagen de perfil"></a>';
+                                echo '<a href="../Vistas/perfiles.php?id=' . $seguidos_id . '"class="show-users_profile">' . $following['nombre'] . '</a>';
                                 echo '</div>';
                                 // Mostrar el botón "Dejar de seguir" para cada usuario seguido
                                 echo '<button data-id="' . $seguidos_id . '" class="btnUnfollow">Dejar de seguir</button>';

@@ -189,8 +189,19 @@ $user_image = $userData['imagen_perfil'];
                                 // Mostrar la información del seguidor
                                 echo '<div class="show-users" id="' . $seguidor_id . '">';
                                 echo '<div class="show-users_info">';
-                                echo '<a class="show-users_profilImg"><img src="' . $follower['imagen_perfil'] . '" alt="Imagen de perfil"></a>';
-                                echo '<a class="show-users_profile">' . $follower['nombre'] . '</a>';
+                                // Redireccionar al usuario a su perfil o al perfil público según corresponda
+                                if ($esUsuarioSesion) {
+                                    echo '<a href="../Vistas/perfil.php" class="show-users_profilImg"><img src="' . $follower['imagen_perfil'] . '" alt="Imagen de perfil"></a>';
+                                } else {
+                                    echo '<a href="../Vistas/perfiles.php?id=' . $seguidor_id . '" class="show-users_profilImg"><img src="' . $follower['imagen_perfil'] . '" alt="Imagen de perfil"></a>';
+                                }
+                                // Redireccionar al usuario a su perfil o al perfil público según corresponda
+                                if ($esUsuarioSesion) {
+                                    echo '<a href="../Vistas/perfil.php" class="show-users_profile">' . $follower['nombre'] . '</a>';
+                                } else {
+
+                                    echo '<a href="../Vistas/perfiles.php?id=' . $seguidor_id . '" class="show-users_profile">' . $follower['nombre'] . '</a>';
+                                }
                                 echo '</div>';
                                 // Mostrar el botón "Seguir" o "Dejar de seguir" según la relación entre el usuario de sesión y el seguidor actual
                                 if (!$esUsuarioSesion) {
@@ -234,8 +245,18 @@ $user_image = $userData['imagen_perfil'];
                                 // Mostrar la información del usuario seguido
                                 echo '<div class="show-users" id="' . $seguidos_id . '">';
                                 echo '<div class="show-users_info">';
-                                echo '<a class="show-users_profilImg"><img src="' . $following['imagen_perfil'] . '" alt="Imagen de perfil"></a>';
-                                echo '<a class="show-users_profile">' . $following['nombre'] . '</a>';
+                                // Redireccionar al usuario a su perfil o al perfil público según corresponda
+                                if ($esUsuarioSesion) {
+                                    echo '<a href="../Vistas/perfil.php" class="show-users_profilImg"><img src="' . $following['imagen_perfil'] . '" alt="Imagen de perfil"></a>';
+                                } else {
+                                    echo '<a href="../Vistas/perfiles.php?id=' . $seguidos_id . '" class="show-users_profilImg"><img src="' . $following['imagen_perfil'] . '" alt="Imagen de perfil"></a>';
+                                }
+                                // Redireccionar al usuario a su perfil o al perfil público según corresponda
+                                if ($esUsuarioSesion) {
+                                    echo '<a href="../Vistas/perfil.php" class="show-users_profile">' . $following['nombre'] . '</a>';
+                                } else {
+                                    echo '<a href="../Vistas/perfiles.php?id=' . $seguidos_id . '" class="show-users_profile">' . $following['nombre'] . '</a>';
+                                }
                                 echo '</div>';
                                 // Mostrar el botón "Seguir" o "Dejar de seguir" según la relación entre el usuario de sesión y el usuario seguido actual
                                 if (!$esUsuarioSesion) {
@@ -268,4 +289,5 @@ $user_image = $userData['imagen_perfil'];
     </div>
     <script src="../JS/perfil.js"></script>
 </body>
+
 </html>
