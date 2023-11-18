@@ -15,11 +15,11 @@
         <form action="../Clases/usuario.php?register" method="post" accept-charset="UTF-8">
             <div class="form-group">
                 <label for="username">Nombre:</label>
-                <input required="required" name="name" id="email" type="text">
+                <input required="required" name="name" id="name" type="text">
             </div>
             <div class="form-group">
                 <label for="lastName">Apellido:</label>
-                <input required="required" name="lastName" id="password" type="text">
+                <input required="required" name="lastName" id="lastName" type="text">
             </div>
             <div class="from-group">
                 <label for="dateOfBirth">Fecha de nacimiento</label>
