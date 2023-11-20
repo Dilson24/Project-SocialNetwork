@@ -47,7 +47,7 @@ main>footer {
     gap: 1.5em;
     position: fixed;
     bottom: 0;
-    left: 0; 
+    left: 0;
     right: 0;
 }
 
@@ -56,12 +56,11 @@ main {
     width: 100vw;
 }
 
-/*content*/
+/*CONTENT*/
 .content {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    /* Arriba | Derecha | Abajo | Izquierda */
     margin: 4.5em auto 0 auto;
     width: 90%;
 }
@@ -94,7 +93,7 @@ main {
     gap: 2em;
 }
 
-/*buttons*/
+/*BUTTONS*/
 .signUp {
     padding: 1.3em 4em;
     font-size: 12px;
@@ -152,19 +151,6 @@ main {
 .signIn:active {
     transform: translateY(-1px);
 }
-
-/*footer*/
-
-/* footer {
-    display: flex;
-    justify-content: space-around;
-    flex-direction: column;
-    align-items: center;
-    margin: 0 auto;
-    width: 90%;
-    gap: 1.5em;
-    border: 1px solid green;
-} */
 
 .line {
     width: 98%;
