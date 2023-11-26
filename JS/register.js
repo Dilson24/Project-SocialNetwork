@@ -1,30 +1,32 @@
 /*--- A P I - F O R - S E L E C T S ---*/
 $(document).ready(function () {
-    //-------------------------------SELECT CASCADING-------------------------//
+    //-------------------------------SELECCIÓN EN CADENA-------------------------//
+    // Variables para almacenar valores seleccionados de país, región y ciudad
     var selectedCountry = (selectedRegion = selectedCity = "");
-    // This is a demo API key for testing purposes. You should rather request your API key (free) from http://battuta.medunes.net/
+    // Esta es una clave API de demostración con fines de prueba.
+    // Reemplácela con su clave API real de http://battuta.medunes.net/
     var BATTUTA_KEY = "00000000000000000000000000000000";
-    // Populate country select box from battuta API
-    url =
+    // URL para poblar la caja de selección de país desde la API de Battuta
+    var url =
         "https://battuta.medunes.net/api/country/all/?key=" +
         BATTUTA_KEY +
         "&callback=?";
-
-    // EXTRACT JSON DATA.
+    // EXTRAER DATOS JSON.
     $.getJSON(url, function (data) {
         console.log(data);
+        // Iterar a través de los datos recibidos y poblar la caja de selección de país
         $.each(data, function (index, value) {
-            // APPEND OR INSERT DATA TO SELECT ELEMENT.
+            // AGREGAR O INSERTAR DATOS AL ELEMENTO DE SELECCIÓN.
             $("#country").append(
                 '<option value="' + value.code + '">' + value.name + "</option>"
             );
         });
     });
-    // Country selected --> update region list .
+    // País seleccionado --> actualizar lista de regiones.
     $("#country").change(function () {
         selectedCountry = this.options[this.selectedIndex].text;
         countryCode = $("#country").val();
-        // Populate country select box from battuta API
+        // Poblar la caja de selección de regiones desde la API de Battuta según el país seleccionado
         url =
             "https://battuta.medunes.net/api/region/" +
             countryCode +
@@ -33,21 +35,22 @@ $(document).ready(function () {
             "&callback=?";
         $.getJSON(url, function (data) {
             $("#region option").remove();
-            $('#region').append('<option value="">Please select your region</option>');
+            $('#region').append('<option value="">Por favor, selecciona tu región</option>');
+            // Iterar a través de los datos recibidos y poblar la caja de selección de regiones
             $.each(data, function (index, value) {
-                // APPEND OR INSERT DATA TO SELECT ELEMENT.
+                // AGREGAR O INSERTAR DATOS AL ELEMENTO DE SELECCIÓN.
                 $("#region").append(
                     '<option value="' + value.region + '">' + value.region + "</option>"
                 );
             });
         });
     });
-    // Region selected --> updated city list
+    // Región seleccionada --> actualizar lista de ciudades
     $("#region").on("change", function () {
         selectedRegion = this.options[this.selectedIndex].text;
-        // Populate country select box from battuta API
         countryCode = $("#country").val();
         region = $("#region").val();
+        // Poblar la caja de selección de ciudades desde la API de Battuta según el país y la región seleccionados
         url =
             "https://battuta.medunes.net/api/city/" +
             countryCode +
@@ -59,24 +62,26 @@ $(document).ready(function () {
         $.getJSON(url, function (data) {
             console.log(data);
             $("#city option").remove();
-            $('#city').append('<option value="">Please select your city</option>');
+            $('#city').append('<option value="">Por favor, selecciona tu ciudad</option>');
+            // Iterar a través de los datos recibidos y poblar la caja de selección de ciudades
             $.each(data, function (index, value) {
-                // APPEND OR INSERT DATA TO SELECT ELEMENT.
+                // AGREGAR O INSERTAR DATOS AL ELEMENTO DE SELECCIÓN.
                 $("#city").append(
                     '<option value="' + value.city + '">' + value.city + "</option>"
                 );
             });
         });
     });
-    // city selected --> update location string
+    // Ciudad seleccionada --> actualizar cadena de ubicación
     $("#city").on("change", function () {
         selectedCity = this.options[this.selectedIndex].text;
+        // Mostrar la ubicación seleccionada en el elemento HTML con id 'location'
         $("#location").html(
-            "Locatation: Country: " +
+            "Ubicación: País: " +
             selectedCountry +
-            ", Region: " +
+            ", Región: " +
             selectedRegion +
-            ", City: " +
+            ", Ciudad: " +
             selectedCity
         );
     });

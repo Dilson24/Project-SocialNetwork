@@ -1,45 +1,5 @@
-<?php
-session_start();
-require_once('../db.php');
-$db = Database::getInstance();
-$connection = $db->getConnection();
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = $_POST['Email'];
-    $password = $_POST['password'];
-
-    // Verificar las credenciales en la tabla de 'usuario'
-    $query = "SELECT usuario_id, email, password FROM usuario WHERE email = ?";
-    $stmt = $connection->prepare($query);
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows === 1) {
-        // El usuario con el correo electrónico proporcionado fue encontrado
-        $row = $result->fetch_assoc();
-        $storedPassword = $row['password'];
-
-        if (password_verify($password, $storedPassword)) {
-            // La contraseña es correcta
-            $_SESSION['user_id'] = $row['usuario_id'];
-            header('Location: ../Vistas/perfil.php'); // Redirigir al perfil del usuario
-            exit();
-        } else {
-            // Contraseña incorrecta
-            $error_message = "Contraseña incorrecta. Inténtalo de nuevo.";
-        }
-    } else {
-        // Usuario no encontrado
-        $error_message = "Usuario no encontrado. Regístrate si no tienes una cuenta.";
-    }
-}
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -53,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="card-header">
             <div class="log">Inicio de sesión</div>
         </div>
-        <form method="post" action="inicio-sesion.php">
+        <form method="post" action="../Clases/usuario.php">
             <div class="form-group">
                 <label for="email">Email:</label>
                 <input required="required" name="Email" id="email" type="email">
@@ -67,13 +27,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </form>
         <p>¿No tienes cuenta? <a href="registro.php">Regístrate</a></p>
-        <?php
-        if (isset($error_message)) {
-            echo '<p class="error-message">' . $error_message . '</p>';
-        }
-        ?>
     </div>
-
 </body>
-
 </html>
