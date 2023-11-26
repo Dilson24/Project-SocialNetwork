@@ -8,21 +8,17 @@
 /* Personalizar la barra de desplazamiento */
 ::-webkit-scrollbar {
     width: 12px;
-    /* Ancho de la barra de desplazamiento */
 }
 
 /* Personalizar el pulgar (thumb) de la barra de desplazamiento */
 ::-webkit-scrollbar-thumb {
     background-color: var(--black-300);
-    /* Color del pulgar */
     border-radius: 6px;
-    /* Borde redondeado del pulgar */
 }
 
 /* Personalizar la barra de seguimiento (track) de la barra de desplazamiento */
 ::-webkit-scrollbar-track {
-    background-color: var(--black-900);
-    /* Color de fondo de la barra de seguimiento */
+    background-color: var(--black-900);    
 }
 
 /*GLOBAL CSS VARIABLES*/
@@ -64,7 +60,7 @@ body {
     height: 100vh;
 }
 
-/*contenido*/
+/* CONTENT */
 .header {
     grid-area: header;
     display: flex;
@@ -80,7 +76,7 @@ body {
     color: #fff;
 }
 
-/* Establece los estilos para los aside */
+/* ESTILOS PARA EL ASIDE */
 .sidenav {
     display: flex;
     flex-direction: column;
@@ -89,18 +85,12 @@ body {
     overflow-y: auto;
 }
 
-/* aside izquierdo */
+/* ASIDE IZQUIERDO */
 .sidenav.sidenav-left {
     grid-area: sidenav-left;
     width: 20%;
     border-right: 2px solid var(--black-900);
     background-color: var(--black-50);
-}
-
-/*logo*/
-.sidenav__logo {
-    /*eliminar*/
-    border: 1px solid red;
 }
 
 .sidenav__logo img {
@@ -157,7 +147,7 @@ body {
     padding: 20px;
 }
 
-/*card user*/
+/* CARD USER */
 
 .main-cardUser {
     display: flex;
@@ -165,13 +155,11 @@ body {
     flex-direction: row;
     align-items: center;
     width: 100%;
-    border: 1px solid rebeccapurple;
 }
 
 .userInfo__imgProfile {
     display: flex;
     width: 30%;
-    border: 1px solid rgb(153, 255, 0);
 }
 
 .userInfo__imgProfile img {
@@ -180,7 +168,6 @@ body {
     object-fit: cover;
     border-radius: 100%;
     margin: 0 auto;
-    border: 1px solid blue;
 }
 
 .main-cardUser__info {
@@ -188,8 +175,6 @@ body {
     flex-direction: column;
     gap: 10px;
     width: 100%;
-    border: 1px solid red;
-    /* arriba | derecha | abajo | izquierda */
     padding-left: 50px;
 }
 
@@ -198,7 +183,6 @@ body {
     flex-direction: row;
     align-items: center;
     gap: 20px;
-    border: 1px solid yellow;
 }
 
 .info-name h2 {
@@ -235,7 +219,6 @@ body {
     display: flex;
     flex-direction: row;
     gap: 10px;
-    border: 1px solid rosybrown;
     margin-top: 10px;
     font-size: 16px;
     font-family: var(--font-family);
@@ -248,16 +231,13 @@ body {
     margin-left: 15px;
 }
 
-/* Estilo para el texto "Seguidores" y "Seguidos" dentro de los divs */
 .info-followers a,
 .info-following a {
     cursor: pointer;
     text-decoration: none;
 }
 
-/*POPUPS*/
-
-/*popups*/
+/* POPUP SHOW FOLLOWERS/FOLLOWINGS */
 .popup-f {
     display: none;
     position: fixed;
@@ -280,7 +260,6 @@ body {
     background-color: var(--black-100);
     width: 25%;
     max-height: 300px;
-    border: 1px solid #ccc;
     overflow-y: auto;
 }
 
@@ -318,7 +297,6 @@ body {
     width: 100%;
     flex-direction: column;
     margin: 4px auto 4px auto;
-    border: 1px solid green;
 }
 
 .show-users {
@@ -327,7 +305,6 @@ body {
     align-items: center;
     margin: 5px;
     padding: 5px;
-    border: 1px solid blueviolet;
 }
 
 .show-users_info {
@@ -357,7 +334,7 @@ body {
     color: var(--black-600);
 }
 
-/*btn unfollow*/
+/* BTN UNFOLLOW */
 .btnUnfollow {
     padding: 8px 15px;
     font-size: 14px;
@@ -396,12 +373,11 @@ body {
     color: #fff;
 }
 
-/*publications*/
+/* PUBLICATIONS */
 .main-publishing {
     display: flex;
     justify-content: space-between;
     flex-direction: column;
-    /* arriba | derecha | abajo | izquierda */
     margin: 20px 40px 20px 40px;
     padding: 20px;
     height: auto;
@@ -416,7 +392,6 @@ body {
     flex-direction: row;
     align-items: center;
     gap: 10px;
-    border: 1px solid seagreen;
 }
 
 .users-info img {
@@ -448,7 +423,6 @@ body {
     display: flex;
     margin: 4px 0 4px 0;
     width: 100%;
-    border: 1px solid yellow;
 }
 
 .content-img {
@@ -466,7 +440,6 @@ body {
     display: flex;
     margin: 4px 0 4px 0;
     width: 100%;
-    border: 1px solid #ff0000;
 }
 
 .contet-reaction {
@@ -486,7 +459,7 @@ body {
     color: #ff0000
 }
 
-/*popup publication*/
+/* POPUP PUBLICATION */
 .popup {
     display: none;
     position: fixed;
@@ -510,7 +483,6 @@ body {
     padding: 25px;
     width: 50%;
     max-height: 600px;
-    border: 1px solid #ccc;
     overflow-y: auto;
 }
 
@@ -530,7 +502,7 @@ body {
     color: var(--black-600);
 }
 
-/*card profile*/
+/* POPUP CARD PROFILE */
 .popup-p {
     display: none;
     position: fixed;
@@ -553,7 +525,6 @@ body {
     margin: 5px;
     background-color: var(--black-100);
     max-height: 600px;
-    border: 1px solid red;
     overflow-y: auto;
 }
 
@@ -576,7 +547,7 @@ body {
     position: relative;
     overflow: hidden;
     margin: 10px;
-    border: 2px solid #007bff;
+    border: 2px solid var(--black-950);
 }
 
 .profile-image img {
@@ -614,7 +585,6 @@ body {
 .profile-image:hover label {
     opacity: 1;
 }
-
 
 .edit-group {
     display: flex;
@@ -695,7 +665,7 @@ select.edit-input {
     ;
 }
 
-/*Modal*/
+/* MODAL PASSWORD */
 .modal {
     display: none;
     position: fixed;
@@ -719,6 +689,6 @@ select.edit-input {
     text-align: center;
 }
 
-.modal_title{
+.modal_title {
     margin-top: 6px;
 }

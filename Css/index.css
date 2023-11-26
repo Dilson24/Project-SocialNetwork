@@ -56,7 +56,7 @@ main {
     width: 100vw;
 }
 
-/*CONTENT*/
+/* CONTENT */
 .content {
     display: flex;
     justify-content: space-around;
@@ -93,7 +93,7 @@ main {
     gap: 2em;
 }
 
-/*BUTTONS*/
+/* BUTTONS */
 .signUp {
     padding: 1.3em 4em;
     font-size: 12px;
