@@ -43,3 +43,4 @@ class usuarioTest extends TestCase
         unset($_POST['email'], $_POST['password'], $_POST['name'], $_POST['lastName'], $_POST['dateOfBirth'], $_POST['country'], $_POST['city']);
     }
 }
+?>
