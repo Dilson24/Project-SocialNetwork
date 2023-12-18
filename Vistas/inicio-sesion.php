@@ -13,7 +13,7 @@
         <div class="card-header">
             <div class="log">Inicio de sesión</div>
         </div>
-        <form method="post" action="../Clases/usuario.php">
+        <form method="post" action="../Clases/usuario.php?iniciar-sesion">
             <div class="form-group">
                 <label for="email">Email:</label>
                 <input required="required" name="Email" id="email" type="email">
