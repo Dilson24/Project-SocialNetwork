@@ -144,7 +144,8 @@ $usuario = new Usuario();
 // Verificar si se está registrando un nuevo usuario o iniciando sesión
 if (isset($_GET['register'])) {
     $usuario->registrar();
-} else {
+}  
+if (isset($_GET['iniciar-sesion'])){
     $usuario->iniciar_sesion();
 }
 // Verificar si se está cerrando sesión
