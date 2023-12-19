@@ -1,4 +1,5 @@
 <?php
+use LDAP\Result;
 // Incluir el archivo que contiene la lógica de la base de datos y la clase Database
 require_once('../db.php');
 // Incluir la librería para JWT
@@ -18,6 +19,11 @@ class Usuario
         $this->connection = $this->db->getConnection();
         // Establecer la codificación de caracteres en UTF-8
         $this->connection->set_charset("utf8mb4");
+    }
+    // Variable para indicar el modo prueba
+    private $isTesting = false;
+    public function setTesting($isTesting) {
+        $this->isTesting = $isTesting;
     }
     // Método para registrar un nuevo usuario
     public function registrar()
@@ -50,12 +56,21 @@ class Usuario
                 if ($stmt->execute()) {
                     // La inserción en la tabla 'perfiles' fue exitosa
                     // Iniciar sesión y redirigir al usuario
-                    session_start();
-                    $_SESSION['name'] = $nameFormatted;
-                    $_SESSION['user_id'] = $userId;
-                    $_SESSION['profileImage'] = $defaultProfileImage;
-                    header('Location: ../Vistas/inicio.php');
-                    exit();
+                    if(!$this->isTesting){
+                        //// Solo iniciar sesión y redirigir si no estamos en modo de prueba
+                        session_start();
+                        $_SESSION['name'] = $nameFormatted;
+                        $_SESSION['user_id'] = $userId;
+                        $_SESSION['profileImage'] = $defaultProfileImage;
+                        header('Location: ../Vistas/inicio.php');
+                        exit();
+                        
+                    }
+                    return  [
+                        'success' => true,
+                        'name' => $nameFormatted,
+                        'user_id' => $userId,                       
+                    ];
                 } else {
                     // Manejar el error en la inserción en la tabla 'perfiles'
                     echo "<script>alert('Error: Algo falló. Inténtelo de nuevo.');";
